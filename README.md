@@ -1,6 +1,6 @@
 <img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 50%"/>
 
-<h1 align = "center">Vue Admin Work P</h1>
+<h1 align = "center">Admin Work</h1>
 
 ## 简介：
 
@@ -11,7 +11,7 @@ Vue Admin Work P，是 Vue Admini Work 系列中最成熟和完善的中后台�
 ## 项目地址：
 
 - [🎉 官网&文档地址](http://qingqingxuan.gitee.io/work-p-site)
-- [🎉Vue Admin Work P **gitee** 演示地址](http://qingqingxuan.gitee.io/vue-admin-work-p)
+- [🎉 Admin Work **gitee** 演示地址](http://qingqingxuan.gitee.io/admin-work)
 
 ## vue-admin-work 前端讨论群及 QQ 客服
 
@@ -32,12 +32,12 @@ Vue Admin Work P，是 Vue Admini Work 系列中最成熟和完善的中后台�
 
 ```shell
 # 克隆项目，如果github打开速度比较慢，可以使用gitee地址
-git clone -b master https://github.com/qingqingxuan/vue-admin-work-p.git
+git clone -b master https://github.com/qingqingxuan/admin-work.git
 # or
-git clone -b master https://gitee.com/qingqingxuan/vue-admin-work-p.git
+git clone -b master https://gitee.com/qingqingxuan/admin-work.git
 
 # 进入项目目录
-cd vue-admin-work-p
+cd admin-work
 # 安装依赖
 npm install
 # 本地开发 启动项目
