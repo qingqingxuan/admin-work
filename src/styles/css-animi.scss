@@ -1,0 +1,208 @@
+@mixin absolute() {
+  position: absolute;
+  content: "";
+  background-color: rgb(24, 144, 255);
+  transition: transform 0.5s ease 0s;
+}
+@mixin transfrom1 {
+  @include absolute();
+  top: 0px;
+  bottom: 0px;
+  width: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+@mixin transfrom1Hover {
+  transform: scaleY(1);
+  transition: transform 0.5s ease 0s;
+}
+@mixin transfrom2 {
+  @include absolute();
+  left: 0px;
+  right: 0px;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+@mixin transfrom2Hover {
+  transform: scaleX(1);
+  transition: transform 0.5s ease 0s;
+}
+
+.pillars-1::before {
+  left: -8px;
+  @include transfrom1();
+}
+.pillars-1:hover::after,
+.pillars-1:hover::before {
+  @include transfrom1Hover();
+}
+.pillars-1::after {
+  right: -8px;
+  @include transfrom1();
+}
+.pillars-2::before {
+  top: -8px;
+  @include transfrom2();
+}
+.pillars-2:hover::after,
+.pillars-2:hover::before {
+  @include transfrom2Hover();
+}
+.pillars-2::after {
+  bottom: -8px;
+  @include transfrom2();
+}
+.pillars-3::before {
+  left: -8px;
+  @include transfrom1();
+}
+.pillars-3:hover::after,
+.pillars-3:hover::before {
+  @include transfrom1Hover();
+}
+.pillars-3::after {
+  right: -8px;
+  @include transfrom1();
+  transform-origin: bottom;
+}
+.strike-through::before{
+  @include absolute();
+  height: 2px;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.strike-through:hover::before{
+  transform: scaleX(1);
+  transition: transform 0.5s ease 0s;
+}
+.under-line-1::before{
+  @include absolute();
+  height: 2px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.under-line-2::before{
+  @include absolute();
+  height: 2px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.under-line-2:hover::before{
+  transform: scaleX(0);
+  transition: transform 0.5s ease 0s;
+}
+.under-line-3::before{
+  @include absolute();
+  height: 2px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+.under-line-1:hover::before,.under-line-3:hover::before{
+  transform: scaleX(1);
+  transition: transform 0.5s ease 0s;
+}
+.over-line-1::before{
+  @include absolute();
+  height: 2px;
+  left: 0;
+  right: 0;
+  top: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+.over-line-1:hover::before{
+  transform: scaleX(1);
+  transition: transform 0.5s ease 0s;
+}
+.over-line-2::before{
+  @include absolute();
+  height: 2px;
+  left: 0;
+  right: 0;
+  top: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.over-line-2:hover::before{
+  transform: scaleX(1);
+  transition: transform 0.5s ease 0s;
+}
+.highlight-1::before{
+  @include absolute();
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  z-index: -1;
+}
+.highlight-1:hover::before{
+  transform: scaleX(1);
+  transition: transform 0.5s ease 0s;
+  transform-origin: left;
+}
+.highlight-2::before{
+  @include absolute();
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform: scaleY(0.1);
+  transform-origin: bottom;
+  z-index: -1;
+}
+.highlight-2:hover::before{
+  transform: scaleY(1);
+  transition: transform 0.5s ease 0s;
+}
+@mixin bubble-transform {
+  position: absolute;
+  z-index: -1;
+  width: 1em;
+  height: 1em;
+  content: "";
+  background-color: #1890ff;
+  border-radius: 50%;
+  transition: transform .45s ease-in-out;
+  transform: translate3d(-50%,-50%,0) scale3d(0,0,0);
+  transform-origin: center;
+}
+.bubble-1::before{
+  @include bubble-transform();
+  top: 100%;
+  left: 100%;
+}
+.bubble-2::before{
+  @include bubble-transform();
+  top: 100%;
+  right: 100%;
+}
+.bubble-3::before{
+  @include bubble-transform();
+  right: 100%;
+  bottom: 100%;
+}
+.bubble-4::before{
+  @include bubble-transform();
+  left: 100%;
+  bottom: 100%;
+}
+.bubble-4:hover::before, .bubble-3:hover::before, .bubble-2:hover::before, .bubble-1:hover::before{
+  transition: transform .45s ease-in-out;
+  transform: translate3d(-50%,-50%,0) scale3d(15,15,15);
+  transform-origin: center;
+}

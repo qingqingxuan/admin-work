@@ -1,0 +1,19 @@
+/*! @import */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{
+  --menu-width: 210px
+}
+html,
+body,
+#app {
+  height: 100vh;
+}
+* {
+  box-sizing: border-box;
+}
+
+td .n-button + .n-button{
+  margin-left: 10px;
+}

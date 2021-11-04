@@ -1,0 +1,179 @@
+<template>
+  <!-- <div v-if="!isMobile">
+    <div class="relative overflow-hidden">
+      <div
+        class="flex items-center justify-center splash-container"
+        :class="{ 'hidden-splash': showLoginPage, 'show-splash': !showLoginPage }"
+      >
+        <div class="top-line" :class="{ 'animation-line': showAnimation }"> </div>
+        <div class="text-white center-text">
+          <span class="mr-4 the">the</span>
+          <span class="p-text"><strong>P</strong> = vite + v3 + ts + naive-ui </span>
+        </div>
+        <div class="bottom-line" :class="{ 'animation-line': showAnimation }"></div>
+      </div>
+      <div
+        class="login-wrapper"
+        :class="{ 'show-login': showLoginPage, 'hidden-login': !showLoginPage }"
+      >
+        <LoginComponent />
+      </div>
+      <div
+        class="arrow"
+        v-if="showArrow"
+        :style="{ transform: showLoginPage ? 'rotate(90deg)' : 'rotate(-90deg)' }"
+      >
+        <span @click="onNextLogin" class="iconfont icon-doubleleft arrow-icon"></span>
+      </div>
+    </div>
+  </div> -->
+  <LoginComponent />
+</template>
+
+<script lang="ts">
+  import { useLayoutStore } from '@/components'
+  import { DeviceType } from '@/types/store'
+  import { computed, defineComponent, onMounted, ref } from 'vue'
+  import LoginComponent from './LoginComponent.vue'
+  export default defineComponent({
+    name: 'Login',
+    components: { LoginComponent },
+    setup() {
+      const showAnimation = ref(false)
+      const showArrow = ref(false)
+      const showLoginPage = ref(false)
+      function onNextLogin() {
+        showLoginPage.value = !showLoginPage.value
+      }
+      const layoutStore = useLayoutStore()
+      const isMobile = computed(() => layoutStore.state.device === DeviceType.MOBILE)
+      onMounted(() => {
+        setTimeout(() => (showAnimation.value = true), 500)
+        setTimeout(() => {
+          showArrow.value = true
+        }, 6200)
+      })
+      return {
+        isMobile,
+        showAnimation,
+        showArrow,
+        showLoginPage,
+        onNextLogin,
+      }
+    },
+  })
+</script>
+<style>
+  @keyframes grow {
+    from {
+      width: 0;
+    }
+    to {
+      width: 80vw;
+    }
+  }
+
+  @keyframes blink {
+    from {
+      border-right-color: #eee;
+    }
+    to {
+      border-right-color: #222;
+    }
+  }
+  @keyframes blink-arrow {
+    from {
+      color: #222;
+    }
+    to {
+      color: #eee;
+    }
+  }
+</style>
+<style lang="scss" scoped>
+  .splash-container {
+    background-color: rgba($color: #000000, $alpha: 1);
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    @mixin bg-img {
+      background-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.9) 25%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.9) 75%
+      );
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      width: 80%;
+      background-color: #ffffff;
+    }
+    .top-line {
+      top: 10vh;
+      transform: translateX(-120%);
+      @include bg-img();
+    }
+    .bottom-line {
+      bottom: 10vh;
+      transform: translateX(120%);
+      @include bg-img();
+    }
+    .animation-line {
+      transform: translateX(0);
+      transition: transform 1s ease-in-out;
+    }
+    .center-text {
+      width: 80vw;
+      border-right: 2px solid #eee;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: grow 4s steps(35) 1.5s normal both, blink 1s steps(35) infinite normal;
+      .the {
+        font-size: 14px;
+      }
+      .p-text {
+        font-size: 80px;
+      }
+    }
+  }
+  .arrow {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    text-align: center;
+    .arrow-icon {
+      font-size: 30px;
+      animation: blink-arrow 1s linear infinite alternate;
+    }
+  }
+  .show-splash {
+    transform: translateY(0);
+    transition: transform 0.5s linear;
+  }
+  .hidden-splash {
+    transform: translateY(-100%);
+    transition: transform 0.5s linear;
+  }
+  .login-wrapper {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: absolute;
+    top: 100vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .show-login {
+    top: 0;
+    transition: top 0.5s linear;
+  }
+  .hidden-login {
+    top: 100vh;
+    transition: top 0.5s linear;
+  }
+</style>
