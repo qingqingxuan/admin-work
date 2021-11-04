@@ -4,7 +4,7 @@
 
 ## 简介：
 
-Vue Admin Work P，是 Vue Admini Work 系列中最成熟和完善的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下最流行的 Vue3 UI 库--NaiveUI
+Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下最流行的 Vue3 UI 库--NaiveUI
 
 使用了当今最流行的技术框架： `Vue3 + Vite2 + Typescript + Navie UI`
 
