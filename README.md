@@ -1,4 +1,6 @@
+<div align="center">
 <img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 50%"/>
+</div>
 
 <h1 align = "center">Admin Work</h1>
 
