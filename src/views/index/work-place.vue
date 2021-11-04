@@ -285,17 +285,17 @@
           {
             title: 'Vue Admin Work',
             imagePath: W_LOGO,
-            target: 'http://qingqingxuan.gitee.io/vue-admin-work/w/',
+            target: 'http://qingqingxuan.gitee.io/vue-admin-work',
           },
           {
             title: 'Vue Admin Work X',
             imagePath: X_LOGO,
-            target: 'http://qingqingxuan.gitee.io/vue-admin-work/x/',
+            target: 'http://qingqingxuan.gitee.io/vue-admin-work-x',
           },
           {
             title: 'Vue Admin Work P',
             imagePath: P_LOGO,
-            target: 'http://qingqingxuan.gitee.io/vue-admin-work/p/',
+            target: 'http://qingqingxuan.gitee.io/vue-admin-work-p',
           },
           {
             title: 'React',

@@ -11,7 +11,7 @@
             <div class="logo-wrapper">
               <img src="../../assets/logo.png" />
             </div>
-            <div class="title margin-left">Vue Admin Work P</div>
+            <div class="title margin-left">Admin Work</div>
           </div>
           <div class="mt-8 form-container">
             <div class="item-wrapper">
@@ -53,7 +53,7 @@
     <div v-else class="m-login-container">
       <div class="header">
         <div class="the-p"> P </div>
-        <div class="mt-4 text-lg font-bold text-white"> Vue Admin Work </div>
+        <div class="mt-4 text-lg font-bold text-white"> Admin Work </div>
       </div>
       <div class="content">
         <n-input round placeholder="请输入用户名/手机号" size="large" v-model:value="username">

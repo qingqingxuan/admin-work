@@ -16,7 +16,7 @@ interface Setting {
   }
 }
 
-export const projectName = 'Vue Admin Work P'
+export const projectName = 'Admin Work'
 
 export default Object.assign(
   {
