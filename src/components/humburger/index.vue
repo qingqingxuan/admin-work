@@ -1,7 +1,7 @@
 <template>
   <span
     class="fold-wrapper iconfont"
-    :class="[state.isCollapse ? 'fold-open-status' : 'fold-close-status']"
+    :class="[state.isCollapse ? 'fold-close-status' : 'fold-open-status']"
     @click="toggleFold"
   >
     <SvgIcon name="expand" />

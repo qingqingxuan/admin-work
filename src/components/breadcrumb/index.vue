@@ -7,7 +7,12 @@
           :options="item.children"
           @select="handleSelect"
         >
-          {{ item.label }}
+          <span>
+            {{ item.label }}
+            <n-icon>
+              <ChevronDown />
+            </n-icon>
+          </span>
         </n-dropdown>
         <span v-else>{{ item.label }}</span>
       </n-breadcrumb-item>
@@ -21,6 +26,7 @@
   import { defineComponent, onMounted, reactive, watch } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { useLayoutStore } from '..'
+  import { ChevronDown } from '@vicons/ionicons5'
   interface DropItem {
     label: string
     key: string
@@ -28,6 +34,7 @@
   }
   export default defineComponent({
     name: 'Breadcrumb',
+    components: { ChevronDown },
     setup() {
       const breadcrumbs = reactive([] as Array<DropItem>)
       const route = useRoute()
