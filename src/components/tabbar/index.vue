@@ -425,12 +425,10 @@
       top: 0;
       left: 0;
       overflow: hidden;
-      :deep {
-        .fold-wrapper {
-          height: $tabHeight;
-          line-height: $tabHeight;
-        }
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
     }
     .tab-humburger-wrapper {
       margin-left: 40px;
