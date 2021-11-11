@@ -96,11 +96,6 @@ export const constantRoutes = [
     hidden: true,
     component: () => import('@/views/exception/403.vue'),
   },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/404',
-    hidden: true,
-  },
 ]
 const router = createRouter({
   history: createWebHashHistory(),

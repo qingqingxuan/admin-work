@@ -8,6 +8,7 @@ import { mapTwoLevelRouter, toHump } from '.'
 import { Layout } from '@/components'
 import layoutStore from '@/store'
 import { defineAsyncComponent } from 'vue'
+import LoadingComponent from '../components/loading/index.vue'
 
 interface OriginRoute {
   menuUrl: string
@@ -28,7 +29,7 @@ function loadComponents() {
   return import.meta.glob('../views/**/*.vue')
 }
 
-const components = loadComponents()
+const asynComponents = loadComponents()
 
 function getRoutes() {
   return post({
@@ -45,7 +46,8 @@ function getRoutes() {
 
 function getComponent(it: OriginRoute) {
   return defineAsyncComponent({
-    loader: components['../views' + it.menuUrl + '.vue'],
+    loader: asynComponents['../views' + it.menuUrl + '.vue'],
+    loadingComponent: LoadingComponent,
   })
 }
 
@@ -117,6 +119,11 @@ router.beforeEach(async (to) => {
         mapRoutes.forEach((it: any) => {
           router.addRoute(it)
         })
+        router.addRoute({
+          path: '/:pathMatch(.*)*',
+          redirect: '/404',
+          hidden: true,
+        } as RouteRecordRaw)
         layoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
         return { ...to, replace: true }
       } else {
