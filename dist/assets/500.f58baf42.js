@@ -1,0 +1,1 @@
+import t from"./ExceptionStatus.7ddbb6a5.js";import{d as a,r as s,o as n,c as o,a as e}from"./vendor.9a8d1981.js";var r=a({name:"Page500",components:{ExceptionStatus:t}});const c={class:"main-container"};r.render=function(t,a,r,i,d,m){const p=s("ExceptionStatus");return n(),o("div",c,[e(p,{status:"500"})])};export default r;

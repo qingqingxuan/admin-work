@@ -5,8 +5,8 @@
         <div class="avatar">
           <n-avatar circle size="small" :src="state.userInfo.avatar" />
         </div>
-        <span class="nick-name el-dropdown-link">
-          <span>{{ state.userInfo.nickName }}</span> <i class="el-icon-arrow-down tip"></i>
+        <span class="nick-name">
+          <span>{{ state.userInfo.nickName }}</span>
         </span>
       </div>
     </n-dropdown>
@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
-  import { useDialog } from 'naive-ui'
-  import { defineComponent } from 'vue'
+  import { useDialog, NIcon } from 'naive-ui'
+  import { defineComponent, h } from 'vue'
   import { useLayoutStore } from '../../components/index'
+  import { Menu, LogInOutline } from '@vicons/ionicons5'
 
   export default defineComponent({
     name: 'VAWAvatar',
@@ -26,10 +27,18 @@
         {
           label: '个人中心',
           key: 'personal-center',
+          icon: () =>
+            h(NIcon, null, {
+              default: () => h(Menu),
+            }),
         },
         {
           label: '退出登录',
           key: 'logout',
+          icon: () =>
+            h(NIcon, null, {
+              default: () => h(LogInOutline),
+            }),
         },
       ]
       function personalCenter() {
@@ -37,18 +46,6 @@
       }
       const dialog = useDialog()
       function logout() {
-        // ElMessageBox({
-        //   title: '提示',
-        //   message: '是否要退出登录？',
-        //   type: 'warning',
-        //   confirmButtonText: '退出',
-        //   cancelButtonText: '取消',
-        //   showCancelButton: true
-        // }).then(() => {
-        //   store.onLogout && store.onLogout()
-        // }).catch(() => {
-        //   store.cancelLogout && store.cancelLogout()
-        // })
         dialog.warning({
           title: '提示',
           content: '是否要退出当前账号？',

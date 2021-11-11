@@ -107,7 +107,11 @@
       watch(
         () => route.path,
         () => {
-          if (route.path.startsWith('/redirect')) return
+          if (
+            route.path.startsWith('/redirect') ||
+            ['/login', '/404', '/405', '/403'].includes(route.path)
+          )
+            return
           generatorBreadcrumb()
         }
       )

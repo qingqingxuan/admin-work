@@ -91,7 +91,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
   return tempRoutes
 }
 
-const whiteRoutes: string[] = ['/login']
+const whiteRoutes: string[] = ['/login', '/404', '/403', '/500']
 
 function isTokenExpired(): boolean {
   const token = Cookies.get('p-admin-token')
@@ -113,11 +113,6 @@ router.beforeEach(async (to) => {
         const accessRoutes: Array<RouteRecordRaw> = []
         const tempRoutes = await getRoutes()
         accessRoutes.push(...tempRoutes)
-        accessRoutes.push({
-          path: '/:pathMatch(.*)*',
-          redirect: '/404',
-          hidden: true,
-        } as RouteRecordRaw)
         const mapRoutes = mapTwoLevelRouter(accessRoutes)
         mapRoutes.forEach((it: any) => {
           router.addRoute(it)
