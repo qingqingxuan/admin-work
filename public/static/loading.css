@@ -45,3 +45,10 @@
     transform: scaleY(30%);
   }
 }
+
+.title{
+  font-size: 28px; 
+  font-weight: bold; 
+  text-align: center; 
+  margin-top: 50px;
+}

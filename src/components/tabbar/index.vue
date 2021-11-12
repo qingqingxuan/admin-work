@@ -21,7 +21,11 @@
           @click.self="itemClick(item.fullPath, $event)"
           @contextmenu="onContextMenu(item.fullPath, $event)"
         >
-          <span class="text-item" @click.self="itemChildClick(item.fullPath, $event)">
+          <span
+            style="font-size: 12px"
+            class="text-item"
+            @click.self="itemChildClick(item.fullPath, $event)"
+          >
             {{ item.meta ? item.meta.title : item.name }}
           </span>
           <n-icon v-if="!item.meta?.affix" class="icon-item" @click="iconClick(item.fullPath)">
@@ -397,7 +401,7 @@
   .vaw-tab-bar-container {
     position: relative;
     height: $tabHeight;
-    line-height: $tabHeight;
+    line-height: calc(#{$tabHeight} - 3px);
     box-sizing: border-box;
     white-space: nowrap;
     box-shadow: 10px 5px 10px rgb(0 0 0 / 10%);
