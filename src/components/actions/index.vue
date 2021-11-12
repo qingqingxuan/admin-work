@@ -29,11 +29,7 @@
         <ExpandIcon />
       </n-icon>
     </span>
-    <span
-      v-if="state.actionItem.showFullScreen && state.device !== 'mobile'"
-      class="action-item"
-      @click="onShowSetting"
-    >
+    <span class="action-item" @click="onShowSetting">
       <n-icon size="18">
         <SettingIcon />
       </n-icon>
