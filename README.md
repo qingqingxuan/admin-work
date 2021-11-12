@@ -12,17 +12,17 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 ## 项目地址：
 
-- [🎉 官网&文档地址](http://qingqingxuan.gitee.io/work-p-site)
+- [🎉 官网&文档&授权--地址](http://qingqingxuan.gitee.io/work-p-site)
 
-- [🎉 Admin Work 演示地址（Vuex.x + Tavascript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/admin-work)
+- [🎉 Admin Work 演示地址（Vuex.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/admin-work)
 
 ## Vue Admin Work 系列中其它项目的演示地址
 
 - [🎉 Vue Admin Work 演示地址（Vue2.x + Javascript + Element UI + Webpack）](http://qingqingxuan.gitee.io/vue-admin-work)
 
-- [🎉 Vue Admin Work X 演示地址（Vue3.x + Tavascript + Element Plus + Webpack）](http://qingqingxuan.gitee.io/vue-admin-work-x)
+- [🎉 Vue Admin Work X 演示地址（Vue3.x + Typescript + Element Plus + Webpack）](http://qingqingxuan.gitee.io/vue-admin-work-x)
 
-- [🎉 Vue Admin Work P 演示地址（Vuex.x + Tavascript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/vue-admin-work-p)
+- [🎉 Vue Admin Work P 演示地址（Vuex.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/vue-admin-work-p)
 
 ## Vue Admin Work 前端讨论群及 QQ 客服
 
@@ -59,7 +59,7 @@ npm run dev
 
 ## 特别感谢
 
-| **🚀 [vue3.x](https://cn.vuejs.org/)**                     |
+| **[🚀 vue3.x](https://cn.vuejs.org/)**                     |
 | ---------------------------------------------------------- |
 | **[🚀 naive-ui](https://www.naiveui.com/)**                |
 | **[🚀 vue-router-next](https://next.router.vuejs.org/)**   |
