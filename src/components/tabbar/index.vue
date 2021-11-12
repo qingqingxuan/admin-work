@@ -356,7 +356,7 @@
       },
       leftArrowClick() {
         const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
-        const scrollX = scrollbar.containerRef?.scrollLeft || 0
+        const scrollX = scrollbar.$el?.scrollLeft || 0
         scrollbar.scrollTo(
           {
             left: Math.max(0, scrollX - 200),
@@ -369,7 +369,7 @@
       },
       rightArrowClick() {
         const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
-        const scrollX = scrollbar.containerRef?.scrollLeft || 0
+        const scrollX = scrollbar.$el?.scrollLeft || 0
         scrollbar.scrollTo(
           {
             left: scrollX + 200,
@@ -383,7 +383,7 @@
       isDisabledArrow() {
         setTimeout(() => {
           const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
-          const { scrollLeft, scrollWidth, clientWidth } = scrollbar.containerRef as HTMLElement
+          const { scrollLeft, scrollWidth, clientWidth } = scrollbar.$el as HTMLElement
           this.leftArrowDisabled = scrollLeft === 0
           this.rightArrowDisabled = scrollLeft === scrollWidth - clientWidth
         }, 100)
