@@ -1,45 +1,42 @@
 <template>
-  <div>
-    <div class="login-container" v-if="!isMobileScreen">
-      <div class="login-bg-wrapper">
+  <n-el>
+    <div class="flex login-container" v-if="!isMobileScreen">
+      <div class="left">
         <img :src="ImageBg1" />
-      </div>
-      <div class="flex form-wrapper">
-        <div class="left"></div>
-        <div class="right">
-          <div class="flex justify-center my-width flex-sub align-center">
-            <div class="logo-wrapper">
-              <img src="../../assets/logo.png" />
-            </div>
-            <div class="title margin-left">Admin Work</div>
+        <div class="content-wrapper">
+          <div class="logo-wrapper">
+            <img src="../../assets/logo.png" />
           </div>
-          <div class="mt-8 form-container">
-            <div class="item-wrapper">
-              <n-input
-                v-model:value="username"
-                placeholder="请输入用户名/手机号"
-                prefix-icon="el-icon-user"
-                clearable
-              />
-            </div>
-            <div class="mt-4 item-wrapper">
-              <n-input
-                v-model:value="password"
-                placeholder="请输入密码"
-                type="password"
-                clearable
-                prefix-icon="el-icon-lock"
-              />
-            </div>
-            <!-- <div class="item-wrapper">
-            <VawVerify class="mt-4" @verify-success="onVerifySuccess" />
-          </div> -->
-            <div class="flex-sub"></div>
-            <div class="mt-4">
-              <n-button type="primary" class="login" :loading="loading" @click="onLogin">
-                登录
-              </n-button>
-            </div>
+          <div class="title">Admin Work</div>
+          <div class="sub-title">Vue3 + Vite2 + Typescript + Navie UI</div>
+          <div class="flex-1 flex justify-center items-center ttppii"> 生活，应该还有诗和远方 </div>
+          <div class="bottom-wrapper">Admin Work {{ version }} · Made by qingqingxuan</div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="form-wrapper">
+          <div class="form-title">账号登录</div>
+          <div class="item-wrapper">
+            <n-input
+              v-model:value="username"
+              placeholder="请输入用户名/手机号"
+              prefix-icon="el-icon-user"
+              clearable
+            />
+          </div>
+          <div class="mt-4 item-wrapper">
+            <n-input
+              v-model:value="password"
+              placeholder="请输入密码"
+              type="password"
+              clearable
+              prefix-icon="el-icon-lock"
+            />
+          </div>
+          <div class="mt-4">
+            <n-button type="primary" class="login" :loading="loading" @click="onLogin">
+              登录
+            </n-button>
           </div>
           <div class="mt-4 my-width flex-sub">
             <div class="flex justify-between">
@@ -47,6 +44,20 @@
               <a :underline="false" type="primary">忘记密码？</a>
             </div>
           </div>
+        </div>
+        <div class="third-login">
+          <n-divider dashed>第三方登录</n-divider>
+          <n-space justify="center">
+            <n-icon color="var(--primary-color)" size="20">
+              <LogoAlipay />
+            </n-icon>
+            <n-icon color="var(--primary-color)" size="20">
+              <LogoGithub />
+            </n-icon>
+            <n-icon color="var(--primary-color)" size="20">
+              <LogoWechat />
+            </n-icon>
+          </n-space>
         </div>
       </div>
     </div>
@@ -102,13 +113,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </n-el>
 </template>
 
 <script lang="ts">
   import { computed, defineComponent, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import ImageBg1 from '@/assets/img_login_bg_01.jpg'
+  import ImageBg1 from '@/assets/img_login_bg.png'
   import ImageMobileBg1 from '@/assets/img_login_mobile_bg_01.jpg'
   import { post, Response } from '@/api/http'
   import { login } from '@/api/url'
@@ -124,10 +135,12 @@
     LogoAlipay,
     LogoWechat,
   } from '@vicons/ionicons5'
+  import useAppInfo from '@/hooks/useAppInfo'
   export default defineComponent({
     name: 'Login',
     components: { PhoneIcon, PasswordIcon, LogoGithub, LogoAlipay, LogoWechat },
     setup() {
+      const { version } = useAppInfo()
       const username = ref('admin')
       const password = ref('123456')
       const autoLogin = ref(true)
@@ -174,163 +187,115 @@
         onLogin,
         ImageBg1,
         ImageMobileBg1,
+        version,
       }
     },
   })
 </script>
 
 <style lang="scss" scoped>
+  @keyframes left-to-right {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
   .login-container {
     position: relative;
     overflow: hidden;
     height: 100vh;
     width: 100%;
-    .login-bg-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
+    @media screen and(max-width:960px) {
+      .left {
+        display: none !important;
+      }
+    }
+    .left {
+      display: block;
+      position: relative;
+      min-width: 450px;
       & > img {
-        width: 100%;
         height: 100%;
-        object-fit: cover;
       }
-    }
-    .logo-wrapper {
-      & img {
-        width: 50px;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 2;
       }
-      & img::after {
-        content: '欢迎来到vue-admin-work-x';
-      }
-    }
-    .login-footer-wrapper {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      ::v-deep {
-        .el-card {
-          background-color: transparent;
+      .content-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        .logo-wrapper {
+          width: 80px;
+          margin-top: 30%;
+        }
+        .title {
+          margin-top: 10px;
+          color: #ffffff;
+          font-weight: bold;
+          font-size: 24px;
+        }
+        .sub-title {
+          margin-top: 10px;
+          color: #f5f5f5;
+          font-size: 16px;
+        }
+        .ttppii {
+          color: #ffffff;
+          font-weight: 500;
+          font-size: 30px;
+          text-shadow: 1px 1px 2px #f5f5f5;
+          animation: left-to-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .bottom-wrapper {
+          margin-bottom: 5%;
+          color: #c0c0c0;
+          font-size: 16px;
         }
       }
     }
-    .form-wrapper {
-      position: absolute;
-      top: 18.5%;
-      left: 0;
-      right: 0;
-      bottom: 15.8%;
-      @media screen and (max-width: 768px) {
-        .left {
-          display: none;
+    .right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(to bottom, var(--primary-color));
+      .form-wrapper {
+        width: 50%;
+        border-radius: 5px;
+        border: 1px solid #f0f0f0;
+        padding: 20px;
+        box-shadow: 0px 0px 7px #dddddd;
+        .form-title {
+          font-size: 26px;
+          margin-bottom: 20px;
+          font-weight: bold;
         }
-        .right {
+        .item-wrapper {
           width: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-around;
-          align-items: center;
-          .my-width {
-            width: 80%;
-          }
-          .title {
-            display: block;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: #34495e;
-            text-shadow: 0 0 0.2em #41b883, -0 -0 0.2em #41b883;
-          }
-          .form-container {
-            width: 80%;
-            min-height: 60%;
-            text-align: center;
-            background: rgba(183, 183, 183, 0.2);
-            padding: 5%;
-            border-radius: 5px;
-            border: 2px solid #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            .item-wrapper {
-              width: 100%;
-            }
-            .login {
-              width: 100%;
-            }
-          }
         }
-      }
-      @media screen and (min-width: 768px) and (max-width: 992px) {
-        .left {
-          display: none;
-        }
-        .right {
-          display: flex;
+        .login {
           width: 100%;
-          flex-direction: column;
-          justify-content: space-around;
-          align-items: center;
-          .my-width {
-            width: 48%;
-          }
-          .title {
-            display: block;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: #5497ff;
-          }
-          .form-container {
-            width: 50%;
-            height: 60%;
-            margin-bottom: 10%;
-            text-align: center;
-            background: rgba(183, 183, 183, 0.2);
-            padding: 5%;
-            border-radius: 5px;
-            border: 2px solid #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            .item-wrapper {
-              width: 100%;
-            }
-            .login {
-              width: 100%;
-            }
-          }
         }
       }
-      @media screen and (min-width: 992px) {
-        .left {
-          display: block;
-          flex: 1;
-        }
-        .right {
-          margin-left: 10%;
-          flex: 1;
-          display: flex;
-          justify-content: center;
-          flex-direction: column;
-          .my-width {
-            width: 48%;
-          }
-          .title {
-            display: block;
-            font-size: 24px;
-            font-weight: bold;
-            color: #5497ff;
-          }
-          .item-wrapper {
-            width: 48%;
-          }
-          .login {
-            width: 48%;
-          }
-        }
+      .third-login {
+        width: 50%;
       }
     }
   }
