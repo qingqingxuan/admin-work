@@ -72,6 +72,8 @@ import {
   NPopselect,
   NDescriptions,
   NDescriptionsItem,
+  NCascader,
+  NImageGroup,
 } from 'naive-ui'
 import store from '../store'
 import { App, inject } from 'vue'
@@ -137,6 +139,7 @@ function registerElement(app: App) {
       NTreeSelect,
       NTag,
       NAlert,
+      NImageGroup,
       NImage,
       NEllipsis,
       NProgress,
@@ -155,6 +158,7 @@ function registerElement(app: App) {
       NPopselect,
       NDescriptions,
       NDescriptionsItem,
+      NCascader,
     ],
   })
   app.use(navie)
@@ -162,12 +166,26 @@ function registerElement(app: App) {
 
 import DataForm from './common/DataForm'
 import { projectName } from '../setting'
+import { toHump } from '../utils'
+
+function getComponentName(key: string) {
+  if (!key) {
+    return ''
+  }
+  const paths = key.split('/')
+  const name = paths
+    .filter((it) => !!it && it !== '.')
+    .reverse()
+    .find((it) => it !== 'index.vue' && it !== 'index.ts' && it !== 'index.js')
+    ?.replace('.vue', '')
+  return name || ''
+}
 
 export function registerComponents(app: App) {
   const components = import.meta.globEager('./**.vue')
   Object.keys(components).forEach((it: string) => {
     const component = components[it]
-    app.component(component.default.name, component.default)
+    app.component(component.default.name || toHump(getComponentName(it)), component.default)
   })
   app.component('DataForm', DataForm)
 }

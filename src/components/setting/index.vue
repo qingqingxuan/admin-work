@@ -61,7 +61,7 @@
           </n-grid-item>
         </n-grid>
         <n-divider dashed>主题颜色</n-divider>
-        <div class="colors-wrapper">
+        <n-space class="colors-wrapper">
           <div
             v-for="(item, index) of primartyColorList"
             :key="index"
@@ -70,7 +70,7 @@
             :style="{ backgroundColor: item.value }"
             @click="colorClick(item)"
           ></div>
-        </div>
+        </n-space>
         <div style="height: 20px"></div>
         <n-divider dashed>菜单设置</n-divider>
         <div class="setting-item-wrapper">
@@ -227,6 +227,56 @@
         {
           name: 'purple',
           value: '#722ED1',
+          checked: false,
+        },
+        {
+          name: 'ee4f12',
+          value: '#ee4f12',
+          checked: false,
+        },
+        {
+          name: '0096c7',
+          value: '#0096c7',
+          checked: false,
+        },
+        {
+          name: 'ff9801',
+          value: '#ff9801',
+          checked: false,
+        },
+        {
+          name: 'ff3d68',
+          value: '#ff3d68',
+          checked: false,
+        },
+        {
+          name: '01c1d4',
+          value: '#01c1d4',
+          checked: false,
+        },
+        {
+          name: '71efa3',
+          value: '#71efa3',
+          checked: false,
+        },
+        {
+          name: '171010',
+          value: '#171010',
+          checked: false,
+        },
+        {
+          name: '78dec7',
+          value: '#78dec7',
+          checked: false,
+        },
+        {
+          name: '1768ac',
+          value: '#1768ac',
+          checked: false,
+        },
+        {
+          name: '1427df',
+          value: '#1427df',
           checked: false,
         },
       ])
@@ -405,6 +455,7 @@
         height: 20px;
         border-radius: 5px;
         border: 1px solid #c1c1c1;
+        margin-bottom: 20px;
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       }
       .circle::after {

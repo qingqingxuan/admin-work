@@ -114,6 +114,11 @@ export const adminRoutes = [
             menuUrl: '/other/chart/echarts',
             menuName: 'echarts',
           },
+          {
+            parentPath: '/other/chart',
+            menuUrl: '/other/chart/icon-selector',
+            menuName: '图标选择器',
+          },
         ],
       },
       {
@@ -158,8 +163,13 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: '/other/descriptions',
-        menuName: '其它',
+        menuUrl: '/other/big-preview',
+        menuName: '大图预览',
+      },
+      {
+        parentPath: '/other',
+        menuUrl: '/other/city-selector',
+        menuName: '省市区选择器',
       },
     ],
   },

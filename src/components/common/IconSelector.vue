@@ -1,7 +1,15 @@
 <template>
   <n-popover trigger="click" placement="bottom" width="400">
     <template #trigger>
-      <n-button>{{ selectItem.name }}</n-button>
+      <n-button>
+        <template #icon v-if="selectItem.font_class">
+          <span
+            class="iconfont"
+            :class="['icon-' + selectItem.font_class]"
+            style="font-size: 20px"
+          ></span> </template
+        >{{ selectItem.name }}
+      </n-button>
     </template>
     <n-scrollbar class="grid-wrapper">
       <n-grid :cols="4" style="height: 300px">
@@ -41,13 +49,14 @@
       defaultIcon: String,
       onUpdateIcon: Function,
     },
-    setup(props) {
+    emits: ['selected'],
+    setup(props, { emit }) {
       const defaultIcon = toRef(props, 'defaultIcon')
       const pageSize = 40
       const icons = shallowReactive(Iconfonts.glyphs.slice(0, 40))
       const currentPage = ref(1)
       const itemCount = computed(() => Iconfonts.glyphs.length)
-      const selectItem = ref({ name: defaultIcon.value || '选择图标' })
+      const selectItem = ref({ font_class: '', name: defaultIcon.value || '选择图标' })
       function onUpdatePage(page: number) {
         currentPage.value = page
         icons.length = 0
@@ -60,6 +69,8 @@
         selectItem.value = item
         if (onUpdateIcon) {
           onUpdateIcon(item)
+        } else {
+          emit('selected', item)
         }
       }
       return {

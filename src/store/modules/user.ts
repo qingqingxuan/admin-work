@@ -62,7 +62,7 @@ export const userModule: Module<UserState, RootState> = {
       state.userName = userInfo.userName
       state.nickName = userInfo.nickName
       state.avatar = userInfo.avatar || defaultAvatar
-      Cookies.set('p-admin-token', userInfo.token)
+      Cookies.set('admin-work-token', userInfo.token)
       localStorage.setItem('p-user-info', JSON.stringify(userInfo))
       layoutStore.setUserInfo({
         nickName: userInfo.nickName,
@@ -77,7 +77,7 @@ export const userModule: Module<UserState, RootState> = {
       state.userName = ''
       state.nickName = ''
       state.token = ''
-      Cookies.remove('p-admin-token')
+      Cookies.remove('admin-work-token')
       localStorage.clear()
       layoutStore.reset()
     },
