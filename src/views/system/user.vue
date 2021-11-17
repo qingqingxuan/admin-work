@@ -228,7 +228,7 @@
             width: 80,
             render: (rowData) => {
               return h(NSwitch, {
-                value: !!rowData.status,
+                defaultValue: !!rowData.status,
               })
             },
           },

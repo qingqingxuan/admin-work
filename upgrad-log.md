@@ -3,6 +3,7 @@
 - 重置：重新设计登录页面样式
 - 修改：progressbar 不随着主题色变换的 bug
 - 修改：footer 距离上面一定的距离
+- 修复：swtich 在 table 里面不能点击的 bug，关闭 [issue-#1](https://github.com/qingqingxuan/admin-work/issues/1)
 
 ### 2021-11-15(v: 1.0.2)
 

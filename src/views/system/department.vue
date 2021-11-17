@@ -31,8 +31,6 @@
   import {
     DataTableColumn,
     NInput,
-    NRadio,
-    NRadioGroup,
     NSelect,
     NSwitch,
     SelectOption,
@@ -51,88 +49,6 @@
     children: Array<Department>
   }
   const DP_CODE_FLAG = 'dp_code_'
-  const searchOptions = [
-    {
-      key: 'name',
-      label: '姓名',
-      value: ref(null),
-      render: (formItem) => {
-        return h(NInput, {
-          value: formItem.value.value,
-          onUpdateValue: (val) => {
-            formItem.value.value = val
-          },
-        })
-      },
-    },
-    {
-      key: 'gender',
-      label: '性别',
-      value: ref(1),
-      selectOptions: [
-        {
-          label: '男',
-          value: 0,
-        },
-        {
-          label: '女',
-          value: 1,
-        },
-      ],
-      render: (formItem) => {
-        return h(
-          NRadioGroup,
-          {
-            onUpdateValue: (val) => {
-              formItem.value.value = val
-            },
-            value: formItem.value.value,
-            name: formItem.key as string,
-          },
-          {
-            default: () =>
-              formItem.optionItems?.map((it) => {
-                return h(
-                  NRadio,
-                  {
-                    value: it.value,
-                  },
-                  { default: () => it.label }
-                )
-              }),
-          }
-        )
-      },
-    },
-    {
-      key: 'address',
-      label: '地区',
-      value: ref('0'),
-      render: (formItem) => {
-        return h(NSelect, {
-          value: formItem.value.value,
-          onUpdateValue: (val) => {
-            formItem.value.value = val
-          },
-          options: formItem.optionItems as Array<SelectOption>,
-        })
-      },
-      optionItems: [
-        {
-          value: '0',
-          label: '第一个',
-        },
-        {
-          value: '1',
-          label: '第二个',
-        },
-        {
-          value: '2',
-          label: '第三个',
-        },
-      ],
-    },
-  ] as Array<FormItem>
   const itemFormOptions = [
     {
       key: 'parentId',
@@ -226,7 +142,7 @@
             key: 'status',
             render: (rowData) => {
               return h(NSwitch, {
-                value: !!rowData.status,
+                defaultValue: !!rowData.status,
               })
             },
           },
@@ -351,7 +267,6 @@
         ...table,
         onDeleteItem,
         onAddItem,
-        searchOptions,
         itemFormOptions,
         rowKey,
         modalDialog,
