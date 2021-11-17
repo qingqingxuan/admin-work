@@ -29,20 +29,36 @@
 }
 
 @keyframes growAnim {
-  from {
-    transform: scaleY(30%);
+  0% {
+    transform: scale(1, 0.3);
+    -ms-transform: scale(1, 0.3);
+    -webkit-transform: scale(1, 0.3);
+    -moz-transform: scale(1, 0.3);
+    -o-transform: scale(1, 0.3);
   }
-  to {
-    transform: scaleY(100%);
+  100% {
+    transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
   }
 }
 
 @keyframes growAnimReverse {
   from {
-    transform: scaleY(100%);
+    transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
   }
   to {
-    transform: scaleY(30%);
+    transform: scale(1, 0.3);
+    -ms-transform: scale(1, 0.3);
+    -webkit-transform: scale(1, 0.3);
+    -moz-transform: scale(1, 0.3);
+    -o-transform: scale(1, 0.3);
   }
 }
 
