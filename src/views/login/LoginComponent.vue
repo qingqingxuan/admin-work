@@ -216,6 +216,7 @@
       display: block;
       position: relative;
       min-width: 450px;
+      width: 450px;
       & > img {
         height: 100%;
       }
