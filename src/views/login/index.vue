@@ -1,32 +1,4 @@
 <template>
-  <!-- <div v-if="!isMobile">
-    <div class="relative overflow-hidden">
-      <div
-        class="flex items-center justify-center splash-container"
-        :class="{ 'hidden-splash': showLoginPage, 'show-splash': !showLoginPage }"
-      >
-        <div class="top-line" :class="{ 'animation-line': showAnimation }"> </div>
-        <div class="text-white center-text">
-          <span class="mr-4 the">the</span>
-          <span class="p-text"><strong>P</strong> = vite + v3 + ts + naive-ui </span>
-        </div>
-        <div class="bottom-line" :class="{ 'animation-line': showAnimation }"></div>
-      </div>
-      <div
-        class="login-wrapper"
-        :class="{ 'show-login': showLoginPage, 'hidden-login': !showLoginPage }"
-      >
-        <LoginComponent />
-      </div>
-      <div
-        class="arrow"
-        v-if="showArrow"
-        :style="{ transform: showLoginPage ? 'rotate(90deg)' : 'rotate(-90deg)' }"
-      >
-        <span @click="onNextLogin" class="iconfont icon-doubleleft arrow-icon"></span>
-      </div>
-    </div>
-  </div> -->
   <LoginComponent />
 </template>
 

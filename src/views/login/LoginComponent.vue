@@ -120,7 +120,6 @@
   import { computed, defineComponent, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import ImageBg1 from '@/assets/img_login_bg.png'
-  import ImageMobileBg1 from '@/assets/img_login_mobile_bg_01.jpg'
   import { post, Response } from '@/api/http'
   import { login } from '@/api/url'
   import { UserState } from '@/store/types'
@@ -186,7 +185,6 @@
         loading,
         onLogin,
         ImageBg1,
-        ImageMobileBg1,
         version,
       }
     },

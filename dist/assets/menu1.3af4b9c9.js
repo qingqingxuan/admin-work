@@ -1,1 +1,0 @@
-import{d as e,m as a,r as n,o as t,c as o,w as r,a as u}from"./vendor.204f34a9.js";var l=e({name:"Menu1",setup:()=>({content:a("")})});l.render=function(e,a,l,s,c,d){const p=n("n-input"),f=n("n-card");return t(),o(f,{title:"缓存信息"},{default:r((()=>[u(p,{value:e.content,"onUpdate:value":a[1]||(a[1]=a=>e.content=a),placeholder:"请输入信息"},null,8,["value"])])),_:1})};export default l;
