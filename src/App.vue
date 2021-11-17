@@ -1,9 +1,7 @@
 <template>
   <n-notification-provider>
     <n-message-provider>
-      <n-loading-bar-provider>
-        <router-view />
-      </n-loading-bar-provider>
+      <router-view />
     </n-message-provider>
   </n-notification-provider>
 </template>

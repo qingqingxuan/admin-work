@@ -33,8 +33,10 @@
 </template>
 
 <script lang="ts">
+  import { useLoadingBar } from 'naive-ui'
   import { computed, defineComponent, onMounted, ref } from 'vue'
-  import { useLayoutStore } from './index'
+  import { useRouter, useRoute } from 'vue-router'
+  import { useLayoutStore, useTitle } from './index'
   export default defineComponent({
     name: 'MainLayout',
     props: {
@@ -48,6 +50,17 @@
       const listenTo1 = ref<HTMLElement | null>(null)
       const listenTo2 = ref<HTMLElement | null>(null)
       const isShowHeader = computed(() => store?.isShowHeader())
+      const router = useRouter()
+      const route = useRoute()
+      useTitle(route.meta.title as string)
+      const loadingBar = useLoadingBar()
+      router.beforeEach(() => {
+        useTitle(route.meta.title as string)
+        loadingBar?.start()
+      })
+      router.afterEach(() => {
+        loadingBar?.finish()
+      })
       onMounted(() => {
         listenTo1.value = document.querySelector('.main-base-style')
         listenTo2.value = document.querySelector('.vaw-main-layout-container')
@@ -120,6 +133,9 @@
     .tab-bar-top {
       padding-top: $logoHeight;
     }
+  }
+  .footer-wrapper {
+    margin-top: 6px;
   }
   .is-mobile {
     .main-layout-open-status,

@@ -6,58 +6,48 @@
     style="height: 100%"
   >
     <n-global-style />
-    <n-dialog-provider>
-      <n-el
-        class="vaw-layout-container"
-        :class="[state.device === 'mobile' && 'is-mobile', state.theme]"
-      >
-        <transition name="header">
-          <VAWHeader v-if="isShowHeader" />
-        </transition>
-        <template v-if="isShowHeader">
-          <SideBar :show-logo="!isShowHeader" />
-          <MainLayout :show-nav-bar="!isShowHeader" />
-        </template>
-        <template v-else-if="state.layoutMode === 'lcr'">
-          <TabSplitSideBar />
-          <MainLayout />
-        </template>
-        <template v-else>
-          <SideBar />
-          <MainLayout />
-        </template>
-        <div
-          v-if="state.device === 'mobile'"
-          class="mobile-shadow"
-          :class="[state.isCollapse ? 'close-shadow' : 'show-shadow']"
-          @click="closeMenu"
-        ></div>
-      </n-el>
-    </n-dialog-provider>
+    <n-loading-bar-provider>
+      <n-dialog-provider>
+        <n-el
+          class="vaw-layout-container"
+          :class="[state.device === 'mobile' && 'is-mobile', state.theme]"
+        >
+          <transition name="header">
+            <VAWHeader v-if="isShowHeader" />
+          </transition>
+          <template v-if="isShowHeader">
+            <SideBar :show-logo="!isShowHeader" />
+            <MainLayout :show-nav-bar="!isShowHeader" />
+          </template>
+          <template v-else-if="state.layoutMode === 'lcr'">
+            <TabSplitSideBar />
+            <MainLayout />
+          </template>
+          <template v-else>
+            <SideBar />
+            <MainLayout />
+          </template>
+          <div
+            v-if="state.device === 'mobile'"
+            class="mobile-shadow"
+            :class="[state.isCollapse ? 'close-shadow' : 'show-shadow']"
+            @click="closeMenu"
+          ></div>
+        </n-el>
+      </n-dialog-provider>
+    </n-loading-bar-provider>
   </n-config-provider>
 </template>
 
 <script lang="ts">
-  import { darkTheme, useLoadingBar, zhCN } from 'naive-ui'
+  import { darkTheme, zhCN } from 'naive-ui'
   import { computed, defineComponent, onBeforeUnmount, onMounted } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
   import { DeviceType } from '../types/store'
-  import { useLayoutStore, useTitle } from './index'
+  import { useLayoutStore } from './index'
   export default defineComponent({
     name: 'Layout',
     setup() {
       const store = useLayoutStore()
-      const router = useRouter()
-      const route = useRoute()
-      useTitle(route.meta.title as string)
-      const loadingBar = useLoadingBar()
-      router.beforeEach(() => {
-        useTitle(route.meta.title as string)
-        loadingBar?.start()
-      })
-      router.afterEach(() => {
-        loadingBar?.finish()
-      })
       const isShowHeader = computed(() => store?.isShowHeader())
       onMounted(() => {
         handleScreenResize()
