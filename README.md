@@ -26,8 +26,9 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 ## Vue Admin Work 授权 微信客服
 
-| <img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" /> |
-| :---------------------------------------------------------------------------------: |
+<div align="center">
+<img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" />
+</div>
 
 ## Vue Admin Work 前端讨论群及 QQ 客服
 

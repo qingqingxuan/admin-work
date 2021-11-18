@@ -8,7 +8,7 @@
             <img src="../../assets/logo.png" />
           </div>
           <div class="title">Admin Work</div>
-          <div class="sub-title">Vue3 + Vite2 + Typescript + Navie UI</div>
+          <div class="sub-title">Vue3 + Vite2 + Typescript + Naive UI</div>
           <div class="flex-1 flex justify-center items-center ttppii"> 生活，应该还有诗和远方 </div>
           <div class="bottom-wrapper">Admin Work {{ version }} · Made by qingqingxuan</div>
         </div>
