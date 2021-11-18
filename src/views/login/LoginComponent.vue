@@ -258,8 +258,10 @@
           color: #ffffff;
           font-weight: 500;
           font-size: 30px;
-          text-shadow: 1px 1px 2px #f5f5f5;
+          // text-shadow: 1px 1px 2px #f5f5f5;
           animation: left-to-right 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          text-shadow: 0 0 5px var(--primary-color), 0 0 15px var(--primary-color),
+            0 0 50px var(--primary-color), 0 0 150px var(--primary-color);
         }
         .bottom-wrapper {
           margin-bottom: 5%;
