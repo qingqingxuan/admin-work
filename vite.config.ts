@@ -2,7 +2,7 @@ import vue from '@vitejs/plugin-vue'
 import viteSvgIcons from 'vite-plugin-svg-icons'
 import path from 'path'
 
-export default ({ command, mode }) => {
+export default ({ mode }) => {
   const config = {
     plugins: [
       vue(),
@@ -23,7 +23,7 @@ export default ({ command, mode }) => {
       open: true,
     },
   }
-  if (command === 'build' && mode === 'staging') {
+  if (mode === 'staging') {
     return Object.assign(
       {
         base: '/admin-work',

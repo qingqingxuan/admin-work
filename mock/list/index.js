@@ -9,6 +9,8 @@ import {
   getRoleList,
 } from '@/api/url'
 
+const isDev = import.meta.env.MODE === 'development'
+
 const totalSize = 30
 
 function computePageSize(totalSize, page, pageSize) {
@@ -112,7 +114,7 @@ Mock.mock(RegExp(getTableList), 'post', function ({ body }) {
         nickName: function () {
           return Random.name()
         },
-        avatar: '/vue-admin-work-p/static/images/img_avatar_01.jpeg',
+        avatar: (isDev ? '' : 'admin_work') + '/static/images/img_avatar_01.jpeg',
         'gender|0-1': 0, // 0男 1女
         'vip|0-1': 0, // 0不是 1是
         address: function () {

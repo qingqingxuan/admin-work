@@ -8,7 +8,7 @@
     :check-strategy="checkStrategy"
     clearable
     filterable
-    @update:value="onValueChange"
+    :on-update:value="onValueChange"
   />
 </template>
 

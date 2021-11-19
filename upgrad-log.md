@@ -1,3 +1,8 @@
+### 2021-11-19(v: 1.0.4)
+
+- 修复：在 npm run build 模式下，编译不通过的 bug
+- 修复：用户列表 中头像不显示的 bug，关闭 [issue-#2](https://github.com/qingqingxuan/admin-work/issues/2)
+
 ### 2021-11-17(v: 1.0.3)
 
 - 重置：重新设计登录页面样式

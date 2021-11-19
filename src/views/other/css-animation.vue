@@ -3,7 +3,9 @@
     <n-grid :x-gap="10" :y-gap="10" :cols="6">
       <n-gi v-for="(item, index) of list" :key="index">
         <div class="flex items-center justify-center item">
-          <span :class="[item.class]" style="position: relative; z-index: 1">{{ item.label }}</span>
+          <span :class="[item.class]" :style="{ position: 'relative', zIndex: 1 }">{{
+            item.label
+          }}</span>
         </div>
       </n-gi>
     </n-grid>
