@@ -1,1 +1,0 @@
-import{e}from"./vendor.f7361d5e.js";function r(r){return{createScriptPromise:new Promise(((t,o)=>{e((()=>{const e=document.createElement("script");e.type="text/javascript",e.onload=()=>{t("")},e.onerror=e=>{o(e)},e.src=r,document.head.appendChild(e)}))}))}}export{r as u};

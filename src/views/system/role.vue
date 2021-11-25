@@ -37,7 +37,7 @@
 
 <script lang="ts">
   import { post } from '@/api/http'
-  import { getAllMenuByRoleId, getRoleList } from '@/api/url'
+  import { getMenuListByRoleId, getRoleList } from '@/api/url'
   import {
     TableActionModel,
     useRenderAction,
@@ -262,7 +262,7 @@
       }
       function onShowMenu(item: any) {
         post({
-          url: getAllMenuByRoleId,
+          url: getMenuListByRoleId,
           data: {
             roleId: item.id,
           },

@@ -218,7 +218,7 @@ export function useLayoutStore() {
 }
 
 export function useTitle(title: string) {
-  document.title = projectName + ' | ' + title
+  document.title = projectName + ' | ' + (title || '')
 }
 
 export { default as Layout } from './Layout.vue'

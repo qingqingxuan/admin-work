@@ -55,10 +55,10 @@
       useTitle(route.meta.title as string)
       const loadingBar = useLoadingBar()
       router.beforeEach(() => {
-        useTitle(route.meta.title as string)
         loadingBar?.start()
       })
       router.afterEach(() => {
+        useTitle(route.meta.title as string)
         loadingBar?.finish()
       })
       onMounted(() => {

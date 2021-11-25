@@ -55,7 +55,7 @@ export const useTableHeight = async function (currentIns: any): Promise<number> 
 
 export const useTable = function (): Table {
   const dataList = shallowReactive([]) as Array<any>
-  let selectRows = shallowReactive([]) as Array<any>
+  const selectRows = shallowReactive([]) as Array<any>
   const tableHeaderRef = ref<TableHeaderType | null>(null)
   const tableFooterRef = ref<TableFooterType | null>(null)
   const tableHeight = ref(200)
@@ -68,7 +68,8 @@ export const useTable = function (): Table {
     return Promise.resolve(data)
   }
   const handleSelectionChange = (tempSelectRows: Array<any>) => {
-    selectRows = tempSelectRows
+    selectRows.length = 0
+    selectRows.push(...tempSelectRows)
   }
   return {
     dataList,

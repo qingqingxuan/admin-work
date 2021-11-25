@@ -6,7 +6,10 @@
           <n-avatar circle size="small" :src="state.userInfo.avatar" />
         </div>
         <span class="nick-name">
-          <span>{{ state.userInfo.nickName }}</span>
+          {{ state.userInfo.nickName }}
+          <n-icon class="tip">
+            <CaretDownSharp />
+          </n-icon>
         </span>
       </div>
     </n-dropdown>
@@ -14,13 +17,14 @@
 </template>
 
 <script lang="ts">
-  import { useDialog, NIcon } from 'naive-ui'
+  import { NIcon, useDialog } from 'naive-ui'
   import { defineComponent, h } from 'vue'
   import { useLayoutStore } from '../../components/index'
-  import { Menu, LogInOutline } from '@vicons/ionicons5'
+  import { Menu, LogInOutline, CaretDownSharp } from '@vicons/ionicons5'
 
   export default defineComponent({
     name: 'VAWAvatar',
+    components: { CaretDownSharp },
     setup() {
       const store = useLayoutStore()
       const options = [
@@ -95,16 +99,18 @@
         }
       }
       .nick-name {
-        margin-left: 10px;
+        margin: 0 5px;
         .tip {
           transform: rotate(0);
           transition: transform $transitionTime;
+          margin-left: 2px;
         }
       }
     }
   }
   .vaw-avatar-container:hover {
     cursor: pointer;
+    color: var(--primary-color);
     .nick-name .tip {
       transform: rotate(180deg);
       transition: transform $transitionTime;

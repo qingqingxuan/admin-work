@@ -1,12 +1,12 @@
 <template>
   <div class="main-container">
-    <TableHeader :show-filter="true">
+    <TableHeader :show-filter="false">
       <template #table-config>
         <TableConfig @update-border="onUpdateBorder" @refresh="doRefresh" />
         <SortableTable class="ml-4" :columns="tableColumns" @update="onUpdateTable" />
       </template>
       <template #top-right>
-        <DeleteButton />
+        <DeleteButton @delete="onDeleteItem" />
       </template>
     </TableHeader>
     <TableBody>
@@ -17,6 +17,7 @@
           :data="dataList"
           :columns="tableColumns"
           :row-key="rowKey"
+          @update:checked-row-keys="handleSelectionChange"
         />
       </template>
     </TableBody>
@@ -115,32 +116,22 @@
           })
           .catch(console.log)
       }
-      function onDeleteItem(item: any) {
-        if (item) {
+      function onDeleteItem() {
+        if (table.selectRows.length !== 0) {
           navieDialog.warning({
             content: '是否要删除此数据，删除后不恢复？',
             positiveText: '删除',
             onPositiveClick: () => {
-              message.success('模拟删除成功，参数为：' + item.id)
+              message.success(
+                '模拟删除成功，参数为：' +
+                  JSON.stringify({
+                    ids: table.selectRows.join(','),
+                  })
+              )
             },
           })
         } else {
-          if (table.selectRows.length !== 0) {
-            navieDialog.warning({
-              content: '是否要删除此数据，删除后不恢复？',
-              positiveText: '删除',
-              onPositiveClick: () => {
-                message.success(
-                  '模拟删除成功，参数为：' +
-                    JSON.stringify({
-                      ids: table.selectRows.map((it: any) => it.id).join(','),
-                    })
-                )
-              },
-            })
-          } else {
-            message.error('请选择要删除的数据项')
-          }
+          message.error('请选择要删除的数据项')
         }
       }
       function onUpdateTable(newColumns: Array<TablePropsType>) {
