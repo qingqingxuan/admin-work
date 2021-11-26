@@ -213,25 +213,6 @@ export const adminRoutes = [
     ],
   },
   {
-    menuUrl: '/excel',
-    menuName: 'Excel',
-    iconPrefix: 'iconfont',
-    icon: 'file-excel',
-    parentPath: '',
-    children: [
-      {
-        parentPath: '/excel',
-        menuUrl: '/excel/export-excel',
-        menuName: '导出Excel',
-      },
-      {
-        parentPath: '/excel',
-        menuUrl: '/excel/export-rows-excel',
-        menuName: '导出选中行',
-      },
-    ],
-  },
-  {
     menuUrl: '/draggable',
     menuName: '拖拽',
     iconPrefix: 'iconfont',
@@ -503,25 +484,6 @@ export const editorRoutes = [
         parentPath: '/editor',
         menuUrl: '/editor/markdown',
         menuName: 'markdown',
-      },
-    ],
-  },
-  {
-    menuUrl: '/excel',
-    menuName: 'Excel',
-    iconPrefix: 'iconfont',
-    icon: 'file-excel',
-    parentPath: '',
-    children: [
-      {
-        parentPath: '/excel',
-        menuUrl: '/excel/export-excel',
-        menuName: '导出Excel',
-      },
-      {
-        parentPath: '/excel',
-        menuUrl: '/excel/export-rows-excel',
-        menuName: '导出选中行',
       },
     ],
   },

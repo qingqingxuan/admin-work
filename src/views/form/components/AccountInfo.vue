@@ -109,9 +109,6 @@
 </script>
 
 <style lang="scss" scoped>
-  ::v-deep .input-with-select .el-input-group__prepend {
-    width: 90px;
-  }
   .tip-wrapper {
     padding: 10px;
   }
