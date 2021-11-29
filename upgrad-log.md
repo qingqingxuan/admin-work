@@ -1,3 +1,8 @@
+### 2021-11-29(v: 1.0.6)
+
+- 修复：tabbar 中的 item 鼠标切换时上下不对齐的 bug 关闭 [issue-#3](https://github.com/qingqingxuan/admin-work/issues/3)
+- 修复：breadcrumd 中，没有到对应路由的情况下，显示 空 bug
+
 ### 2021-11-25(v: 1.0.5)
 
 - 修复：切换账号的时候，菜单不更换的 bug

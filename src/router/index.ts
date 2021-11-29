@@ -34,6 +34,9 @@ export const constantRoutes = [
     name: 'personal',
     component: Layout,
     hidden: true,
+    meta: {
+      title: '个人中心',
+    },
     children: [
       {
         path: '',

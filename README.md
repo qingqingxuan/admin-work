@@ -1,3 +1,7 @@
+## 客官留步
+
+尊敬的小主，为了更好的开源，让开源走的更长久，请动一下可爱的小手指，点一下 star 吧~~在这里感谢您的支持与鼓励。我们将带着您的支持继续前行，为祖国的前端事业奉献一点点微薄之力~
+
 <div align="center">
 <img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 50%"/>
 </div>

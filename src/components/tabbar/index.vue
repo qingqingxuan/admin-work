@@ -446,10 +446,11 @@
     .tab-item {
       padding: 7px 10px;
       cursor: pointer;
-      display: inline-block;
+      display: inline-flex;
       .icon-item {
         margin-left: 0;
         width: 0;
+        height: 0;
         transition: all 0.2s ease-in-out;
         overflow: hidden;
       }
@@ -458,8 +459,6 @@
           display: inline;
           width: 14px;
           height: 14px;
-          max-width: 14px;
-          max-height: 14px;
           margin-left: 5px;
           font-size: 12px;
           background-color: rgba(0, 0, 0, 0.12);
