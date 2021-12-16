@@ -29,7 +29,7 @@
           <n-grid-item
             v-for="(item, index) of sideExampleList"
             :key="index"
-            :span="6"
+            :span="8"
             class="example-wrapper"
           >
             <StyleExample
@@ -164,13 +164,6 @@
           rightBottomBg: '#f5f5f5',
           checked: false,
           themeId: 'white',
-        },
-        {
-          leftBg: '#047fff',
-          rightTopBg: '#ffffff',
-          rightBottomBg: '#f5f5f5',
-          checked: false,
-          themeId: 'blue',
         },
         {
           leftBg: `url(${LeftBg})`,

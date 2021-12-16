@@ -51,22 +51,6 @@
               itemColorActive: 'rgba(24, 160, 88, 0.4)',
             },
           }
-        if (store?.state.sideBarBgColor === SideTheme.BLUE)
-          return {
-            common: {
-              cardColor: '#047fff',
-              textColor1: '#fff',
-              textColor2: '#fff',
-              primaryColor: '#fff',
-              hoverColor: '#1b71cb',
-              popoverColor: '#047fff',
-              itemColorActive: '#106dce',
-            },
-            Menu: {
-              itemIconColorHover: '#cdcdcd',
-              itemTextColorHover: '#cdcdcd',
-            },
-          }
         if (store?.state.sideBarBgColor === SideTheme.WHITE)
           return { common: { cardColor: '#ffffff' } }
         if (store?.state.sideBarBgColor === SideTheme.IMAGE)

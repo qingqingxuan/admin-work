@@ -1,5 +1,5 @@
 {
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "material-icon-theme",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
