@@ -112,35 +112,7 @@ export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Ar
           (item.meta as any).title
         )
     }
-    // return item.meta?.title
-    return () =>
-      h(
-        'div',
-        {
-          class: 'flex justify-between items-center',
-        },
-        {
-          default: () =>
-            [
-              { type: 'title', label: item.meta?.title },
-              { type: 'badge', label: item.meta?.badge },
-            ].map((it) => {
-              return it.type === 'title'
-                ? h('div', null, {
-                    default: () => it.label,
-                  })
-                : getBadge(it)
-            }),
-        }
-      )
-  }
-  function getBadge(item: any) {
-    if (!item.label) return ''
-    return h(NBadge, {
-      value: item.label,
-      style: 'margin-right: 5px',
-      dot: item.label === 'dot',
-    })
+    return item.meta?.title || ''
   }
   if (!originRoutes) {
     return []

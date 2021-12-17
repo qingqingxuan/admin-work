@@ -34,6 +34,7 @@
 <script lang="ts">
   import { post } from '@/api/http'
   import { getTableList } from '@/api/url'
+  import { renderTag } from '@/hooks/form'
   import { usePagination, useRowKey, useTable, useTableColumn } from '@/hooks/table'
   import { DataFormType, FormItem } from '@/types/components'
   import {
@@ -227,11 +228,11 @@
           {
             title: '状态',
             key: 'status',
-            render: (rowData) => {
-              return h(NSwitch, {
-                value: !!rowData.status,
-              })
-            },
+            render: (rowData) =>
+              renderTag(!!rowData.status ? '正常' : '禁用', {
+                type: !!rowData.status ? 'success' : 'error',
+                size: 'small',
+              }),
           },
         ],
         {

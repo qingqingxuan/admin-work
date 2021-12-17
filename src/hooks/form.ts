@@ -14,6 +14,7 @@ import {
   NSelect,
   NSpace,
   NSwitch,
+  NTag,
   NTimePicker,
   NTreeSelect,
   PopselectProps,
@@ -22,6 +23,7 @@ import {
   SelectOption,
   SelectProps,
   SwitchProps,
+  TagProps,
   TimePickerProps,
   TreeSelectProps,
 } from 'naive-ui'
@@ -90,6 +92,12 @@ export function renderCheckbox(
       default: () => label,
     }
   )
+}
+
+export function renderTag(label: string, options: TagProps | AllowedComponentProps = {}) {
+  return h(NTag, options, {
+    default: () => label,
+  })
 }
 
 export function renderCheckboxGroup(

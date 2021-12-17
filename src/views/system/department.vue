@@ -39,6 +39,7 @@
   } from 'naive-ui'
   import { DataFormType, ModalDialogType, FormItem } from '@/types/components'
   import usePost from '@/hooks/usePost'
+  import { renderTag } from '@/hooks/form'
   interface Department {
     parentId: number
     id: number
@@ -140,11 +141,11 @@
           {
             title: '状态',
             key: 'status',
-            render: (rowData) => {
-              return h(NSwitch, {
-                defaultValue: !!rowData.status,
-              })
-            },
+            render: (rowData) =>
+              renderTag(!!rowData.status ? '正常' : '禁用', {
+                type: !!rowData.status ? 'success' : 'error',
+                size: 'small',
+              }),
           },
           {
             title: '操作',

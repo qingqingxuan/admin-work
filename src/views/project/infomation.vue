@@ -58,6 +58,7 @@
   import { useLayoutStore } from '@/components'
   import useAppInfo from '@/hooks/useAppInfo'
   import { onMounted, reactive, ref } from 'vue'
+  import { Close } from '@vicons/ionicons5'
   const { version, dependencies, devDependencies } = useAppInfo()
   const showContact = ref(false)
   const state = useLayoutStore().state

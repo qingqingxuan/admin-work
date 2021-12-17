@@ -40,7 +40,7 @@
   import IconSelector from '@/components/common/IconSelector.vue'
   import { DataFormType, ModalDialogType, FormItem } from '@/types/components'
   import { renderInput, renderRadioButtonGroup, renderSwitch, renderTreeSelect } from '@/hooks/form'
-  import { findRouteByUrl, transformTreeSelect } from '@/utils'
+  import { findRouteByUrl, isExternal, transformTreeSelect } from '@/utils'
   import { useLayoutStore } from '@/components'
   export default defineComponent({
     name: 'Menu',
@@ -92,18 +92,6 @@
                       )
                     },
                   })
-            },
-          },
-          {
-            title: '提示信息',
-            key: 'badge',
-            render: (rowData) => {
-              return rowData.badge
-                ? h(NBadge, {
-                    value: rowData.badge as string,
-                    dot: rowData.badge === 'dot',
-                  })
-                : h('span', null, { default: () => '--' })
             },
           },
           {
@@ -164,7 +152,10 @@
           render: (formItem) =>
             renderTreeSelect(
               formItem.value,
-              transformTreeSelect(table.dataList, 'menuName', 'menuUrl')
+              transformTreeSelect(table.dataList, 'menuName', 'menuUrl'),
+              {
+                showPath: true,
+              }
             ),
         },
         {
@@ -216,37 +207,6 @@
           },
         },
         {
-          label: '提示信息',
-          key: 'badge',
-          value: ref(null),
-          render: (formItem) => {
-            return h('div', null, {
-              default: () => {
-                return [
-                  renderRadioButtonGroup(formItem.value, [
-                    {
-                      label: '红点',
-                      value: 'dot',
-                    },
-                    {
-                      label: 'new',
-                      value: 'new',
-                    },
-                  ]),
-                  h(NInput, {
-                    placeholder: '如果此项为空，则说明不需要提示信息',
-                    class: 'mt-4',
-                    value: formItem.value.value,
-                    onUpdateValue: (newVal) => {
-                      formItem.value.value = newVal
-                    },
-                  }),
-                ]
-              },
-            })
-          },
-        },
-        {
           label: '是否缓存',
           key: 'cacheable',
           value: ref(false),
@@ -285,9 +245,16 @@
         itemFormOptions.forEach((it) => {
           it.value.value = item[it.key] || null
           if (it.key === 'menuUrl' && it.disabled) {
+            if (isExternal(item.menuUrl)) {
+              it.value.value = ''
+            }
             ;(it.disabled as Ref<boolean>).value = true
           }
         })
+        const external = itemFormOptions.find((it) => it.key === 'redirect')
+        if (isExternal(item.menuUrl)) {
+          external!.value.value = item.menuUrl
+        }
         modalDialog.value?.show()
       }
       function onConfirm() {
