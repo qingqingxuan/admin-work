@@ -138,8 +138,8 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: 'http://www.baidu.com',
-        menuName: '外链',
+        menuUrl: 'http://qingqingxuan.gitee.io/work-p-site',
+        menuName: '外链（官网）',
       },
       {
         parentPath: '/other',
