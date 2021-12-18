@@ -43,9 +43,9 @@
         if (store?.state.sideBarBgColor === SideTheme.DARK)
           return {
             common: {
-              cardColor: '#000000',
-              textColor1: '#fff',
-              textColor2: '#fff',
+              cardColor: '#001428',
+              textColor1: '#bbbbbb',
+              textColor2: '#bbbbbb',
               popoverColor: 'rgb(72, 72, 78)',
               hoverColor: 'rgba(255, 255, 255, 0.09)',
               itemColorActive: 'rgba(24, 160, 88, 0.4)',
@@ -56,8 +56,8 @@
         if (store?.state.sideBarBgColor === SideTheme.IMAGE)
           return {
             common: {
-              textColor1: '#fff',
-              textColor2: '#fff',
+              textColor1: '#bbbbbb',
+              textColor2: '#bbbbbb',
               hoverColor: 'rgba(255, 255, 255, 0.09)',
               popoverColor: 'rgb(72, 72, 78)',
             },

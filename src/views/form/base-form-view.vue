@@ -1,12 +1,36 @@
 <template>
   <div>
     <n-card
-      title="请填写会议基本信息，（以下表单信息是动态生成）"
+      title="请填写会议基本信息（预设：grid-item），（以下表单信息是动态生成）"
       :content-style="{ padding: '10px' }"
       :header-style="{ padding: '10px' }"
       :segmented="true"
     >
-      <div class="form-wrapper">
+      <div class="form-wrapper" style="width: 95%">
+        <DataForm
+          ref="dataForm"
+          preset="grid-item"
+          :options="formItems"
+          :form-config="formConfig"
+        />
+        <div class="flex justify-end">
+          <n-button :loading="submitLoading" type="primary" size="small" @click="submit">
+            提交
+          </n-button>
+        </div>
+      </div>
+    </n-card>
+    <br />
+    <n-card
+      title="请填写会议基本信息（预设：form-item），（以下表单信息是动态生成）"
+      :content-style="{ padding: '10px' }"
+      :header-style="{ padding: '10px' }"
+      :segmented="true"
+    >
+      <template #header-extra>
+        <n-button type="primary" size="small" @click="show = !show"> 隐藏 </n-button>
+      </template>
+      <div class="form-wrapper" v-show="show">
         <DataForm ref="dataForm" :options="formItems" :form-config="formConfig" />
         <div class="flex justify-end">
           <n-button :loading="submitLoading" type="primary" size="small" @click="submit">
@@ -227,12 +251,14 @@
         labelAlign: 'right',
       } as FormProps
       const submitLoading = ref(false)
+      const show = ref(true)
       return {
         dataForm,
         formConfig,
         formItems,
         submitLoading,
         submit,
+        show,
       }
     },
   })
