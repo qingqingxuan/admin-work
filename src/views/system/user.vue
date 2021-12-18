@@ -56,6 +56,7 @@
 <script lang="ts">
   import { post } from '@/api/http'
   import { getTableList } from '@/api/url'
+  import { renderTag } from '@/hooks/form'
   import {
     TableActionModel,
     usePagination,
@@ -65,7 +66,7 @@
     useTableColumn,
     useTableHeight,
   } from '@/hooks/table'
-  import { DataTableColumn, NAvatar, NSwitch, useDialog, useMessage } from 'naive-ui'
+  import { DataTableColumn, NAvatar, useDialog, useMessage } from 'naive-ui'
   import {
     defineComponent,
     getCurrentInstance,
@@ -226,11 +227,11 @@
             key: 'status',
             fixed: 'right',
             width: 80,
-            render: (rowData) => {
-              return h(NSwitch, {
-                defaultValue: !!rowData.status,
-              })
-            },
+            render: (rowData) =>
+              renderTag(!!rowData.status ? '正常' : '禁用', {
+                type: !!rowData.status ? 'success' : 'error',
+                size: 'small',
+              }),
           },
           {
             title: '操作',

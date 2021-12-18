@@ -82,7 +82,6 @@ function generatorRoutes(res: Array<OriginRoute>) {
         cacheable: !!it.cacheable,
         icon: it.icon || 'menu',
         iconPrefix: it.iconPrefix || 'iconfont',
-        badge: it.badge,
       },
     }
     if (it.children) {
