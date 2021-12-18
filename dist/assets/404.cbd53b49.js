@@ -1,0 +1,1 @@
+import t from"./ExceptionStatus.69e051ee.js";import{d as o,r as n,o as s,c as a,a as c}from"./vendor.68c261ce.js";var r=o({name:"Page404",components:{ExceptionStatus:t}});const p={class:"main-container"};function i(m,d,_,u,f,x){const e=n("ExceptionStatus");return s(),a("div",p,[c(e,{status:"404"})])}r.render=i;export{r as default};

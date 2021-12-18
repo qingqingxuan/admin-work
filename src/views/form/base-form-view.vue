@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <n-space vertical>
     <n-card
       title="请填写会议基本信息（预设：grid-item），（以下表单信息是动态生成）"
       :content-style="{ padding: '10px' }"
@@ -20,7 +20,6 @@
         </div>
       </div>
     </n-card>
-    <br />
     <n-card
       title="请填写会议基本信息（预设：form-item），（以下表单信息是动态生成）"
       :content-style="{ padding: '10px' }"
@@ -39,7 +38,7 @@
         </div>
       </div>
     </n-card>
-  </div>
+  </n-space>
 </template>
 
 <script lang="ts">
