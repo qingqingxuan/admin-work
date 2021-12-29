@@ -28,12 +28,6 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 - [🎉 Vue Admin Work P 演示地址（Vuex.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/vue-admin-work-p)
 
-## Vue Admin Work 授权 微信客服
-
-<div align="center">
-<img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" />
-</div>
-
 ## Vue Admin Work 前端讨论 QQ 群
 
 <div align="center">
