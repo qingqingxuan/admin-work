@@ -1,0 +1,70 @@
+.first-loading-wrp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  min-height: 90vh;
+}
+
+.loading-wrp{
+  display: flex;
+}
+
+.line{
+  width: 5px;
+  height: 50px;
+  margin: 0 5px;
+  border-radius: 30px;
+}
+
+.loading-wrp > span:nth-child(even) {
+  background-color: #eb0f0f;
+  animation: growAnim 0.4s linear infinite alternate-reverse;
+}
+
+.loading-wrp > span:nth-child(odd) {
+  background-color: #18a058;
+  animation: growAnimReverse 0.4s linear infinite alternate-reverse;
+}
+
+@keyframes growAnim {
+  0% {
+    transform: scale(1, 0.3);
+    -ms-transform: scale(1, 0.3);
+    -webkit-transform: scale(1, 0.3);
+    -moz-transform: scale(1, 0.3);
+    -o-transform: scale(1, 0.3);
+  }
+  100% {
+    transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+  }
+}
+
+@keyframes growAnimReverse {
+  from {
+    transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+  }
+  to {
+    transform: scale(1, 0.3);
+    -ms-transform: scale(1, 0.3);
+    -webkit-transform: scale(1, 0.3);
+    -moz-transform: scale(1, 0.3);
+    -o-transform: scale(1, 0.3);
+  }
+}
+
+.first-loading-wrp .title{
+  font-size: 28px; 
+  font-weight: bold; 
+  text-align: center; 
+  margin-top: 50px;
+}

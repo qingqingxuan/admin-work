@@ -1,6 +1,6 @@
 {
   "name": "admin-work",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "scripts": {
     "dev": "vite",
     "staging": "vite build  --mode staging",
