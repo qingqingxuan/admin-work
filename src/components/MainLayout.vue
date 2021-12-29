@@ -121,7 +121,7 @@
       background-color: #333333;
     }
     .main-section {
-      min-height: calc(100% - #{$footerHeight} - 5px);
+      min-height: calc(100% - #{$footerHeight} - 10px);
       overflow-x: hidden;
     }
     .fixed-nav-bar {

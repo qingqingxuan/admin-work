@@ -132,9 +132,9 @@
         if (store?.state.sideBarBgColor === SideTheme.DARK)
           return {
             common: {
-              cardColor: '#333333',
-              textColor1: '#fff',
-              textColor2: '#fff',
+              cardColor: '#001428',
+              textColor1: '#bbbbbb',
+              textColor2: '#bbbbbb',
             },
             Menu: {
               itemColorActive: 'rgba(24, 160, 88, 0.4)',
@@ -149,8 +149,8 @@
         if (store?.state.sideBarBgColor === SideTheme.IMAGE)
           return {
             common: {
-              textColor1: '#fff',
-              textColor2: '#fff',
+              textColor1: '#bbbbbb',
+              textColor2: '#bbbbbb',
               primaryColor: '#fff',
             },
             Menu: {
