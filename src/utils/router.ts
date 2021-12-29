@@ -4,7 +4,7 @@ import { post } from '@/api/http'
 import store from '@/store/store'
 import { baseAddress, getMenuListByRoleId } from '@/api/url'
 import { RouteRecordRaw } from 'vue-router'
-import { mapTwoLevelRouter, toHump } from '.'
+import { isExternal, mapTwoLevelRouter, toHump } from '.'
 import { Layout } from '@/components'
 import layoutStore from '@/store'
 import { defineAsyncComponent } from 'vue'
@@ -14,7 +14,7 @@ interface OriginRoute {
   menuUrl: string
   menuName?: string
   hidden?: boolean
-  redirect?: string
+  outLink?: string
   affix?: boolean
   cacheable?: boolean
   iconPrefix?: string
@@ -71,10 +71,9 @@ function generatorRoutes(res: Array<OriginRoute>) {
   const tempRoutes: Array<RouteRecordRawWithHidden> = []
   res.forEach((it) => {
     const route: RouteRecordRawWithHidden = {
-      path: it.menuUrl,
+      path: it.outLink && isExternal(it.outLink) ? it.outLink : it.menuUrl,
       name: getNameByUrl(it.menuUrl),
       hidden: !!it.hidden,
-      redirect: it.redirect || '',
       component: isMenu(it.menuUrl) ? Layout : getComponent(it),
       meta: {
         title: it.menuName,

@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 import path from 'path-browserify'
 import { SplitTab, RouteRecordRawWithHidden } from '../types/store'
-import { DataTableColumn, MenuOption, NBadge, NIcon, TreeSelectOption } from 'naive-ui'
+import { DataTableColumn, MenuOption, NIcon, TreeSelectOption } from 'naive-ui'
 import { h, ref } from 'vue'
 import SvgIcon from '../components/svg-icon/index.vue'
 import { TablePropsType } from '@/types/components'

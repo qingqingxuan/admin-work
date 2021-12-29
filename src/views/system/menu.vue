@@ -34,12 +34,12 @@
     useTable,
     useTableColumn,
   } from '@/hooks/table'
-  import { NBadge, NIcon, NInput, useDialog, useMessage } from 'naive-ui'
+  import { NIcon, useDialog, useMessage } from 'naive-ui'
   import { TableColumn } from 'naive-ui/lib/data-table/src/interface'
   import SvgIcon from '@/components/svg-icon/index.vue'
   import IconSelector from '@/components/common/IconSelector.vue'
   import { DataFormType, ModalDialogType, FormItem } from '@/types/components'
-  import { renderInput, renderRadioButtonGroup, renderSwitch, renderTreeSelect } from '@/hooks/form'
+  import { renderInput, renderSwitch, renderTreeSelect } from '@/hooks/form'
   import { findRouteByUrl, isExternal, transformTreeSelect } from '@/utils'
   import { useLayoutStore } from '@/components'
   export default defineComponent({
@@ -186,7 +186,7 @@
         },
         {
           label: '外链地址',
-          key: 'redirect',
+          key: 'outLink',
           value: ref(null),
           render: (formItem) =>
             renderInput(formItem.value, {
