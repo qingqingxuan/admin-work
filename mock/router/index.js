@@ -153,11 +153,6 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: '/other/flow',
-        menuName: '流程图',
-      },
-      {
-        parentPath: '/other',
         menuUrl: '/other/player',
         menuName: '播放器',
       },

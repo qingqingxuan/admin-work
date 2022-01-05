@@ -42,6 +42,8 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 ## Vue Admin Work QQ 群
 
+## Vue Admin Work 前端讨论 QQ 群
+
 <div align="center">
 <img src="http://qingqingxuan.gitee.io/img/qq-custom.png" style="zoom:20%;" />
 </div>
