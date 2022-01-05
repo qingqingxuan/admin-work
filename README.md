@@ -16,7 +16,7 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 ## 项目地址：
 
-- [🎉 官网&文档&授权--地址](http://qingqingxuan.gitee.io/work-p-site)
+- [🎉 官网&文档&授权--地址](http://www.vueadminwork.com)
 
 - [🎉 Admin Work 演示地址（Vuex.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/admin-work)
 
@@ -26,15 +26,21 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 - [🎉 Vue Admin Work X 演示地址（Vue3.x + Typescript + Element Plus + Webpack）](http://qingqingxuan.gitee.io/vue-admin-work-x)
 
-- [🎉 Vue Admin Work P 演示地址（Vuex.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/vue-admin-work-p)
+- [🎉 Vue Admin Work P 演示地址（Vue3.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/vue-admin-work-p)
 
-## Vue Admin Work 授权 微信客服
+- [🎉 Vue Admin Work A 演示地址（Vue3.x + Typescript + Antd + Vite2)](http://qingqingxuan.gitee.io/vue-admin-work-a)
+
+- [🎉 Arco Work 演示地址（Vue3.x + Typescript + Arco Design + Vite2)](http://qingqingxuan.gitee.io/arco-admin)
+
+## Vue Admin Work 微信群
 
 <div align="center">
-<img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" />
+<img src="http://qingqingxuan.gitee.io/img/wechat-group.jpeg" style="zoom:20%;" /> 
 </div>
 
-## Vue Admin Work 前端讨论 QQ 群
+如果微信群已经过期，请添加客服~~邀请进群
+
+## Vue Admin Work QQ 群
 
 <div align="center">
 <img src="http://qingqingxuan.gitee.io/img/qq-custom.png" style="zoom:20%;" />
