@@ -10,7 +10,7 @@ import 'virtual:svg-icons-register'
 import { DeviceType } from './types/store'
 import './utils/router'
 import '../mock'
-import store, { key } from './store/store'
+import pinia from './store/pinia'
 
 function getScreenType() {
   const width = document.body.clientWidth
@@ -35,13 +35,11 @@ app.use(LayoutStore, {
       router.push('/personal')
     },
     onLogout() {
-      store.dispatch('user/logout').then(() => {
-        router.push('/login')
-      })
+      router.push('/login')
     },
   },
 })
-app.use(store, key)
+app.use(pinia)
 app.use(router)
 router.isReady().then(() => {
   app.mount('#app')

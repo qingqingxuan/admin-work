@@ -109,15 +109,16 @@
 </template>
 
 <script lang="ts">
-  import { useStore } from '@/store/store'
   import { defineComponent, ref } from 'vue'
   import { CameraOutline } from '@vicons/ionicons5'
+  import useUserStore from '@/store/modules/user'
   export default defineComponent({
     name: 'Personal',
     components: { CameraOutline },
     setup() {
       const touched = ref(false)
       const uploaded = ref(false)
+      const userStore = useUserStore()
       const avatarTouchStart = () => {
         touched.value = true
       }
@@ -128,7 +129,6 @@
           uploaded.value = false
         }, 1000)
       }
-      const appStore = useStore()
       return {
         touched,
         uploaded,
@@ -206,8 +206,8 @@
             status: 0, // 0未完成，1已完成
           },
         ],
-        avatar: appStore.state.user.avatar,
-        nickName: appStore.state.user.nickName,
+        avatar: userStore.avatar,
+        nickName: userStore.nickName,
         avatarTouchStart,
         uploadAvatar,
       }

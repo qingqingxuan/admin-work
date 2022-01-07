@@ -66,7 +66,6 @@ export interface StateType {
   permissionRoutes: Array<RouteRecordRawWithHidden>
   visitedView: Array<RouteRecordRawWithHidden>
   cachedView: Array<string>
-  userInfo: { nickName: string; avatar: string }
   actionItem: {
     showSearch: boolean
     showMessage: boolean
@@ -91,6 +90,5 @@ export interface StoreType extends CacheView, VisitedView {
   getSplitTabs: () => Array<RouteRecordRawWithHidden>
   initPermissionRoute: (routes: Array<RouteRecordRaw>) => void
   isEmptyPermissionRoute: () => boolean
-  setUserInfo: (userInfo: { nickName: string; avatar: string }) => void
   reset: () => void
 }

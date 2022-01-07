@@ -123,7 +123,6 @@
   import { post, Response } from '@/api/http'
   import { login } from '@/api/url'
   import { UserState } from '@/store/types'
-  import { useStore } from '@/store/store'
   import { useMessage } from 'naive-ui'
   import { useLayoutStore } from '@/components'
   import { DeviceType } from '@/types/store'
@@ -135,6 +134,7 @@
     LogoWechat,
   } from '@vicons/ionicons5'
   import useAppInfo from '@/hooks/useAppInfo'
+  import useUserStore from '@/store/modules/user'
   export default defineComponent({
     name: 'Login',
     components: { PhoneIcon, PasswordIcon, LogoGithub, LogoAlipay, LogoWechat },
@@ -146,7 +146,7 @@
       const loading = ref(false)
       const router = useRouter()
       const route = useRoute()
-      const store = useStore()
+      const userStore = useUserStore()
       const message = useMessage()
       const layoutStore = useLayoutStore()
       const isMobileScreen = computed(() => {
@@ -162,7 +162,7 @@
           },
         })
           .then(({ data }: Response) => {
-            store.dispatch('user/saveUser', data as UserState).then(() => {
+            userStore.saveUser(data as UserState).then(() => {
               router
                 .replace({
                   path: route.query.redirect ? (route.query.redirect as string) : '/',

@@ -1,12 +1,3 @@
-export interface RootState {
-  root: string
-}
-
-export interface AppState {
-  version: string
-  appName: string
-}
-
 export interface UserState {
   userId: number
   token: string
@@ -15,10 +6,4 @@ export interface UserState {
   userName: string
   nickName: string
   avatar: string
-}
-
-export interface ParentState {
-  root: RootState
-  user: UserState
-  app: AppState
 }

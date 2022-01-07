@@ -2,7 +2,7 @@ import { RouteRecordRawWithHidden } from './../../types/store'
 import { StoreType } from '../../types/store'
 import VisitedView from '../../types/visited-view'
 
-const LOCAL_STOREAGE_VISITED_KEY = 'p-visited'
+const LOCAL_STOREAGE_VISITED_KEY = 'admin-work-visited'
 
 export default {
   addVisitedView(route) {

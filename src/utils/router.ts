@@ -1,7 +1,6 @@
 import router, { constantRoutes } from '../router'
 import Cookies from 'js-cookie'
 import { post } from '@/api/http'
-import store from '@/store/store'
 import { baseAddress, getMenuListByRoleId } from '@/api/url'
 import { RouteRecordRaw } from 'vue-router'
 import { isExternal, mapTwoLevelRouter, toHump } from '.'
@@ -36,8 +35,10 @@ function getRoutes() {
     url: baseAddress + getMenuListByRoleId,
     method: 'POST',
     data: {
-      userId: store.getters['user/userId'],
-      roleId: store.getters['user/roleId'],
+      // 在实际的开发中，这个地方可以换成 token，让后端解析用户信息获取 userId 和 roleId，前端可以不用传 userId 和 roleId。
+      // 这样可以增加安全性
+      userId: localStorage.getItem('userId'),
+      roleId: localStorage.getItem('roleId'),
     },
   }).then((res: any) => {
     return generatorRoutes(res.data)

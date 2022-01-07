@@ -201,9 +201,9 @@
   import AVATAR_DEFAULT from '@/assets/img_avatar_default.png'
   import { computed, defineComponent, onMounted, reactive, ref } from '@vue/runtime-core'
   import { useRouter } from 'vue-router'
-  import { useStore } from '@/store/store'
   import { random } from 'lodash'
   import { useLayoutStore } from '@/components'
+  import useUserStore from '@/store/modules/user'
   const COLORS = ['#67C23A', '#E6A23C', '#F56C6C', '#409EFF']
   const date = new Date()
   export default defineComponent({
@@ -253,8 +253,8 @@
       const isMobileScreen = computed(() => {
         return layoutStore.state.device === 'mobile'
       })
-      const store = useStore()
-      const avatar = computed(() => store.state.user.avatar)
+      const userStore = useUserStore()
+      const avatar = computed(() => userStore.avatar)
       const tempWaitingItems = reactive([] as Array<any>)
       const showWatingMode = ref(false)
       const toggleMore = () => {

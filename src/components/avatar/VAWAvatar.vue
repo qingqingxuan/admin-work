@@ -3,10 +3,10 @@
     <n-dropdown trigger="hover" :options="options" size="large" @select="handleSelect">
       <div class="action-wrapper">
         <div class="avatar">
-          <n-avatar circle size="small" :src="state.userInfo.avatar" />
+          <n-avatar circle size="small" :src="userStore.avatar" />
         </div>
         <span class="nick-name">
-          {{ state.userInfo.nickName }}
+          {{ userStore.nickName }}
           <n-icon class="tip">
             <CaretDownSharp />
           </n-icon>
@@ -19,14 +19,16 @@
 <script lang="ts">
   import { NIcon, useDialog } from 'naive-ui'
   import { defineComponent, h } from 'vue'
-  import { useLayoutStore } from '../../components/index'
   import { Menu, LogInOutline, CaretDownSharp } from '@vicons/ionicons5'
+  import useUserStore from '@/store/modules/user'
+  import { useLayoutStore } from '..'
 
   export default defineComponent({
     name: 'VAWAvatar',
     components: { CaretDownSharp },
     setup() {
-      const store = useLayoutStore()
+      const userStore = useUserStore()
+      const layoutStore = useLayoutStore()
       const options = [
         {
           label: '个人中心',
@@ -46,7 +48,7 @@
         },
       ]
       function personalCenter() {
-        ;(store as any).onPersonalCenter && (store as any).onPersonalCenter()
+        ;(layoutStore as any).onPersonalCenter && (layoutStore as any).onPersonalCenter()
       }
       const dialog = useDialog()
       function logout() {
@@ -56,7 +58,9 @@
           positiveText: '退出',
           negativeText: '再想想',
           onPositiveClick: () => {
-            ;(store as any).onLogout && (store as any).onLogout()
+            userStore.logout().then(() => {
+              ;(layoutStore as any).onLogout && (layoutStore as any).onLogout()
+            })
           },
         })
       }
@@ -71,7 +75,7 @@
         }
       }
       return {
-        state: store?.state,
+        userStore,
         options,
         handleSelect,
       }

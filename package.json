@@ -1,6 +1,6 @@
 {
   "name": "admin-work",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "scripts": {
     "dev": "vite",
     "staging": "vite build  --mode staging",
@@ -15,6 +15,7 @@
     "js-cookie": "^2.2.1",
     "mockjs": "^1.1.0",
     "path-browserify": "^1.0.1",
+    "pinia": "^2.0.9",
     "print-js": "^1.6.0",
     "qrcode": "^1.4.4",
     "qs": "^6.10.1",
@@ -22,7 +23,7 @@
     "screenfull": "^5.1.0",
     "simplemde": "^1.11.2",
     "tiny-emitter": "^2.1.0",
-    "vue": "^3.0.5",
+    "vue": "^3.2.25",
     "vue-router": "^4.0.10",
     "vuedraggable": "^4.0.3",
     "vuex": "^4.0.2",
