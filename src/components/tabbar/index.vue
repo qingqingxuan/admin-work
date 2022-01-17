@@ -17,7 +17,7 @@
           :key="item.fullPath"
           :type="currentTab === item.fullPath ? 'primary' : 'default'"
           class="mx-1 rounded-sm tab-item"
-          style="--n-height: 24px; --font-weight: 200"
+          style="--n-height: 24px; --n-font-weight: 200"
           @click.self="itemClick(item.fullPath, $event)"
           @contextmenu="onContextMenu(item.fullPath, $event)"
         >

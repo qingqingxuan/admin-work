@@ -28,15 +28,7 @@
   import { TableActionModel, useTable, useRenderAction, useTableColumn } from '@/hooks/table'
   import { defineComponent, h, nextTick, onMounted, ref, shallowReactive } from 'vue'
   import _ from 'lodash'
-  import {
-    DataTableColumn,
-    NInput,
-    NSelect,
-    NSwitch,
-    SelectOption,
-    useDialog,
-    useMessage,
-  } from 'naive-ui'
+  import { DataTableColumn, NInput, NSelect, SelectOption, useDialog, useMessage } from 'naive-ui'
   import { DataFormType, ModalDialogType, FormItem } from '@/types/components'
   import usePost from '@/hooks/usePost'
   import { renderTag } from '@/hooks/form'

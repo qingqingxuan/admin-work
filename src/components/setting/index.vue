@@ -4,114 +4,112 @@
     placement="right"
     :width="state.device === 'mobile' ? '75%' : '280px'"
   >
-    <n-scrollbar>
-      <n-drawer-content title="系统设置" closable class="wrapper">
-        <n-divider dashed>主题设置</n-divider>
-        <n-grid>
-          <n-grid-item
-            v-for="(item, index) of themeList"
-            :key="index"
-            :span="12"
-            class="example-wrapper"
-          >
-            <StyleExample
-              :checked="item.checked"
-              :left-bg="item.leftBg"
-              :right-top-bg="item.rightTopBg"
-              :right-bottom-bg="item.rightBottomBg"
-              :tip-text="item.tipText"
-              @click="themeClick(item)"
-            />
-          </n-grid-item>
-        </n-grid>
-        <n-divider dashed>侧边栏样式</n-divider>
-        <n-grid>
-          <n-grid-item
-            v-for="(item, index) of sideExampleList"
-            :key="index"
-            :span="8"
-            class="example-wrapper"
-          >
-            <StyleExample
-              :checked="item.checked"
-              :left-bg="item.leftBg"
-              :right-top-bg="item.rightTopBg"
-              :right-bottom-bg="item.rightBottomBg"
-              @click="exampleClick(item)"
-            />
-          </n-grid-item>
-        </n-grid>
-        <n-divider dashed>布局模式</n-divider>
-        <n-grid>
-          <n-grid-item
-            v-for="(item, index) of layoutExampleList"
-            :key="index"
-            :span="8"
-            class="example-wrapper"
-          >
-            <StyleExample
-              :checked="item.checked"
-              :left-bg="item.leftBg"
-              :right-top-bg="item.rightTopBg"
-              :right-bottom-bg="item.rightBottomBg"
-              :class="[item.class || '']"
-              :tip-text="item.tipText"
-              @click="layoutExampleClick(item)"
-            />
-          </n-grid-item>
-        </n-grid>
-        <n-divider dashed>主题颜色</n-divider>
-        <n-space class="colors-wrapper">
-          <div
-            v-for="(item, index) of primartyColorList"
-            :key="index"
-            class="color-wrapper"
-            :class="{ circle: item.checked }"
-            :style="{ backgroundColor: item.value }"
-            @click="colorClick(item)"
-          ></div>
-        </n-space>
-        <div style="height: 20px"></div>
-        <n-divider dashed>菜单设置</n-divider>
-        <div class="setting-item-wrapper">
-          <span style="width: 100px">菜单宽度</span>
-          <n-input-number v-model:value="menuWidth" size="small" :min="200" :max="400" :step="10">
-            <template #suffix>px</template>
-          </n-input-number>
-        </div>
-        <n-divider dashed>页面切换动画</n-divider>
-        <div class="setting-item-wrapper">
-          <span style="width: 100px">动画效果</span>
-          <n-select
-            v-model:value="state.pageAnim"
-            :options="animOptions"
-            @update:value="onAnimUpdate"
+    <n-drawer-content title="系统设置" closable class="wrapper">
+      <n-divider dashed>主题设置</n-divider>
+      <n-grid>
+        <n-grid-item
+          v-for="(item, index) of themeList"
+          :key="index"
+          :span="12"
+          class="example-wrapper"
+        >
+          <StyleExample
+            :checked="item.checked"
+            :left-bg="item.leftBg"
+            :right-top-bg="item.rightTopBg"
+            :right-bottom-bg="item.rightBottomBg"
+            :tip-text="item.tipText"
+            @click="themeClick(item)"
           />
-        </div>
-        <n-divider dashed>按钮显示</n-divider>
-        <div class="setting-item-wrapper">
-          <span>固定顶部导航</span>
-          <n-switch v-model:value="state.isFixedNavBar" :disabled="state.layoutMode === 'ttb'" />
-        </div>
-        <div class="setting-item-wrapper">
-          <span>搜索</span>
-          <n-switch v-model:value="state.actionItem.showSearch" />
-        </div>
-        <div class="setting-item-wrapper">
-          <span>消息</span>
-          <n-switch v-model:value="state.actionItem.showMessage" />
-        </div>
-        <div class="setting-item-wrapper">
-          <span>刷新</span>
-          <n-switch v-model:value="state.actionItem.showRefresh" />
-        </div>
-        <div class="setting-item-wrapper">
-          <span>全屏</span>
-          <n-switch v-model:value="state.actionItem.showFullScreen" />
-        </div>
-        <n-divider />
-      </n-drawer-content>
-    </n-scrollbar>
+        </n-grid-item>
+      </n-grid>
+      <n-divider dashed>侧边栏样式</n-divider>
+      <n-grid>
+        <n-grid-item
+          v-for="(item, index) of sideExampleList"
+          :key="index"
+          :span="8"
+          class="example-wrapper"
+        >
+          <StyleExample
+            :checked="item.checked"
+            :left-bg="item.leftBg"
+            :right-top-bg="item.rightTopBg"
+            :right-bottom-bg="item.rightBottomBg"
+            @click="exampleClick(item)"
+          />
+        </n-grid-item>
+      </n-grid>
+      <n-divider dashed>布局模式</n-divider>
+      <n-grid>
+        <n-grid-item
+          v-for="(item, index) of layoutExampleList"
+          :key="index"
+          :span="8"
+          class="example-wrapper"
+        >
+          <StyleExample
+            :checked="item.checked"
+            :left-bg="item.leftBg"
+            :right-top-bg="item.rightTopBg"
+            :right-bottom-bg="item.rightBottomBg"
+            :class="[item.class || '']"
+            :tip-text="item.tipText"
+            @click="layoutExampleClick(item)"
+          />
+        </n-grid-item>
+      </n-grid>
+      <n-divider dashed>主题颜色</n-divider>
+      <n-space class="colors-wrapper">
+        <div
+          v-for="(item, index) of primartyColorList"
+          :key="index"
+          class="color-wrapper"
+          :class="{ circle: item.checked }"
+          :style="{ backgroundColor: item.value }"
+          @click="colorClick(item)"
+        ></div>
+      </n-space>
+      <div style="height: 20px"></div>
+      <n-divider dashed>菜单设置</n-divider>
+      <div class="setting-item-wrapper">
+        <span style="width: 100px">菜单宽度</span>
+        <n-input-number v-model:value="menuWidth" size="small" :min="200" :max="400" :step="10">
+          <template #suffix>px</template>
+        </n-input-number>
+      </div>
+      <n-divider dashed>页面切换动画</n-divider>
+      <div class="setting-item-wrapper">
+        <span style="width: 100px">动画效果</span>
+        <n-select
+          v-model:value="state.pageAnim"
+          :options="animOptions"
+          @update:value="onAnimUpdate"
+        />
+      </div>
+      <n-divider dashed>按钮显示</n-divider>
+      <div class="setting-item-wrapper">
+        <span>固定顶部导航</span>
+        <n-switch v-model:value="state.isFixedNavBar" :disabled="state.layoutMode === 'ttb'" />
+      </div>
+      <div class="setting-item-wrapper">
+        <span>搜索</span>
+        <n-switch v-model:value="state.actionItem.showSearch" />
+      </div>
+      <div class="setting-item-wrapper">
+        <span>消息</span>
+        <n-switch v-model:value="state.actionItem.showMessage" />
+      </div>
+      <div class="setting-item-wrapper">
+        <span>刷新</span>
+        <n-switch v-model:value="state.actionItem.showRefresh" />
+      </div>
+      <div class="setting-item-wrapper">
+        <span>全屏</span>
+        <n-switch v-model:value="state.actionItem.showFullScreen" />
+      </div>
+      <n-divider />
+    </n-drawer-content>
   </n-drawer>
 </template>
 
