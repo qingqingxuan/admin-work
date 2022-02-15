@@ -1,0 +1,1 @@
+import{d as o,o as n,i as s}from"./vendor.66b1fd00.js";var a=o({created(){const{params:t,query:r}=this.$route,{path:e}=t;this.$router.replace({path:"/"+(typeof e=="string"?e:e.join("/")),query:r})}});const c={class:"redirect-contianer"};function i(t,r,e,p,d,f){return n(),s("div",c)}a.render=i;export{a as default};

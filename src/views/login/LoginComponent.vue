@@ -33,12 +33,12 @@
               prefix-icon="el-icon-lock"
             />
           </div>
-          <div class="mt-4">
+          <div class="mt-6">
             <n-button type="primary" class="login" :loading="loading" @click="onLogin">
               登录
             </n-button>
           </div>
-          <div class="mt-4 my-width flex-sub">
+          <div class="mt-6 my-width flex-sub">
             <div class="flex justify-between">
               <n-checkbox v-model:checked="autoLogin">自动登录</n-checkbox>
               <a :underline="false" type="primary">忘记密码？</a>
@@ -278,7 +278,7 @@
       align-items: center;
       background: linear-gradient(to bottom, var(--primary-color));
       .form-wrapper {
-        width: 50%;
+        width: 35%;
         border-radius: 5px;
         border: 1px solid #f0f0f0;
         padding: 20px;

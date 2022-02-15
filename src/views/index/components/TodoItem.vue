@@ -1,12 +1,12 @@
 <template>
   <div class="wating-item-action">
     <div class="flex items-center item-header-wrapper">
-      <div class="flex items-center justify-center item-header" :style="headerStyle">
-        {{ firstChar }}
-      </div>
-      <div class="flex-1 item-time">{{ item?.time }}</div>
+      <n-avatar round>{{ firstChar }}</n-avatar>
+      <div class="ml-2 title">{{ item?.name }}</div>
+      <div class="flex-1"></div>
+      <div class="item-time">{{ item?.time }}</div>
     </div>
-    <div class="mt-4 item-content">{{ item?.content }}</div>
+    <div class="ml-10 item-content">{{ item?.content }}</div>
   </div>
 </template>
 
@@ -22,7 +22,7 @@
     },
     setup(props) {
       const firstChar = computed(() => {
-        return (props.item as any).content.substring(0, 1)
+        return (props.item as any).name.substring(0, 1)
       })
       return {
         firstChar,
@@ -36,10 +36,14 @@
 
 <style lang="scss" scoped>
   .wating-item-action {
-    border-bottom: 1px solid #f5f5f5;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding: 5px;
+    margin-bottom: 5px;
     .item-header-wrapper {
+      .title {
+        color: var(--text-color);
+        font-weight: bold;
+        font-size: 14px;
+      }
       .item-header {
         width: 30px;
         height: 30px;
@@ -47,12 +51,12 @@
         color: #fff;
       }
       .item-time {
-        color: #888;
+        color: #666;
         margin-left: 10px;
       }
     }
     .item-content {
-      color: #4e4e4e;
+      color: #707070;
       line-height: 18px;
     }
   }

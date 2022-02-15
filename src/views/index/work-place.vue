@@ -1,205 +1,91 @@
 <template>
   <div class="main-container">
     <n-card title="工作台" :content-style="{ padding: '10px' }" :header-style="{ padding: '10px' }">
-      <div v-if="!isMobileScreen" class="flex margin-top">
-        <div class="avatar-wrapper">
-          <img :src="avatar" />
-        </div>
-        <div class="flex flex-col justify-around ml-3.5 flex-1">
-          <div class="text-lg">早上好，Andy，青春只有一次，别让自己过得不精彩</div>
-          <div class="text-sm text-gray-500">
-            <i class="el-icon-heavy-rain"></i> 今日有小雨，出门别忘记带伞哦~
-          </div>
-        </div>
-        <div class="flex flex-col justify-around align-end item-action">
-          <div class="text-gray">项目数</div>
-          <div class="text-xl">12</div>
-        </div>
-        <div class="flex flex-col justify-around align-end item-action">
-          <div class="text-gray">待办项</div>
-          <div class="text-xl">3/20</div>
-        </div>
-        <div class="flex flex-col justify-around align-end item-action">
-          <div class="text-gray">当前日期</div>
-          <div class="text-xl">{{ currentDate }}</div>
-        </div>
-      </div>
-      <div v-else>
-        <div class="flex">
-          <div class="mt-1 avatar-wrapper">
+      <n-grid :cols="4" :y-gap="15" item-responsive responsive="screen">
+        <n-grid-item class="flex" span="4 s:2 m:2 l:2 xl:2 2xl:2">
+          <div class="avatar-wrapper">
             <img :src="avatar" />
           </div>
-          <div class="flex flex-col justify-around ml-4 flex-sub">
-            <div class="text-xl">早上好，Andy，青春只有一次，别让自己过得不精彩</div>
-            <div class="text-sm text-gray-500"
-              ><i class="el-icon-heavy-rain"></i> 今日有小雨，出门别忘记带伞哦~</div
-            >
+          <div class="flex flex-col justify-around ml-3.5 flex-1">
+            <div class="text-lg">早上好，Andy，青春只有一次，别让自己过得不精彩</div>
+            <div class="text-sm text-gray-500">今日有小雨，出门别忘记带伞哦~ </div>
           </div>
-        </div>
-        <div class="flex mt-4">
-          <div class="flex flex-col items-center flex-1">
+        </n-grid-item>
+        <n-grid-item class="flex justify-end" span="4 s:2 m:2 l:2 xl:2 2xl:2">
+          <div class="flex flex-col justify-around align-end item-action">
             <div class="text-gray">项目数</div>
             <div class="text-xl">12</div>
           </div>
-          <div class="flex flex-col items-center flex-1">
+          <div class="flex flex-col justify-around align-end item-action">
             <div class="text-gray">待办项</div>
             <div class="text-xl">3/20</div>
           </div>
-          <div class="flex flex-col items-center flex-1">
+          <div class="flex flex-col justify-around align-end item-action">
             <div class="text-gray">当前日期</div>
             <div class="text-xl">{{ currentDate }}</div>
           </div>
-        </div>
-      </div>
+        </n-grid-item>
+      </n-grid>
     </n-card>
-    <div v-if="!isMobileScreen" class="flex mt-1">
-      <div style="flex: 3">
-        <n-card header-style="padding: 10px" :content-style="{ padding: '5px' }" title="我的课程">
-          <n-grid :x-gap="8" :y-gap="8" :cols="3">
-            <n-grid-item v-for="(item, index) of dataItems" :key="index">
-              <ProjectItem :item="item" />
-            </n-grid-item>
-          </n-grid>
+    <n-grid
+      class="mt-4 mb-4"
+      :y-gap="15"
+      :x-gap="15"
+      cols="2 s:2 m:3 l:6 xl:6 2xl:6"
+      responsive="screen"
+    >
+      <n-grid-item v-for="(item, index) of fastActions" :key="index">
+        <n-card @click="fastActionClick(item)">
+          <div class="flex flex-col items-center justify-center">
+            <span
+              :class="[item.icon, 'iconfont']"
+              :style="{ color: item.color, fontSize: '30px' }"
+            ></span>
+            <span class="mt-1">{{ item.title }}</span>
+          </div>
         </n-card>
+      </n-grid-item>
+    </n-grid>
+
+    <n-grid
+      class="mt-4 mb-4"
+      :y-gap="15"
+      :x-gap="15"
+      cols="2 s:2 m:3 l:6 xl:6 2xl:6"
+      responsive="screen"
+    >
+      <n-grid-item v-for="(item, index) of dataItems" :key="index">
+        <ProjectItem :item="item" />
+      </n-grid-item>
+    </n-grid>
+
+    <n-grid cols="1 s:1 m:2 l:2 xl:2 2xl:2" :y-gap="15" :x-gap="15" responsive="screen">
+      <n-grid-item>
         <n-card
-          title="动态信息"
-          header-style="padding: 10px"
+          title="项目进度"
           :content-style="{ padding: '5px' }"
-          class="mt-1"
-        >
-          <div v-for="(item, index) of trendsItems" :key="index">
-            <TrendsItem :item="item">
-              <template #title="{ title }">
-                <div v-html="title"></div>
-              </template>
-            </TrendsItem>
-          </div>
-        </n-card>
-      </div>
-      <div style="flex: 2; margin-left: 5px">
-        <n-card
-          title="快捷操作"
-          :content-style="{ padding: 0 }"
           :header-style="{ padding: '10px' }"
         >
-          <n-grid :x-gap="1" :y-gap="1" :cols="3">
-            <n-grid-item v-for="(item, index) of fastActions" :key="index">
-              <div
-                @click="fastActionClick(item)"
-                class="flex flex-col items-center justify-center fast-item-wrapper"
-              >
-                <span
-                  :class="[item.icon, 'iconfont']"
-                  :style="{ color: item.color, fontSize: '25px' }"
-                ></span>
-                <span class="mt-1">{{ item.title }}</span>
-              </div>
-            </n-grid-item>
-          </n-grid>
+          <n-data-table :columns="columns" :data="dataSource" :pagination="false" />
         </n-card>
+      </n-grid-item>
+      <n-grid-item>
         <n-card
-          title="待办事项"
-          class="mt-1"
-          :content-style="{ padding: '10px' }"
+          title="项目动态"
+          :content-style="{ padding: '5px' }"
           :header-style="{ padding: '10px' }"
-          :footer-style="{ padding: '0px' }"
         >
-          <TodoItem v-for="(item, index) of tempWaitingItems" :key="index" :item="item" />
-          <div v-if="isShowMore" class="text-center">
-            <n-button type="text" @click="toggleMore">
-              {{ showWatingMode ? '收起更多' : '显示更多' }}
-              <template #icon>
-                <i class="iconfont" :class="[showWatingMode ? 'icon-caret-up' : 'icon-caret-down']">
-                </i>
-              </template>
-            </n-button>
-          </div>
+          <TodoItem v-for="(item, index) of waitingItmes" :key="index" :item="item" />
         </n-card>
-      </div>
-    </div>
-    <div v-else class="mt-1">
-      <n-card
-        title="我的课程"
-        :content-style="{ padding: '5px' }"
-        :header-style="{ padding: '5px' }"
-      >
-        <n-grid :x-gap="10" :y-gap="10" :cols="3">
-          <n-grid-item v-for="(item, index) of dataItems" :key="index">
-            <ProjectItem :item="item" />
-          </n-grid-item>
-        </n-grid>
-      </n-card>
-      <n-card
-        title="动态信息"
-        :content-style="{ padding: '5px' }"
-        :header-style="{ padding: '5px' }"
-        class="mt-1"
-      >
-        <div v-for="(item, index) of trendsItems" :key="index">
-          <TrendsItem :item="item">
-            <template #title="{ title }">
-              <div v-html="title"></div>
-            </template>
-          </TrendsItem>
-        </div>
-      </n-card>
-      <n-card
-        title="快捷操作"
-        :content-style="{ padding: 0 }"
-        :header-style="{ padding: '5px' }"
-        class="mt-1"
-      >
-        <n-grid :x-gap="10" :y-gap="10" :cols="3">
-          <n-grid-item v-for="(item, index) of fastActions" :key="index">
-            <div
-              @click="fastActionClick(item)"
-              class="flex flex-col items-center justify-center fast-item-wrapper"
-            >
-              <div
-                :class="[item.icon, 'iconfont']"
-                :style="{ color: item.color, fontSize: '20px' }"
-              ></div>
-              <div class="margin-top-xs">{{ item.title }}</div>
-            </div>
-          </n-grid-item>
-        </n-grid>
-      </n-card>
-      <n-card
-        title="待办事项"
-        class="mt-1"
-        :content-style="{ padding: '10px' }"
-        :header-style="{ padding: '5px' }"
-      >
-        <TodoItem v-for="(item, index) of tempWaitingItems" :key="index" :item="item" />
-        <div v-if="isShowMore" class="text-center">
-          <n-button type="text" @click="toggleMore"
-            >{{ showWatingMode ? '收起更多' : '显示更多' }}
-            <i
-              class="el-icon-view"
-              :class="[showWatingMode ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"
-            >
-            </i>
-          </n-button>
-        </div>
-      </n-card>
-    </div>
+      </n-grid-item>
+    </n-grid>
   </div>
 </template>
 
 <script lang="ts">
   import ProjectItem from './components/ProjectItem.vue'
-  import TrendsItem from './components/TrendsItem.vue'
   import TodoItem from './components/TodoItem.vue'
-  import W_LOGO from '@/assets/the_w.png'
-  import X_LOGO from '@/assets/the_x.png'
-  import P_LOGO from '@/assets/the_p.png'
-  import REACT_PATH from '@/assets/img_react.jpeg'
-  import VUE_PATH from '@/assets/img_vue.jpeg'
-  import ANGULAR_PATH from '@/assets/img_angular.jpeg'
-  import AVATAR_01 from '@/assets/img_avatar_01.jpeg'
-  import AVATAR_02 from '@/assets/img_avatar_02.jpeg'
-  import AVATAR_DEFAULT from '@/assets/img_avatar_default.png'
-  import { computed, defineComponent, onMounted, reactive, ref } from '@vue/runtime-core'
+  import { computed, defineComponent } from 'vue'
   import { useRouter } from 'vue-router'
   import { random } from 'lodash'
   import { useLayoutStore } from '@/components'
@@ -210,130 +96,137 @@
     name: 'WorkPlace',
     components: {
       ProjectItem,
-      TrendsItem,
       TodoItem,
     },
     setup() {
       const waitingItmes = [
         {
-          content: '早上，中午，晚上上下班别忘记打卡',
-          time: '04-05',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
+          name: 'lyj',
+          content: '哎哟，不错哟，加油',
+          time: '04-04',
         },
         {
+          name: '王总',
           content: '给经理打印文件',
           time: '04-04',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
         },
         {
-          content: '下班断电',
-          time: '04-03',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-        },
-        {
+          name: '老李',
           content: '等到周末的时候和同事一起去逛街，买新衣服，买新手机，买包包，各种买买买',
           time: '04-02',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
         },
         {
+          name: '花哥',
           content: '新同事入职培训工作',
           time: '04-01',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
         },
         {
+          name: '清清玄',
           content: '给领导安排机票，酒店住宿等问题',
           time: '03-31',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
         },
       ]
-      const isShowMore = computed(() => {
-        return waitingItmes.length > 4
-      })
       const layoutStore = useLayoutStore()
       const isMobileScreen = computed(() => {
         return layoutStore.state.device === 'mobile'
       })
+      const dataSource = [
+        {
+          key: '1',
+          projectName: 'Arco Admin 开发',
+          beginTime: '2021-12-01',
+          endTime: '2021-12-31',
+          progress: 100,
+          status: '完成',
+        },
+        {
+          key: '2',
+          projectName: '官网开发',
+          beginTime: '2021-12-01',
+          endTime: '2021-12-31',
+          progress: 90,
+          status: '进行中',
+        },
+        {
+          key: '3',
+          projectName: '文档编写',
+          beginTime: '2021-12-01',
+          endTime: '2021-12-31',
+          progress: 80,
+          status: '进行中',
+        },
+        {
+          key: '4',
+          projectName: '各版本升级工作',
+          beginTime: '2021-12-01',
+          endTime: '2025-12-31',
+          progress: 50,
+          status: '进行中',
+        },
+        {
+          key: '5',
+          projectName: '软文编写',
+          beginTime: '2021-12-01',
+          endTime: '2025-12-31',
+          progress: 50,
+          status: '进行中',
+        },
+        {
+          key: '5',
+          projectName: '工具编写',
+          beginTime: '2021-12-01',
+          endTime: '2025-12-31',
+          progress: 50,
+          status: '进行中',
+        },
+      ]
       const userStore = useUserStore()
       const avatar = computed(() => userStore.avatar)
-      const tempWaitingItems = reactive([] as Array<any>)
-      const showWatingMode = ref(false)
-      const toggleMore = () => {
-        showWatingMode.value = !showWatingMode.value
-        tempWaitingItems.length = 0
-        if (showWatingMode.value) {
-          tempWaitingItems.push(...waitingItmes)
-        } else {
-          tempWaitingItems.push(...waitingItmes.slice(0, 4))
-        }
-      }
       const router = useRouter()
       const fastActionClick = ({ path = '/' }) => {
         router.push(path)
       }
-      onMounted(() => {
-        tempWaitingItems.push(
-          ...(waitingItmes.length > 4 ? waitingItmes.slice(0, 4) : waitingItmes)
-        )
-      })
       return {
-        isShowMore,
         isMobileScreen,
-        tempWaitingItems,
+        waitingItmes,
         avatar,
         currentDate: date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate(),
         dataItems: [
           {
             title: 'Vue Admin Work',
-            imagePath: W_LOGO,
             target: 'http://qingqingxuan.gitee.io/vue-admin-work',
+            gitee: 'http://www.vueadminwork.com',
+            ui: 'Element UI',
           },
           {
             title: 'Vue Admin Work X',
-            imagePath: X_LOGO,
             target: 'http://qingqingxuan.gitee.io/vue-admin-work-x',
+            gitee: 'http://www.vueadminwork.com',
+            ui: 'Element Plus',
           },
           {
             title: 'Vue Admin Work P',
-            imagePath: P_LOGO,
-            target: 'http://qingqingxuan.gitee.io/vue-admin-work-p',
+            target: 'http://qingqingxuan.gitee.io/admin-work',
+            gitee: 'http://www.vueadminwork.com',
+            ui: 'NaiveUI',
           },
           {
-            title: 'React',
-            imagePath: REACT_PATH,
+            title: 'Arco Work',
+            target: 'http://qingqingxuan.gitee.io/admin-work',
+            gitee: 'http://www.vueadminwork.com',
+            ui: 'ArcoDesign',
           },
           {
-            title: 'Vue',
-            imagePath: VUE_PATH,
+            title: 'Vue Admin Work A',
+            target: 'http://qingqingxuan.gitee.io/vue-admin-work-x',
+            gitee: 'http://www.vueadminwork.com',
+            ui: 'Antd',
           },
           {
-            title: 'Angular',
-            imagePath: ANGULAR_PATH,
-          },
-        ],
-        trendsItems: [
-          {
-            avatar: AVATAR_01,
-            title:
-              '<span><span class="text-blue-600">孙悟空</span>发表了一条动态<span class="text-blue-600">《看我七十二变》</span></span>',
-          },
-          {
-            avatar: AVATAR_02,
-            title:
-              '<span><span class="text-blue-600">唐僧</span>赞了<span class="text-blue-600">八戒</span><span class="text-blue-600">~今天晚上的猪头肉真香~</span></span>',
-          },
-          {
-            avatar: AVATAR_01,
-            title:
-              '<span><span class="text-blue-600">孙悟空</span>发表了一条动态<span class="text-blue-600">《看我七十二变》</span></span>',
-          },
-          {
-            avatar: AVATAR_02,
-            title:
-              '<span><span class="text-blue-600">唐僧</span>赞了<span class="text-blue-600">八戒</span><span class="text-blue-600">~今天晚上的猪头肉真香~</span></span>',
-          },
-          {
-            avatar: AVATAR_DEFAULT,
-            title: '<span><span class="text-blue-600">我</span>提交了请假申请',
+            title: 'Admin Work',
+            target: 'http://qingqingxuan.gitee.io/admin-work',
+            gitee: 'http://www.vueadminwork.com',
+            ui: 'NaiveUI',
           },
         ],
         fastActions: [
@@ -374,9 +267,30 @@
             color: COLORS[random(0, COLORS.length)],
           },
         ],
-        showWatingMode,
         fastActionClick,
-        toggleMore,
+        dataSource,
+        columns: [
+          {
+            title: '项目名',
+            key: 'projectName',
+          },
+          {
+            title: '开始时间',
+            key: 'beginTime',
+          },
+          {
+            title: '结束时间',
+            key: 'endTime',
+          },
+          {
+            title: '进度',
+            key: 'progress',
+          },
+          {
+            title: '状态',
+            key: 'status',
+          },
+        ],
       }
     },
   })
@@ -384,17 +298,17 @@
 
 <style lang="scss" scoped>
   .avatar-wrapper {
-    width: 5rem;
-    height: 5rem;
-    max-width: 5rem;
-    max-height: 5rem;
-    min-width: 5rem;
-    min-height: 5rem;
+    width: 3rem;
+    height: 3rem;
+    max-width: 3rem;
+    max-height: 3rem;
+    min-width: 3rem;
+    min-height: 3rem;
     & > img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      border: 2px solid yellowgreen;
+      border: 2px solid var(--primary-color);
     }
   }
   .item-action {

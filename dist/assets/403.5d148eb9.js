@@ -1,1 +1,0 @@
-import e from"./ExceptionStatus.65765f58.js";import{d as o,r as n,o as s,c as a,a as c}from"./vendor.e0f74c14.js";var r=o({name:"Page403",components:{ExceptionStatus:e}});const p={class:"main-container"};function i(m,d,_,f,u,x){const t=n("ExceptionStatus");return s(),a("div",p,[c(t,{status:"403"})])}r.render=i;export{r as default};

@@ -2,8 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root{
-  --menu-width: 210px
+:root {
+  --menu-width: 210px;
 }
 html,
 body,
@@ -14,6 +14,10 @@ body,
   box-sizing: border-box;
 }
 
-td .n-button + .n-button{
+td .n-button + .n-button {
   margin-left: 10px;
+}
+
+.n-card {
+  border-radius: 10px;
 }
