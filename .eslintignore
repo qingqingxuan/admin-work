@@ -12,3 +12,4 @@ dist
 .local
 /bin
 Dockerfile
+/dist
