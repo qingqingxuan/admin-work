@@ -27,12 +27,14 @@
       </n-grid-item>
       <n-grid-item :span="19">
         <div>
-          <TableHeader ref="tableHeaderRef" :show-filter="false">
-            <template #top-right>
-              <DeleteButton @delete="onDeleteItems" />
-            </template>
-          </TableHeader>
           <TableBody>
+            <template #header>
+              <TableHeader ref="tableHeaderRef" :show-filter="false">
+                <template #top-right>
+                  <DeleteButton @delete="onDeleteItems" />
+                </template>
+              </TableHeader>
+            </template>
             <template #default>
               <n-data-table
                 :loading="tableLoading"
@@ -45,8 +47,10 @@
                 @update:checked-row-keys="onRowCheck"
               />
             </template>
+            <template #footer>
+              <TableFooter ref="tableFooterRef" :pagination="pagination" />
+            </template>
           </TableBody>
-          <TableFooter ref="tableFooterRef" :pagination="pagination" />
         </div>
       </n-grid-item>
     </n-grid>
@@ -67,15 +71,7 @@
     useTableHeight,
   } from '@/hooks/table'
   import { DataTableColumn, NAvatar, useDialog, useMessage } from 'naive-ui'
-  import {
-    defineComponent,
-    getCurrentInstance,
-    h,
-    onMounted,
-    ref,
-    shallowReactive,
-    watch,
-  } from 'vue'
+  import { defineComponent, h, onMounted, ref, shallowReactive, watch } from 'vue'
   export default defineComponent({
     name: 'UserList',
     setup() {
@@ -195,11 +191,14 @@
             title: '头像',
             key: 'avatar',
             render: (rowData: any) => {
-              return h(NAvatar, {
-                circle: true,
-                size: 'small',
-                src: rowData.avatar || '',
-              })
+              return h(
+                NAvatar,
+                {
+                  circle: true,
+                  size: 'small',
+                },
+                { default: () => rowData.nickName.substring(0, 1) }
+              )
             },
           },
           {
@@ -311,7 +310,7 @@
         }
       )
       onMounted(async () => {
-        table.tableHeight.value = await useTableHeight(getCurrentInstance())
+        table.tableHeight.value = await useTableHeight()
         doRefresh()
       })
       return {

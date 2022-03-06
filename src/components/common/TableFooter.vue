@@ -1,5 +1,5 @@
 <template>
-  <n-card :content-style="{ padding: 0 }" class="table-footer-container">
+  <n-card :bordered="false" :content-style="{ padding: 0 }" class="table-footer-container">
     <div class="flex justify-center">
       <n-pagination
         :page="pagination?.page"

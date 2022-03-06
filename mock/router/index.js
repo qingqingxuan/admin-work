@@ -138,7 +138,7 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: 'http://qingqingxuan.gitee.io/work-p-site',
+        menuUrl: 'http://www.vueadminwork.com',
         menuName: '外链（官网）',
       },
       {

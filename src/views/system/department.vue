@@ -1,11 +1,13 @@
 <template>
   <div class="main-container">
-    <TableHeader :show-filter="false">
-      <template #top-right>
-        <AddButton @add="onAddItem" />
-      </template>
-    </TableHeader>
     <TableBody>
+      <template #header>
+        <TableHeader :show-filter="false">
+          <template #top-right>
+            <AddButton @add="onAddItem" />
+          </template>
+        </TableHeader>
+      </template>
       <template #default>
         <n-data-table
           :loading="tableLoading"

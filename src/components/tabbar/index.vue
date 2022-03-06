@@ -22,7 +22,7 @@
           @contextmenu="onContextMenu(item.fullPath, $event)"
         >
           <span
-            style="font-size: 12px"
+            style="font-size: 12px; margin-top: 2px"
             class="text-item"
             @click.self="itemChildClick(item.fullPath, $event)"
           >
@@ -446,7 +446,6 @@
     .tab-item {
       padding: 7px 10px;
       cursor: pointer;
-      display: inline-flex;
       .icon-item {
         margin-left: 0;
         width: 0;

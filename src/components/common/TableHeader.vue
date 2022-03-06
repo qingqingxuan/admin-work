@@ -3,6 +3,7 @@
     <n-card
       :title="title"
       :content-style="{ padding: '0px' }"
+      :bordered="false"
       header-style="font-size: 16px; padding: 10px 15px; border-radius: 0"
     >
       <template #header-extra>

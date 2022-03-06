@@ -1,33 +1,39 @@
 <template>
   <div class="main-container">
-    <TableHeader
-      :show-filter="true"
-      title="查询条件"
-      @search="onSearch"
-      @reset-search="onResetSearch"
-    >
-      <template #search-content>
-        <DataForm
-          ref="searchForm"
-          :form-config="{
-            labelWidth: 60,
-          }"
-          :options="conditionItems"
-          preset="grid-item"
-        />
-      </template>
-    </TableHeader>
     <TableBody ref="tableBody">
+      <template #header>
+        <TableHeader
+          :show-filter="true"
+          title="查询条件"
+          @search="onSearch"
+          @reset-search="onResetSearch"
+        >
+          <template #search-content>
+            <DataForm
+              ref="searchForm"
+              :form-config="{
+                labelWidth: 60,
+              }"
+              :options="conditionItems"
+              preset="grid-item"
+            />
+          </template>
+        </TableHeader>
+      </template>
       <template #default>
         <n-data-table
           :loading="tableLoading"
           :data="dataList"
           :columns="tableColumns"
           :row-key="rowKey"
+          :style="{ height: `${tableHeight}px` }"
+          :flex-height="true"
         />
       </template>
+      <template #footer>
+        <TableFooter :pagination="pagination" />
+      </template>
     </TableBody>
-    <TableFooter :pagination="pagination" />
   </div>
 </template>
 
@@ -35,7 +41,7 @@
   import { post } from '@/api/http'
   import { getTableList } from '@/api/url'
   import { renderTag } from '@/hooks/form'
-  import { usePagination, useRowKey, useTable, useTableColumn } from '@/hooks/table'
+  import { usePagination, useRowKey, useTable, useTableColumn, useTableHeight } from '@/hooks/table'
   import { DataFormType, FormItem } from '@/types/components'
   import {
     DataTableColumn,
@@ -46,7 +52,6 @@
     NInput,
     NSelect,
     NSpace,
-    NSwitch,
     NTimePicker,
     SelectOption,
     useMessage,
@@ -179,6 +184,7 @@
     setup() {
       const searchForm = ref<DataFormType | null>(null)
       const pagination = usePagination(doRefresh)
+      pagination.pageSize = 20
       const table = useTable()
       const message = useMessage()
       const rowKey = useRowKey('id')
@@ -202,11 +208,14 @@
             title: '头像',
             key: 'avatar',
             render: (rowData: any) => {
-              return h(NAvatar, {
-                circle: true,
-                size: 'small',
-                src: rowData.avatar || '',
-              })
+              return h(
+                NAvatar,
+                {
+                  circle: true,
+                  size: 'small',
+                },
+                { default: () => rowData.nickName.substring(0, 1) }
+              )
             },
           },
           {
@@ -263,7 +272,10 @@
       function onResetSearch() {
         searchForm.value?.reset()
       }
-      onMounted(doRefresh)
+      onMounted(async () => {
+        table.tableHeight.value = await useTableHeight()
+        doRefresh()
+      })
       return {
         ...table,
         rowKey,

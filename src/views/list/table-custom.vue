@@ -1,15 +1,17 @@
 <template>
   <div class="main-container">
-    <TableHeader :show-filter="false">
-      <template #table-config>
-        <TableConfig @update-border="onUpdateBorder" @refresh="doRefresh" />
-        <SortableTable class="ml-4" :columns="tableColumns" @update="onUpdateTable" />
-      </template>
-      <template #top-right>
-        <DeleteButton @delete="onDeleteItem" />
-      </template>
-    </TableHeader>
     <TableBody>
+      <template #header>
+        <TableHeader :show-filter="false">
+          <template #table-config>
+            <TableConfig @update-border="onUpdateBorder" @refresh="doRefresh" />
+            <SortableTable class="ml-4" :columns="tableColumns" @update="onUpdateTable" />
+          </template>
+          <template #top-right>
+            <DeleteButton @delete="onDeleteItem" />
+          </template>
+        </TableHeader>
+      </template>
       <template #default>
         <n-data-table
           :loading="tableLoading"
@@ -20,8 +22,10 @@
           @update:checked-row-keys="handleSelectionChange"
         />
       </template>
+      <template #footer>
+        <TableFooter :pagination="pagination" />
+      </template>
     </TableBody>
-    <TableFooter :pagination="pagination" />
   </div>
 </template>
 
@@ -32,7 +36,7 @@
   import { usePagination, useRowKey, useTable, useTableColumn } from '@/hooks/table'
   import { TablePropsType } from '@/types/components'
   import { sortColumns } from '@/utils'
-  import { DataTableColumn, NAvatar, NSwitch, useDialog, useMessage } from 'naive-ui'
+  import { DataTableColumn, NAvatar, useDialog, useMessage } from 'naive-ui'
   import { defineComponent, h, onMounted, reactive } from 'vue'
   export default defineComponent({
     name: 'TableCustom',
@@ -63,11 +67,14 @@
               title: '头像',
               key: 'avatar',
               render: (rowData: any) => {
-                return h(NAvatar, {
-                  circle: true,
-                  size: 'small',
-                  src: rowData.avatar || '',
-                })
+                return h(
+                  NAvatar,
+                  {
+                    circle: true,
+                    size: 'small',
+                  },
+                  { default: () => rowData.nickName.substring(0, 1) }
+                )
               },
             },
             {

@@ -30,25 +30,24 @@ interface Table {
   }
 }
 
-export const useTableHeight = async function (currentIns: any): Promise<number> {
-  const clientHeight = document.body.clientHeight
+export const useTableHeight = async function (): Promise<number> {
+  const clientHeight = document.querySelector('.main-section')?.clientHeight || 0
   return new Promise((resolve) => {
     setTimeout(() => {
-      if (currentIns) {
-        let tempHeight = 0
-        if (currentIns.refs.tableHeaderRef) {
-          const header = (currentIns.refs as any).tableHeaderRef.$el.nextElementSibling
-          tempHeight += header.offsetTop + header.clientHeight
-        }
-        if (currentIns.refs.tableFooterRef) {
-          const footer = (currentIns.refs as any).tableFooterRef.$el
-          tempHeight += footer.clientHeight + 65
-        } else {
-          tempHeight += 60
-        }
-        resolve(clientHeight - tempHeight)
+      let tempHeight = 0
+      const header = document.getElementById('tableHeaderContainer')
+      if (header) {
+        console.log(header.clientHeight)
+
+        tempHeight += header.clientHeight
       }
-      resolve(150)
+      const footer = document.querySelector('.table-footer-container')
+      if (footer) {
+        console.log(footer.clientHeight)
+        tempHeight += footer.clientHeight
+      }
+      tempHeight += 20 + 2 // 加是 table-body 上下 10px的间距 和 1px的border
+      resolve(clientHeight - tempHeight)
     }, 1000)
   })
 }
@@ -95,7 +94,9 @@ export const useRenderAction = function (actions: TableActionModel[]) {
       NButton,
       {
         type: it.type || 'primary',
-        size: 'small',
+        size: 'tiny',
+        secondary: true,
+        round: true,
         disabled: it.disabled,
         onClick: it.onClick,
       },

@@ -1,3 +1,17 @@
+### 2022-1-17(v: 1.1.3)
+
+- 升级：升级 `naive-ui` 版本 到 `2.26.1`
+
+- 升级: 升级`naive-ui`组件由原来的全部引入改成按需引入，新增第三方依赖：`unplugin-vue-components`，删除 `layouts/index.ts` 手动引入的 `naive-ui` 组件
+
+- 修复：`tabbar`中的按钮文本不居中显示的样式 bug
+
+- 调整：重新设置 `table` 中 `按钮` 的显示样式更加精美
+
+- 调整：优化 `table-body`中 `n-table` 高度的流程逻辑，满足自适应高度的场景
+
+- 调整：把 `tableHeader` 和 `tableFooter` 合并到 `tableBody`中
+
 ### 2022-1-17(v: 1.1.1)
 
 - 升级：升级 `vue` 版本 到 `3.2.26`
