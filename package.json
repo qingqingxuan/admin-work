@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "staging": "vite build  --mode staging",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
+    "tsc": "vue-tsc --noEmit",
     "serve": "vite preview"
   },
   "dependencies": {
