@@ -5,6 +5,8 @@ import vitePluginCompression from 'vite-plugin-compression'
 import ViteComponents from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
+import vueJsx from '@vitejs/plugin-vue-jsx'
+
 export default ({ mode }) => {
   const config = {
     plugins: [
@@ -19,6 +21,7 @@ export default ({ mode }) => {
       ViteComponents({
         resolvers: [NaiveUiResolver()],
       }),
+      vueJsx(),
     ],
     resolve: {
       alias: [
