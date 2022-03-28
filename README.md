@@ -16,11 +16,11 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 ## 项目地址：
 
-- [🎉 官网&文档&授权--地址](http://www.vueadminwork.com)
+- [🎉 文档地址](http://www.vueadminwork.com)
 
-- [🎉 Admin Work 演示地址（Vuex.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/admin-work)
+- [🎉 演示地址（Vuex.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/admin-work)
 
-## Vue Admin Work 系列中其它项目的演示地址
+## Vue Admin Work 系列中其它开源项目的演示地址
 
 - [🎉 Vue Admin Work 演示地址（Vue2.x + Javascript + Element UI + Webpack）](http://qingqingxuan.gitee.io/vue-admin-work)
 
@@ -32,27 +32,13 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 - [🎉 Arco Work 演示地址（Vue3.x + Typescript + Arco Design + Vite2)](http://qingqingxuan.gitee.io/arco-admin)
 
-## Vue Admin Work 微信群
-
-<div align="center">
-<img src="http://qingqingxuan.gitee.io/img/wechat-group.jpeg" style="zoom:20%;" /> 
-</div>
-
-如果微信群已经过期，请添加客服~~邀请进群
-
-## Vue Admin Work QQ 群
-
-## Vue Admin Work 前端讨论 QQ 群
-
-<div align="center">
-<img src="http://qingqingxuan.gitee.io/img/qq-custom.png" style="zoom:20%;" />
-</div>
 
 ## 关注微信公众号 `知码前端` 方便以后更新、升级
 
 <div  align="center">
-<img src="http://qingqingxuan.gitee.io/img/wx-service.jpg"/>
+<img width="50%" src="http://qingqingxuan.gitee.io/img/wx-service.jpg"/>
 </div>
+
 
 ## 适合人群
 
@@ -79,10 +65,10 @@ npm run dev
 ## 特别感谢
 
 | **[🚀 vue3.x](https://cn.vuejs.org/)**                     |
-| ---------------------------------------------------------- |
+| --------------------------------------------------------- |
 | **[🚀 naive-ui](https://www.naiveui.com/)**                |
 | **[🚀 vue-router-next](https://next.router.vuejs.org/)**   |
-| **[🚀 vuex-next](https://next.vuex.vuejs.org/)**           |
+| **[🚀 pinia](https://pinia.vuejs.org/)**                   |
 | **[🚀 axios](http://www.axios-js.com/)**                   |
 | **[🚀 mockjs](http://mockjs.com/)**                        |
 | **[🚀 echarts](https://echarts.apache.org/zh/index.html)** |
@@ -99,7 +85,6 @@ vue-admin-work 有如下优势:
 使用注意事项:
 1. 项目默认使用使用vscode工具进行开发，也是唯一推荐的开发工具
 2. 项目默认eslint校验规范
-3. 项目仅供个人或者团队学习商用。
 ```
 
 ## 效果图
@@ -108,12 +93,3 @@ vue-admin-work 有如下优势:
 | :-: | --- |
 | <img src="http://qingqingxuan.gitee.io/img/demo-p-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-p-4.png" style="zoom:20%;" /> |
 | <img src="http://qingqingxuan.gitee.io/img/demo-p-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-p-6.png" style="zoom:20%;" /> |
-
-|
-
-## 捐赠
-
-本项目是开源项目，开源不易，还请各们小主赏杯咖啡，以更好的维护此项目。您的支持是我们前进的最大动力。
-
-| <img src="http://qingqingxuan.gitee.io/img/wx-donation.jpg" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/ali-donation.jpg" style="zoom:20%;" /> |
-| :-: | :-: |
