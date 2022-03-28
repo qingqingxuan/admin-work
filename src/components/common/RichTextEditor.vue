@@ -51,9 +51,14 @@
       const getJsonContent = () => {
         return JSON.stringify(quill?.getContents())
       }
+
+      const setContents = (content: any) => {
+        quill?.setContents(content)
+      }
       return {
         getHtmlContent,
         getJsonContent,
+        setContents,
       }
     },
   })

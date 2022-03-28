@@ -116,9 +116,9 @@
     margin-bottom: 5px;
   }
   :deep(.n-menu .n-menu-item::before) {
-    left: 0;
-    right: 0;
-    border-radius: 0;
+    left: 5px;
+    right: 5px;
+    border-radius: 5px;
   }
   :deep(.n-menu .n-menu-item:hover) {
     background-color: var(--item-color-active);

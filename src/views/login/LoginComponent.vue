@@ -278,7 +278,7 @@
       align-items: center;
       background: linear-gradient(to bottom, var(--primary-color));
       .form-wrapper {
-        width: 35%;
+        width: 50%;
         border-radius: 5px;
         border: 1px solid #f0f0f0;
         padding: 20px;

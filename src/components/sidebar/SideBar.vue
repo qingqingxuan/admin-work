@@ -50,6 +50,21 @@
               hoverColor: 'rgba(255, 255, 255, 0.09)',
               itemColorActive: 'rgba(24, 160, 88, 0.4)',
             },
+            Menu: {
+              itemTextColorChildActive: '#ffffff',
+              itemIconColorChildActive: '#ffffff',
+
+              arrowColorChildActive: '#ffffff',
+              arrowColorHover: '#ffffff',
+
+              itemTextColorActive: '#ffffff',
+              itemIconColorActive: '#ffffff',
+
+              itemTextColorHover: '#ffffff',
+              itemIconColorHover: '#ffffff',
+
+              itemColorActive: 'var(--primary-color)',
+            },
           }
         if (store?.state.sideBarBgColor === SideTheme.WHITE)
           return { common: { cardColor: '#ffffff' } }

@@ -16,6 +16,9 @@
       <template #header-extra>
         <div class="flex">
           <n-space justify="end">
+            <n-button type="primary" size="small" @click="setHtmlContent"
+              >设置（回显）数据
+            </n-button>
             <n-button type="primary" size="small" @click="getHtmlContent">获取HTML</n-button>
             <n-button type="warning" size="small" @click="getJsonContent">获取JSON</n-button>
           </n-space>
@@ -48,6 +51,16 @@
         this.htmlContent = (
           this.$refs.richTextEditor as InstanceType<typeof RichTextEditor>
         ).getHtmlContent()
+      },
+      setHtmlContent() {
+        const delta = {
+          ops: [
+            { insert: 'Hello ' },
+            { insert: 'World', attributes: { bold: true } },
+            { insert: '\n' },
+          ],
+        }
+        ;(this.$refs.richTextEditor as InstanceType<typeof RichTextEditor>).setContents(delta)
       },
       getJsonContent() {
         this.jsonContent = (

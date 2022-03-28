@@ -1,5 +1,5 @@
 <template>
-  <n-card class="footer-container"> Copyright © {{ projectName }} 2021 </n-card>
+  <n-card class="footer-container"> Copyright © {{ projectName }} 2022 </n-card>
 </template>
 
 <script lang="ts">
