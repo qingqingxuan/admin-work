@@ -20,16 +20,7 @@
 
 <script lang="ts">
   import type { MenuOption } from 'naive-ui'
-  import {
-    defineComponent,
-    onMounted,
-    PropType,
-    reactive,
-    ref,
-    shallowReactive,
-    watch,
-    watchEffect,
-  } from 'vue'
+  import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { useLayoutStore } from '../../../components/index'
   import { RouteRecordRawWithHidden } from '../../../types/store'
@@ -47,14 +38,11 @@
       const store = useLayoutStore()
       const menuOptions = shallowReactive([] as Array<MenuOption>)
       const defaultPath = ref('')
-      const defaultExpandKeys = reactive([] as Array<string>)
+      const defaultExpandKeys = ref<Array<string>>([])
       const currentRoute = useRoute()
       const router = useRouter()
       defaultPath.value = currentRoute.fullPath
       handleExpandPath()
-      onMounted(() => {
-        handleMenu(props.routes)
-      })
       function handleMenu(routes?: Array<RouteRecordRawWithHidden>) {
         menuOptions.length = 0
         const tempMenus = transfromMenu(routes || [])
@@ -62,12 +50,18 @@
       }
       function handleExpandPath() {
         const keys = defaultPath.value.split('/')
-        // defaultExpandKeys.length = 0
-        keys.forEach((it) => {
-          if (!defaultExpandKeys.includes('/' + it)) {
-            defaultExpandKeys.push('/' + it)
-          }
-        })
+        const results = keys
+          .filter((it) => !!it)
+          .reduce((pre, cur) => {
+            const lastItem = pre[pre.length - 1]
+            if (!lastItem) {
+              pre.push('/' + cur)
+            } else {
+              pre.push(lastItem + '/' + cur)
+            }
+            return pre
+          }, [] as string[])
+        defaultExpandKeys.value = Array.from(new Set([...defaultExpandKeys.value, ...results]))
       }
       function onMenuClick(key: string) {
         if (isExternal(key)) return
@@ -77,10 +71,7 @@
         }
       }
       function onMenuExpandedKeysClick(keys: string[]) {
-        defaultExpandKeys.length = 0
-        keys.forEach((it) => {
-          defaultExpandKeys.push(it)
-        })
+        defaultExpandKeys.value = keys
       }
       watch(
         () => currentRoute.fullPath,

@@ -1,3 +1,11 @@
+### 2022-4-12(v: 1.1.5)
+
+- 升级：升级 `naive-ui` 版本 到 `2.28.0`
+
+- 修改：修复 `tabbar` 滑动异常的 bug，优化滑动流程
+
+- 修改：修改在 `menu` 在多级显示的情况下，刷新浏览器不默认展开的 bug。close [#10](https://github.com/qingqingxuan/admin-work/issues/10)
+
 ### 2022-3-28(v: 1.1.4)
 
 - 升级：升级 `naive-ui` 版本 到 `2.27.0`

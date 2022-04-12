@@ -7,12 +7,14 @@ const LOCAL_STOREAGE_VISITED_KEY = 'admin-work-visited'
 export default {
   addVisitedView(route) {
     return new Promise((resolve) => {
+      let isNewRoute = false
       if (!(this as StoreType).state.visitedView.find((it) => it.fullPath === route.fullPath)) {
+        isNewRoute = true
         ;(this as StoreType).state.visitedView.push(route)
         this.persistentVisitedView()
       }
       ;(this as StoreType).addCachedView && (this as StoreType).addCachedView(route)
-      resolve(route)
+      resolve({ route, isNewRoute })
     })
   },
   removeVisitedView(route) {

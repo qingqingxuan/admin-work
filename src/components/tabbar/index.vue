@@ -18,6 +18,7 @@
           :type="currentTab === item.fullPath ? 'primary' : 'default'"
           class="mx-1 rounded-sm tab-item"
           style="--n-height: 24px; --n-font-weight: 200"
+          :data="item.fullPath"
           @click.self="itemClick(item.fullPath, $event)"
           @contextmenu="onContextMenu(item.fullPath, $event)"
         >
@@ -158,17 +159,29 @@
           return
         }
         if (newVal.name) {
-          store.addVisitedView(newVal).then((route) => {
+          store.addVisitedView(newVal).then(({ route, isNewRoute }) => {
             this.currentTab = route.fullPath || ''
             const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
-            scrollbar.scrollTo(
-              {
-                left: 1000000000,
-                debounce: true,
-                behavior: 'smooth',
-              } as any,
-              0
-            )
+            if (isNewRoute) {
+              scrollbar.scrollTo(
+                {
+                  left: 1000000000,
+                  debounce: true,
+                  behavior: 'smooth',
+                } as any,
+                0
+              )
+            } else {
+              const el = document.querySelector(`[data="${this.currentTab}"]`) as HTMLElement
+              scrollbar.scrollTo(
+                {
+                  left: el.offsetLeft,
+                  debounce: true,
+                  behavior: 'smooth',
+                } as any,
+                0
+              )
+            }
           })
         }
       },
@@ -206,51 +219,31 @@
             fullPath: this.$route.fullPath,
             meta: this.$route.meta,
           } as RouteRecordRawWithHidden)
-          .then((route) => {
+          .then(({ route }) => {
             this.currentTab = route.fullPath as string
             this.$nextTick(() => {
-              const elements = document.querySelectorAll('.tab-item .text-item')
-              let currentEle: HTMLElement | null = null
-              for (let index = 0; index < elements.length; index++) {
-                const temp = elements[index] as HTMLElement
-                if (temp.innerText === route.meta?.title) {
-                  currentEle = elements[index] as HTMLElement
-                  break
-                }
-              }
+              const elements = document.querySelector(`[data="${this.currentTab}"]`) as HTMLElement
               const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
-              if (currentEle) {
+              elements &&
                 scrollbar.scrollTo(
                   {
-                    left: currentEle?.parentElement?.parentElement?.offsetLeft,
+                    left: elements.offsetLeft,
                     debounce: true,
                     behavior: 'smooth',
                   } as any,
                   0
                 )
-                this.isDisabledArrow()
-              }
+              this.isDisabledArrow()
             })
           })
       },
-      itemClick(path: string | undefined, e: MouseEvent) {
-        this.handleTabClick(e.target as HTMLElement, path || '/')
+      itemClick(path: string | undefined) {
+        this.handleTabClick(path || '/')
       },
-      itemChildClick(path: string | undefined, e: MouseEvent) {
-        this.handleTabClick(
-          (e.target as HTMLElement).parentElement?.parentElement as HTMLElement,
-          path || '/'
-        )
+      itemChildClick(path: string | undefined) {
+        this.handleTabClick(path || '/')
       },
-      handleTabClick(el: HTMLElement, path: string) {
-        ;(this.$refs.scrollbar as InstanceType<typeof NScrollbar>).scrollTo(
-          {
-            left: el.offsetLeft,
-            debounce: true,
-            behavior: 'smooth',
-          } as any,
-          0
-        )
+      handleTabClick(path: string) {
         this.$router.push(path)
       },
       iconClick(fullPath: string | undefined) {
