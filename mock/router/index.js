@@ -3,6 +3,28 @@ import Mock from 'mockjs'
 
 export const adminRoutes = [
   {
+    menuUrl: '/index',
+    menuName: 'Dashborad',
+    routeName: 'dashborad',
+    icon: 'icon-dashboard',
+    parentPath: '',
+    children: [
+      {
+        parentPath: '/index',
+        menuUrl: '/index/home',
+        menuName: '主控台',
+        routeName: 'home',
+      },
+      {
+        parentPath: '/index',
+        menuUrl: '/index/work-place',
+        menuName: '工作台',
+        routeName: 'workPlace',
+        isRootPath: true,
+      },
+    ],
+  },
+  {
     menuUrl: '/system',
     menuName: '系统管理',
     iconPrefix: 'iconfont',
@@ -14,7 +36,8 @@ export const adminRoutes = [
         menuUrl: '/system/department',
         menuName: '部门管理',
         badge: 'new',
-        cacheable: true,
+        localFilePath: '/system/local-path/department',
+        routeName: 'my-department',
       },
       {
         parentPath: '/system',
@@ -32,7 +55,6 @@ export const adminRoutes = [
         parentPath: '/system',
         menuUrl: '/system/menu',
         menuName: '菜单管理',
-        cacheable: true,
       },
     ],
   },

@@ -11,11 +11,6 @@ export const constantRoutes = [
     component: () => import('@/views/login/index.vue'),
   },
   {
-    path: '/',
-    redirect: '/index/home',
-    hidden: true,
-  },
-  {
     path: '/redirect',
     component: Layout,
     hidden: true,
@@ -39,7 +34,7 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: '',
+        path: 'info',
         component: () => import('@/views/personal/index.vue'),
         meta: {
           title: '个人中心',
@@ -47,6 +42,29 @@ export const constantRoutes = [
       },
     ],
   },
+  {
+    path: '/404',
+    name: '404',
+    hidden: true,
+    component: () => import('@/views/exception/404.vue'),
+  },
+  {
+    path: '/500',
+    name: '500',
+    hidden: true,
+    component: () => import('@/views/exception/500.vue'),
+  },
+  {
+    path: '/403',
+    name: '403',
+    hidden: true,
+    component: () => import('@/views/exception/403.vue'),
+  },
+]
+
+export const extraRoutes = []
+
+export const asyncRoutes = [
   {
     path: '/index',
     component: Layout,
@@ -81,28 +99,10 @@ export const constantRoutes = [
       },
     ],
   },
-  {
-    path: '/404',
-    name: '404',
-    hidden: true,
-    component: () => import('@/views/exception/404.vue'),
-  },
-  {
-    path: '/500',
-    name: '500',
-    hidden: true,
-    component: () => import('@/views/exception/500.vue'),
-  },
-  {
-    path: '/403',
-    name: '403',
-    hidden: true,
-    component: () => import('@/views/exception/403.vue'),
-  },
 ]
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: mapTwoLevelRouter(constantRoutes),
+  routes: mapTwoLevelRouter([...constantRoutes, ...extraRoutes]),
 })
 
 export default router

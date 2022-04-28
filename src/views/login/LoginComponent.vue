@@ -279,6 +279,7 @@
       background: linear-gradient(to bottom, var(--primary-color));
       .form-wrapper {
         width: 50%;
+        max-width: 500px;
         border-radius: 5px;
         border: 1px solid #f0f0f0;
         padding: 20px;

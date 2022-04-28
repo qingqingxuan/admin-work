@@ -1,1 +1,0 @@
-import{k as n}from"./vendor.88197545.js";function a(r){return{createScriptPromise:new Promise((t,o)=>{n(()=>{const e=document.createElement("script");e.type="text/javascript",e.onload=()=>{t("")},e.onerror=c=>{o(c)},e.src=r,document.head.appendChild(e)})})}}export{a as u};
