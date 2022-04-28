@@ -1,4 +1,4 @@
-import { h, reactive, Ref, ref, shallowReactive, VNode } from 'vue'
+import { h, reactive, Ref, ref, VNode } from 'vue'
 
 import { DataTableColumn, NButton } from 'naive-ui'
 import { TableFooterType, TableHeaderType } from '@/types/components'
@@ -10,16 +10,16 @@ export interface TableActionModel {
   onClick: () => {}
 }
 
-interface Table {
-  dataList: Array<any>
+interface Table<T = any> {
+  dataList: Ref<T[] | undefined>
   bordered: Ref<Boolean>
-  selectRows: Array<string | number>
+  selectRows: Ref<Array<string | number> | undefined>
   tableLoading: Ref<boolean>
   tableHeaderRef: Ref<TableHeaderType | null>
   tableFooterRef: Ref<TableFooterType | null>
   tableHeight: Ref<number>
-  handleSuccess: (res: any) => Promise<any>
-  handleSelectionChange: (tempSelectRows: Array<any>) => void
+  handleSuccess: ({ data }: { data: T[] }) => Promise<T[]>
+  handleSelectionChange: (tempSelectRows: Array<string | number>) => void
   useTableColumn: (columns: DataTableColumn[], options: DataTableColumn) => Array<any>
   selectionColumn: { type: 'selection' }
   indexColumn: {
@@ -52,23 +52,21 @@ export const useTableHeight = async function (): Promise<number> {
   })
 }
 
-export const useTable = function (): Table {
-  const dataList = shallowReactive([]) as Array<any>
-  const selectRows = shallowReactive([]) as Array<any>
+export const useTable = function <T = any>(): Table<T> {
+  const dataList = ref<Array<T>>()
+  const selectRows = ref<Array<string | number>>()
   const tableHeaderRef = ref<TableHeaderType | null>(null)
   const tableFooterRef = ref<TableFooterType | null>(null)
   const tableHeight = ref(200)
   const bordered = ref(false)
   const tableLoading = ref(true)
-  const handleSuccess = ({ data = [] }): Promise<any> => {
+  const handleSuccess = ({ data = [] }: { data: T[] }): Promise<T[]> => {
     tableLoading.value = false
-    dataList.length = 0
-    dataList.push(...data)
+    dataList.value = data
     return Promise.resolve(data)
   }
-  const handleSelectionChange = (tempSelectRows: Array<any>) => {
-    selectRows.length = 0
-    selectRows.push(...tempSelectRows)
+  const handleSelectionChange = (tempSelectRows: Array<string | number>) => {
+    selectRows.value = tempSelectRows
   }
   return {
     dataList,

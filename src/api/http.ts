@@ -11,21 +11,21 @@ export interface HttpOption {
   afterRequest?: () => void
 }
 
-export interface Response {
+export interface Response<T = any> {
   totalSize: number | 0
   code: number
   msg: string
-  data: any
+  data: T
 }
 
-function http({ url, data, method, headers, beforeRequest, afterRequest }: HttpOption) {
-  const successHandler = (res: AxiosResponse<Response>) => {
+function http<T = any>({ url, data, method, headers, beforeRequest, afterRequest }: HttpOption) {
+  const successHandler = (res: AxiosResponse<Response<T>>) => {
     if (res.data.code === 200) {
       return res.data
     }
     throw new Error(res.data.msg || '请求失败，未知异常')
   }
-  const failHandler = (error: Response) => {
+  const failHandler = (error: Response<Error>) => {
     afterRequest && afterRequest()
     throw new Error(error.msg || '请求失败，未知异常')
   }
@@ -37,14 +37,14 @@ function http({ url, data, method, headers, beforeRequest, afterRequest }: HttpO
     : request.post(url, params, { headers: headers }).then(successHandler, failHandler)
 }
 
-export function get({
+export function get<T = any>({
   url,
   data,
   method = 'GET',
   beforeRequest,
   afterRequest,
-}: HttpOption): Promise<Response> {
-  return http({
+}: HttpOption): Promise<Response<T>> {
+  return http<T>({
     url,
     method,
     data,
@@ -53,15 +53,15 @@ export function get({
   })
 }
 
-export function post({
+export function post<T = any>({
   url,
   data,
   method = 'POST',
   headers,
   beforeRequest,
   afterRequest,
-}: HttpOption): Promise<Response> {
-  return http({
+}: HttpOption): Promise<Response<T>> {
+  return http<T>({
     url,
     method,
     data,
@@ -88,7 +88,7 @@ export default {
 declare module '@vue/runtime-core' {
   // 为 `this.$` 提供类型声明
   interface ComponentCustomProperties {
-    $get: (options: HttpOption) => Promise<Response>
-    $post: (options: HttpOption) => Promise<Response>
+    $get: <T>(options: HttpOption) => Promise<Response<T>>
+    $post: <T>(options: HttpOption) => Promise<Response<T>>
   }
 }

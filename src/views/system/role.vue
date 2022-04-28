@@ -50,6 +50,11 @@
   import { DataFormType, ModalDialogType, FormItem } from '@/types/components'
   import { DataTableColumn, NInput, TreeOption, useDialog, useMessage } from 'naive-ui'
   import { defineComponent, h, nextTick, onMounted, ref, shallowReactive } from 'vue'
+  interface RoleModeType {
+    roleName: string
+    roleCode: string
+    description: string
+  }
   const ROLE_CODE_FLAG = 'ROLE_'
   const formItems = [
     {
@@ -153,7 +158,7 @@
       const modalDialogRef = ref<ModalDialogType | null>(null)
       const dataFormRef = ref<DataFormType | null>(null)
       const menuModalDialogRef = ref<ModalDialogType | null>(null)
-      const table = useTable()
+      const table = useTable<RoleModeType>()
       const rowKey = useRowKey('id')
       const naiveDialog = useDialog()
       const message = useMessage()
@@ -212,11 +217,13 @@
       const defaultCheckedKeys = shallowReactive([] as Array<string>)
       const defaultExpandedKeys = shallowReactive([] as Array<string>)
       function doRefresh() {
-        post({
+        post<Array<RoleModeType>>({
           url: getRoleList,
           data: {},
         })
-          .then(table.handleSuccess)
+          .then((res) => {
+            table.handleSuccess(res)
+          })
           .catch(console.log)
       }
       function onAddItem() {

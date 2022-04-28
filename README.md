@@ -32,15 +32,17 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 - [🎉 Arco Work 演示地址（Vue3.x + Typescript + Arco Design + Vite2)](http://qingqingxuan.gitee.io/arco-admin)
 
-
 ## 现在微信技术交流群需要添加好友之后邀请，如需要入群讨论请关注微信公众号添加好友。
+
+<div  align="center">
+<img width="30%" src="http://www.vueadminwork.com/weixin-custom.jpg"/>
+</div>
 
 ## 请关注我们的微信公众号 `知码前端` ，里面包含了各个版本的源码和进入微信福利群的方式
 
 <div  align="center">
 <img width="30%" src="http://qingqingxuan.gitee.io/img/wx-service.jpg"/>
 </div>
-
 
 ## 适合人群
 
@@ -67,7 +69,7 @@ npm run dev
 ## 特别感谢
 
 | **[🚀 vue3.x](https://cn.vuejs.org/)**                     |
-| --------------------------------------------------------- |
+| ---------------------------------------------------------- |
 | **[🚀 naive-ui](https://www.naiveui.com/)**                |
 | **[🚀 vue-router-next](https://next.router.vuejs.org/)**   |
 | **[🚀 pinia](https://pinia.vuejs.org/)**                   |
@@ -92,6 +94,6 @@ vue-admin-work 有如下优势:
 ## 效果图
 
 | <img src="http://qingqingxuan.gitee.io/img/demo-arco-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-2.png" style="zoom:20%;" /> |
-| :----------------------------------------------------------: | ------------------------------------------------------------ |
+| :-: | --- |
 | <img src="http://qingqingxuan.gitee.io/img/demo-arco-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-4.png" style="zoom:20%;" /> |
 | <img src="http://qingqingxuan.gitee.io/img/demo-arco-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-6.png" style="zoom:20%;" /> |
