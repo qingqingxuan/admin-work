@@ -22,15 +22,15 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 ## Vue Admin Work 系列中其它开源项目的演示地址
 
-- [🎉 Vue Admin Work 演示地址（Vue2.x + Javascript + Element UI + Webpack）](http://qingqingxuan.gitee.io/vue-admin-work)
+- [🎉 Vue Admin Work 演示地址（Vue2.x + Javascript + Element UI + Webpack）](http://x.vueadminwork.com)
 
-- [🎉 Vue Admin Work X 演示地址（Vue3.x + Typescript + Element Plus + Webpack）](http://qingqingxuan.gitee.io/vue-admin-work-x)
+- [🎉 Vue Admin Work X 演示地址（Vue3.x + Typescript + Element Plus + Webpack）](http://x.vueadminwork.com)
 
-- [🎉 Vue Admin Work P 演示地址（Vue3.x + Typescript + Navie UI + Vite2)](http://qingqingxuan.gitee.io/vue-admin-work-p)
+- [🎉 Vue Admin Work P 演示地址（Vue3.x + Typescript + Navie UI + Vite2)](http://p.vueadminwork.com)
 
-- [🎉 Vue Admin Work A 演示地址（Vue3.x + Typescript + Antd + Vite2)](http://qingqingxuan.gitee.io/vue-admin-work-a)
+- [🎉 Vue Admin Work A 演示地址（Vue3.x + Typescript + Antd + Vite2)](http://a.vueadminwork.com)
 
-- [🎉 Arco Work 演示地址（Vue3.x + Typescript + Arco Design + Vite2)](http://qingqingxuan.gitee.io/arco-admin)
+- [🎉 Arco Work 演示地址（Vue3.x + Typescript + Arco Design + Vite2)](http://arco.vueadminwork.com)
 
 ## 现在微信技术交流群需要添加好友之后邀请，如需要入群讨论请关注微信公众号添加好友。
 
