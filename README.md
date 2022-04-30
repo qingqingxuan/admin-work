@@ -1,6 +1,18 @@
 <div align="center">
-<img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" width="30%"/>
+<img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" width="150" height="150"/>
 </div>
+
+<p align="center">
+    <a href="./LICENSE">
+        <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" />
+    </a>
+    <a href="https://v3.cn.vuejs.org/">
+        <img src="https://img.shields.io/badge/vue.js-3.0-green" alt="Vue3.0">
+    </a>
+    <a href="http://p.vueadminwork.com">
+        <img src="https://img.shields.io/badge/🚀-open--in--browser-blueviolet" alt="Live Demo">
+    </a>
+</p>
 
 <h1 align = "center">Admin Work</h1>
 
