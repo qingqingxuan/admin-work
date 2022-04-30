@@ -25,32 +25,36 @@ Mock.mock(RegExp(getDepartmentList), 'post', function () {
       {
         id: 1,
         name: '总裁办',
-        depCode: 'dp_code_manager', // 0男 1女
-        'order|+1': 1, // 0不是 1是
+        parentId: '',
+        depCode: 'dp_code_manager',
+        'order|+1': 1,
         createTime: Random.now('yyyy-MM-dd HH:mm:ss'),
         status: 0, // 0 禁用 1正常
       },
       {
         id: 2,
         name: '市场部',
-        depCode: 'dp_code_marketing', // 0男 1女
-        'order|+1': 1, // 0不是 1是
+        parentId: '',
+        depCode: 'dp_code_marketing',
+        'order|+1': 1,
         createTime: Random.now('yyyy-MM-dd HH:mm:ss'),
         status: 1, // 0 禁用 1正常,
         children: [
           {
             id: 3,
             name: '市场一部',
-            depCode: 'dp_code_marketing_1', // 0男 1女
-            'order|+1': 1, // 0不是 1是
+            parentId: 2,
+            depCode: 'dp_code_marketing_1',
+            'order|+1': 1,
             createTime: Random.now('yyyy-MM-dd HH:mm:ss'),
             status: 1, // 0 禁用 1正常
           },
           {
             id: 4,
             name: '市场二部',
-            depCode: 'dp_code_marketing_2', // 0男 1女
-            'order|+1': 1, // 0不是 1是
+            parentId: 2,
+            depCode: 'dp_code_marketing_2',
+            'order|+1': 1,
             createTime: Random.now('yyyy-MM-dd HH:mm:ss'),
             status: 1, // 0 禁用 1正常
           },
@@ -59,16 +63,18 @@ Mock.mock(RegExp(getDepartmentList), 'post', function () {
       {
         id: 5,
         name: '技术部',
-        depCode: 'dp_code_technology', // 0男 1女
-        'order|+1': 1, // 0不是 1是
+        parentId: '',
+        depCode: 'dp_code_technology',
+        'order|+1': 1,
         createTime: Random.now('yyyy-MM-dd HH:mm:ss'),
         status: 1, // 0 禁用 1正常
       },
       {
         id: 6,
         name: '销售部',
-        depCode: 'dp_code_sale', // 0男 1女
-        'order|+1': 1, // 0不是 1是
+        parentId: '',
+        depCode: 'dp_code_sale',
+        'order|+1': 1,
         createTime: Random.now('yyyy-MM-dd HH:mm:ss'),
         status: 1, // 0 禁用 1正常
       },

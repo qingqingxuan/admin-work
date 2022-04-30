@@ -247,6 +247,11 @@ router.beforeEach(async (to) => {
         query: { redirect: to.fullPath },
       }
     } else {
+      // if (to.meta && to.meta.auth && !(to.meta.auth as Array<string>).includes('ROLE_admin')) {
+      //   return {
+      //     path: '/403',
+      //   }
+      // }
       const isEmptyRoute = layoutStore.isEmptyPermissionRoute()
       if (isEmptyRoute) {
         // 加载路由

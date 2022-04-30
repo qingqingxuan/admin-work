@@ -1,4 +1,4 @@
-import { MessageApi } from 'naive-ui'
+import { MessageApi, TreeSelectOption } from 'naive-ui'
 import { Ref, VNode } from 'vue'
 
 export interface HeaderCellStyle {
@@ -39,7 +39,7 @@ export interface FormItem extends TableSearchItem {
   maxLength?: number
   rows?: number
   disabled?: Ref<boolean> | boolean
-  optionItems?: Array<SelectOptionItem>
+  optionItems?: Array<SelectOptionItem | TreeSelectOption>
   path?: string
   reset?: (formItem: FormItem) => void
   render?: (formItem: FormItem) => VNode

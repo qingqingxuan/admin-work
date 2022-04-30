@@ -30,10 +30,18 @@
   import { TableActionModel, useTable, useRenderAction, useTableColumn } from '@/hooks/table'
   import { defineComponent, h, nextTick, onMounted, ref, shallowReactive } from 'vue'
   import _ from 'lodash'
-  import { DataTableColumn, NInput, NSelect, SelectOption, useDialog, useMessage } from 'naive-ui'
+  import {
+    DataTableColumn,
+    NInput,
+    SelectOption,
+    TreeSelectOption,
+    useDialog,
+    useMessage,
+  } from 'naive-ui'
   import { DataFormType, ModalDialogType, FormItem } from '@/types/components'
   import usePost from '@/hooks/usePost'
-  import { renderTag } from '@/hooks/form'
+  import { renderRadioButtonGroup, renderTag, renderTreeSelect } from '@/hooks/form'
+  import { transformTreeSelect } from '@/utils'
   interface Department {
     parentId: number
     id: number
@@ -49,16 +57,9 @@
       key: 'parentId',
       label: '父级部门',
       value: ref(null),
-      optionItems: shallowReactive([] as Array<SelectOption>),
+      optionItems: shallowReactive([] as Array<TreeSelectOption>),
       render: (formItem) => {
-        return h(NSelect, {
-          value: formItem.value.value,
-          onUpdateValue: (val) => {
-            formItem.value.value = val
-          },
-          placeholder: '请选择父级部门',
-          options: formItem.optionItems as Array<SelectOption>,
-        })
+        return renderTreeSelect(formItem.value, formItem.optionItems as Array<TreeSelectOption>)
       },
     },
     {
@@ -111,11 +112,28 @@
         return true
       },
     },
+    {
+      label: '部门状态',
+      key: 'status',
+      value: ref(null),
+      render: (formItem) => {
+        return renderRadioButtonGroup(formItem.value, [
+          {
+            label: '正常',
+            value: 1,
+          },
+          {
+            label: '禁用',
+            value: 0,
+          },
+        ])
+      },
+    },
   ] as Array<FormItem>
   export default defineComponent({
     name: 'Department',
     setup() {
-      const table = useTable()
+      const table = useTable<Department>()
       const message = useMessage()
       const naiveDailog = useDialog()
       const tableColumns = useTableColumn(
@@ -127,10 +145,6 @@
           {
             title: '部门编号',
             key: 'depCode',
-          },
-          {
-            title: '排序',
-            key: 'order',
           },
           {
             title: '状态',
@@ -170,21 +184,14 @@
       const modalDialog = ref<ModalDialogType | null>(null)
       const post = usePost()
       function doRefresh() {
-        post({
+        post<Array<Department>>({
           url: getDepartmentList,
         })
           .then(table.handleSuccess)
           .then((res) => {
             const parentFormItem = itemFormOptions.find((it) => it.key === 'parentId') as FormItem
             ;(parentFormItem.optionItems as Array<SelectOption>).length = 0
-            parentFormItem?.optionItems?.push(
-              ...(res as unknown as Array<any>).map((it) => {
-                return {
-                  label: it.name,
-                  value: it.id,
-                }
-              })
-            )
+            parentFormItem?.optionItems?.push(...transformTreeSelect(res, 'name', 'id'))
           })
       }
       function filterItems(srcArray: Array<Department>, filterItem: Department) {
@@ -211,7 +218,7 @@
           positiveText: '删除',
           negativeText: '再想想',
           onPositiveClick: () => {
-            filterItems(table.dataList, item)
+            filterItems(table.dataList.value!, item)
           },
         })
       }
@@ -239,12 +246,10 @@
           itemFormOptions.forEach((it) => {
             const key = it.key
             const propName = item[key]
-            if (propName) {
-              if (it.key === 'depCode') {
-                it.value.value = propName.replace(DP_CODE_FLAG, '')
-              } else {
-                it.value.value = propName
-              }
+            if (it.key === 'depCode') {
+              it.value.value = propName.replace(DP_CODE_FLAG, '')
+            } else {
+              it.value.value = propName
             }
           })
         })
