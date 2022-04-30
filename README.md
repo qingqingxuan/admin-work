@@ -1,9 +1,5 @@
-## 客官留步
-
-尊敬的小主，为了更好的开源，让开源走的更长久，请动一下可爱的小手指，点一下 star 吧~~在这里感谢您的支持与鼓励。我们将带着您的支持继续前行，为祖国的前端事业奉献一点点微薄之力~
-
 <div align="center">
-<img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 50%"/>
+<img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 30%"/>
 </div>
 
 <h1 align = "center">Admin Work</h1>
@@ -13,6 +9,29 @@
 Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下最流行的 Vue3 UI 库--NaiveUI
 
 使用了当今最流行的技术框架： `Vue3 + Vite2 + Typescript + Navie UI`
+
+## 特性：
+
+- 常用模板
+  - 内置常用模板，无需考虑交互排版，助你高效开发
+- 预设样式
+  - 样式美观大方，无缝对接 Naive Ui，随意组合页面，随心所欲
+- 布局方案
+  - 丰富的布局模式，具有高可配性，满足您的各类布局需求
+- 技术支持
+  - 优质的售后技术支持，完善的文档，让您事半功倍
+- 最新技术栈
+  - 基于 Vue3、Vite2、TypeScript、NaiveUI、Pinia 等最新技术栈开发
+- 轻量快速的热重载
+  - 无论应用程序大小如何，都始终极快的模块热重载（HMR）
+- 丰富的示例
+  - 常见的 Web 端插件示例实现
+- 组件封装
+  - 对日常使用频率较高的组件二次封装,满足基础工作需求
+- 主题配置
+  - 丰富的主题配置及黑暗主题适配
+- 权限管理
+  - 完善的前后端权限管理方案
 
 ## 项目地址：
 
