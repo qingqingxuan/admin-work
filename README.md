@@ -106,7 +106,7 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 ## 如何贡献
 
-非常欢迎你的加入！[提一个 Issue](https://github.com/anncwb/vue-vben-admin/issues/new/choose) 或者提交一个 Pull Request。
+非常欢迎你的加入！[提一个 Issue](https://github.com/qingqingxuan/admin-work/issues/new) 或者提交一个 Pull Request。
 
 **Pull Request:**
 
