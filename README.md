@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="./LICENSE">
-        <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" />
+        <img src="https://img.shields.io/github/license/qingqingxuan/admin-work" alt="MIT License" />
     </a>
     <a href="https://v3.cn.vuejs.org/">
         <img src="https://img.shields.io/badge/vue.js-3.0-green" alt="Vue3.0">
