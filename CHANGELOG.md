@@ -2,6 +2,10 @@
 
 - 升级：完善并修改 `department` 页面中的逻辑和 bug
 
+- 适配：升级 `tailwindcss` 版本 并且 适配修复 `tailwindcss` 高版本 与 `naive-ui` 样式冲突的问题。
+
+- 调整：调整 `tabbar` 中 `tab-item` 样式
+
 ### 2022-4-12(v: 2.0.0)
 
 - 升级：升级 `naive-ui` 版本 到 `2.28.0`

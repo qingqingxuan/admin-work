@@ -7,6 +7,12 @@ import DataForm from './common/DataForm'
 import { projectName } from '../setting'
 import { toHump } from '../utils'
 
+function adapterNaiveCss() {
+  const meta = document.createElement('meta')
+  meta.name = 'naive-ui-style'
+  document.head.appendChild(meta)
+}
+
 function getComponentName(key: string) {
   if (!key) {
     return ''
@@ -32,6 +38,7 @@ export function registerComponents(app: App) {
 const key = Symbol('layout_store')
 
 function install(app: App, options?: any) {
+  adapterNaiveCss()
   if (import.meta.env.MODE === 'development') {
     console.warn('install layout store start')
   }

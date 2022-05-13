@@ -16,16 +16,18 @@
           v-for="item of state.visitedView"
           :key="item.fullPath"
           :type="currentTab === item.fullPath ? 'primary' : 'default'"
-          class="mx-1 rounded-sm tab-item"
+          class="tab-item"
+          strong
+          secondary
           style="--n-height: 24px; --n-font-weight: 200"
           :data="item.fullPath"
-          @click.self="itemClick(item.fullPath, $event)"
+          @click.self="itemClick(item.fullPath)"
           @contextmenu="onContextMenu(item.fullPath, $event)"
         >
           <span
             style="font-size: 12px; margin-top: 2px"
             class="text-item"
-            @click.self="itemChildClick(item.fullPath, $event)"
+            @click.self="itemChildClick(item.fullPath)"
           >
             {{ item.meta ? item.meta.title : item.name }}
           </span>
@@ -459,6 +461,9 @@
           transition: all 0.2s ease-in-out;
         }
       }
+    }
+    .tab-item + .tab-item {
+      margin-left: 10px;
     }
     .arrow-wrapper {
       cursor: pointer;
