@@ -130,7 +130,24 @@ export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Ar
         ),
       } as MenuOption
       if (it.children) {
-        tempMenu.children = transfromMenu(it.children)
+        if (it.meta && it.meta.isSingle && it.children.length === 1) {
+          const item = it.children[0]
+          tempMenu.key = path.resolve(tempMenu.key, item.path)
+          tempMenu.label = item.meta && item.meta.title ? getLabel(item) : tempMenu.label
+          tempMenu.icon =
+            item.meta && item.meta.icon
+              ? renderMenuIcon(
+                  item.meta
+                    ? item.meta.iconPrefix
+                      ? (item.meta.iconPrefix as string)
+                      : 'icon'
+                    : 'icon',
+                  item.meta?.icon
+                )
+              : tempMenu.icon
+        } else {
+          tempMenu.children = transfromMenu(it.children)
+        }
       }
       tempMenus.push(tempMenu)
     })
