@@ -184,10 +184,6 @@
             key: 'createTime',
           },
           {
-            title: '角色编号',
-            key: 'roleCode',
-          },
-          {
             title: '操作',
             key: 'actions',
             render: (rowData) => {
