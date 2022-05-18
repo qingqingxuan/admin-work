@@ -91,8 +91,6 @@ declare module 'vue' {
     PopoverMessage: typeof import('./src/components/common/PopoverMessage.vue')['default']
     RichTextEditor: typeof import('./src/components/common/RichTextEditor.vue')['default']
     ScrollerMenu: typeof import('./src/components/sidebar/components/ScrollerMenu.vue')['default']
-    'ScrollerMenu copy': typeof import('./src/components/sidebar/components/ScrollerMenu copy.vue')['default']
-    'ScrollerMenu d': typeof import('./src/components/sidebar/components/ScrollerMenu d.vue')['default']
     SearchContent: typeof import('./src/components/common/SearchContent.vue')['default']
     Setting: typeof import('./src/components/setting/index.vue')['default']
     SideBar: typeof import('./src/components/sidebar/SideBar.vue')['default']
