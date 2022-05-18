@@ -3,7 +3,9 @@
     <div class="logo-wrapper">
       <Logo :always-show="true" />
     </div>
-    <div style="flex: 1"></div>
+    <div style="flex: 1; overflow: hidden; padding: 0 10px">
+      <HorizontalScrollerMenu :routes="routes" />
+    </div>
     <div v-if="state.device !== 'mobile'" class="right-wrapper">
       <ActionItems />
     </div>
@@ -14,13 +16,17 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+  import { defineComponent, computed } from 'vue'
   import { useLayoutStore } from '../../components/index'
   export default defineComponent({
     name: 'VAWHeader',
     setup() {
       const store = useLayoutStore()
+      const routes = computed(() => {
+        return store?.state.permissionRoutes.filter((it) => !!it.name)
+      })
       return {
+        routes,
         state: store?.state,
       }
     },
@@ -41,7 +47,7 @@
     box-sizing: border-box;
     border-bottom: 1px solid var(--border-color);
     .logo-wrapper {
-      width: $menuWidth;
+      width: calc(#{$menuWidth} / 3 * 2);
     }
     .menu-wrapper {
       flex: 1;

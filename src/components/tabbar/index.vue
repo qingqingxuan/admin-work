@@ -1,9 +1,6 @@
 <template>
   <div class="vaw-tab-bar-container">
-    <div v-if="showHumburger" class="humburger-wrapper">
-      <Humburger />
-    </div>
-    <div :class="{ 'tab-humburger-wrapper': showHumburger }" class="flex items-center">
+    <div class="flex items-center">
       <n-icon
         class="arrow-wrapper"
         :class="{ 'arrow-wrapper__disabled': leftArrowDisabled }"
@@ -104,12 +101,6 @@
   export default defineComponent({
     name: 'TabBar',
     components: { Close, ChevronBack, Refresh, ArrowBack, ArrowForward, Menu },
-    props: {
-      showHumburger: {
-        type: Boolean,
-        default: false,
-      },
-    },
     data() {
       return {
         currentTab: this.$route.fullPath,

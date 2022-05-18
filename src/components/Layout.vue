@@ -12,12 +12,9 @@
           class="vaw-layout-container"
           :class="[state.device === 'mobile' && 'is-mobile', state.theme]"
         >
-          <transition name="header">
-            <VAWHeader v-if="isShowHeader" />
-          </transition>
-          <template v-if="isShowHeader">
-            <SideBar :show-logo="!isShowHeader" />
-            <MainLayout :show-nav-bar="!isShowHeader" />
+          <template v-if="state.layoutMode === 'ttb'">
+            <VAWHeader />
+            <MainLayout :show-nav-bar="false" />
           </template>
           <template v-else-if="state.layoutMode === 'lcr'">
             <TabSplitSideBar />

@@ -2,19 +2,27 @@
   <div
     class="vaw-main-layout-container scrollbar"
     :class="[
-      !state.isCollapse ? 'main-layout-open-status' : 'main-layout-close-status',
+      state.layoutMode === 'ttb'
+        ? 'main-layout-ttb-status'
+        : !state.isCollapse
+        ? 'main-layout-open-status'
+        : 'main-layout-close-status',
       state.isFixedNavBar ? 'main-layout_fixed-nav-bar' : 'main-layout',
     ]"
   >
     <section
       :class="[
-        !state.isCollapse ? 'nav-bar-open-status' : 'nav-bar-close-status',
+        state.layoutMode === 'ttb'
+          ? 'nav-bar-ttb-status'
+          : !state.isCollapse
+          ? 'nav-bar-open-status'
+          : 'nav-bar-close-status',
         state.isFixedNavBar ? 'fixed-nav-bar' : '',
         !showNavBar ? 'tab-bar-top' : '',
       ]"
     >
       <NavBar v-if="showNavBar" />
-      <TabBar :show-humburger="isShowHeader" />
+      <TabBar />
     </section>
     <div
       class="main-base-style scrollbar"
@@ -80,6 +88,9 @@
   .scrollbar::-webkit-scrollbar {
     width: 0;
   }
+  .main-layout-ttb-status {
+    margin-left: 0;
+  }
   .main-layout-open-status {
     margin-left: $menuWidth;
   }
@@ -91,6 +102,10 @@
   }
   .nav-bar-close-status.fixed-nav-bar {
     width: calc(100% - #{$minMenuWidth});
+  }
+
+  .nav-bar-ttb-status {
+    width: 100%;
   }
 
   .main-layout {
