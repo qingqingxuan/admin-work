@@ -2,7 +2,7 @@ const settingInfo = JSON.parse(localStorage.getItem('setting-info') || '{}')
 interface Setting {
   projectName: string
   theme: 'light' | 'dark'
-  sideTheme: 'dark' | 'white' | 'blue' | 'image'
+  sideTheme: 'dark' | 'white' | 'image'
   themeColor: string
   layoutMode: 'ltr' | 'ttb' | 'lcr'
   sideWidth: number
@@ -21,8 +21,8 @@ export const projectName = 'Admin Work'
 export default Object.assign(
   {
     theme: 'light',
-    sideTheme: 'dark',
-    themeColor: 'cyan@#18a058',
+    sideTheme: 'white',
+    themeColor: 'blue@#409eff',
     layoutMode: 'ltr',
     sideWidth: 210,
     pageAnim: 'opacity',

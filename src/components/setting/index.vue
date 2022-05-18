@@ -203,12 +203,12 @@
         {
           name: 'cyan',
           value: '#18a058',
-          checked: true,
+          checked: false,
         },
         {
           name: 'blue',
           value: '#409eff',
-          checked: false,
+          checked: true,
         },
         {
           name: 'red',
