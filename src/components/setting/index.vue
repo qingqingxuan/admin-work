@@ -120,12 +120,15 @@
   import { ModalDialogType } from '@/types/components'
   import { useChangeMenuWidth, useMenuWidth } from '@/hooks/useMenuWidth'
   import LeftBg from '@/assets/bg_img.webp'
+  import useAppConfigStore from '@/store/modules/app-config'
+  import { PageAnim } from '@/store/types'
   export default defineComponent({
     name: 'Setting',
     setup() {
       const appInfoDialog = ref<ModalDialogType | null>()
       const opened = ref(false)
       const store = useLayoutStore()
+      const appConfig = useAppConfigStore()
       const state = store?.state
       const message = useMessage()
       const showContact = ref(false)
@@ -340,8 +343,9 @@
       function openAppInfo() {
         appInfoDialog.value?.toggle()
       }
-      function onAnimUpdate(val: any) {
-        store.changePageAnim(val as string)
+      function onAnimUpdate(val: PageAnim) {
+        // store.changePageAnim(val)
+        appConfig.changePageAnim(val)
       }
       watch(
         () => menuWidth.value,
