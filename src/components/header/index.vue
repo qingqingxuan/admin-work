@@ -6,7 +6,7 @@
     <div style="flex: 1; overflow: hidden; padding: 0 10px">
       <HorizontalScrollerMenu :routes="routes" />
     </div>
-    <div v-if="state.device !== 'mobile'" class="right-wrapper">
+    <div v-if="appConfig.deviceType !== 'mobile'" class="right-wrapper">
       <ActionItems />
     </div>
     <div class="avatar-wrapper">
@@ -16,18 +16,20 @@
 </template>
 
 <script lang="ts">
+  import useAppConfigStore from '@/store/modules/app-config'
   import { defineComponent, computed } from 'vue'
   import { useLayoutStore } from '../../components/index'
   export default defineComponent({
     name: 'VAWHeader',
     setup() {
+      const appConfig = useAppConfigStore()
       const store = useLayoutStore()
       const routes = computed(() => {
         return store?.state.permissionRoutes.filter((it) => !!it.name)
       })
       return {
         routes,
-        state: store?.state,
+        appConfig,
       }
     },
   })

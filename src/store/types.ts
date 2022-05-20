@@ -45,9 +45,11 @@ export interface AppConfigState {
   sideTheme: SideTheme
   themeColor: string
   layoutMode: LayoutMode
+  deviceType: DeviceType
   sideWidth: number
   pageAnim: PageAnim
   isFixedNavBar: boolean
+  isCollapse: boolean
   actionBar: {
     isShowSearch: boolean
     isShowMessage: boolean

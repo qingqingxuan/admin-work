@@ -1,9 +1,9 @@
 <template>
   <div class="vaw-nav-bar-wrapper">
     <Humburger />
-    <Breadcrumb v-if="state.device !== 'mobile'" />
+    <Breadcrumb v-if="appConfig.deviceType !== 'mobile'" />
     <div style="flex: 1"></div>
-    <div class="right-wrapper">
+    <div class="right-wrapper" v-if="appConfig.deviceType !== 'mobile'">
       <ActionItems />
     </div>
     <div class="avatar-wrapper">
@@ -13,16 +13,14 @@
 </template>
 
 <script lang="ts">
+  import useAppConfigStore from '@/store/modules/app-config'
   import { defineComponent } from 'vue'
-  import { useLayoutStore } from '../../components/index'
-  import { RefreshOutline as RefreshIcon } from '@vicons/ionicons5'
   export default defineComponent({
     name: 'NavBar',
-    components: { RefreshIcon },
     setup() {
-      const store = useLayoutStore()
+      const appConfig = useAppConfigStore()
       return {
-        state: store?.state,
+        appConfig,
       }
     },
   })

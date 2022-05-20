@@ -1,7 +1,7 @@
 <template>
   <n-config-provider
-    :theme-overrides="state.themeOverrides"
-    :theme="state.theme === 'dark' ? darkTheme : null"
+    :theme-overrides="themeOverrides"
+    :theme="theme"
     :locale="zhCN"
     style="height: 100%"
   >
@@ -10,13 +10,13 @@
       <n-dialog-provider>
         <n-el
           class="vaw-layout-container"
-          :class="[state.device === 'mobile' && 'is-mobile', state.theme]"
+          :class="[appConfig.deviceType === 'mobile' && 'is-mobile']"
         >
-          <template v-if="state.layoutMode === 'ttb'">
+          <template v-if="layoutMode === 'ttb'">
             <VAWHeader />
             <MainLayout :show-nav-bar="false" />
           </template>
-          <template v-else-if="state.layoutMode === 'lcr'">
+          <template v-else-if="layoutMode === 'lcr'">
             <TabSplitSideBar />
             <MainLayout />
           </template>
@@ -25,9 +25,9 @@
             <MainLayout />
           </template>
           <div
-            v-if="state.device === 'mobile'"
+            v-if="appConfig.deviceType === 'mobile'"
             class="mobile-shadow"
-            :class="[state.isCollapse ? 'close-shadow' : 'show-shadow']"
+            :class="[appConfig.isCollapse ? 'close-shadow' : 'show-shadow']"
             @click="closeMenu"
           ></div>
         </n-el>
@@ -37,15 +37,28 @@
 </template>
 
 <script lang="ts">
+  import useAppConfigStore from '@/store/modules/app-config'
   import { darkTheme, zhCN } from 'naive-ui'
   import { computed, defineComponent, onBeforeUnmount, onMounted } from 'vue'
-  import { DeviceType } from '../types/store'
-  import { useLayoutStore } from './index'
+  import { DeviceType, ThemeMode } from '@/store/types'
   export default defineComponent({
     name: 'Layout',
     setup() {
-      const store = useLayoutStore()
-      const isShowHeader = computed(() => store?.isShowHeader())
+      const appConfig = useAppConfigStore()
+      const theme = computed(() => {
+        return appConfig.theme === ThemeMode.DARK ? darkTheme : null
+      })
+      const themeOverrides = computed(() => {
+        return {
+          common: {
+            primaryColor: appConfig.themeColor,
+            primaryColorHover: appConfig.themeColor,
+          },
+        }
+      })
+      const layoutMode = computed(() => {
+        return appConfig.getLayoutMode
+      })
       onMounted(() => {
         handleScreenResize()
         window.addEventListener('resize', handleScreenResize)
@@ -56,27 +69,28 @@
       function handleScreenResize() {
         const width = document.body.clientWidth
         if (width <= 768) {
-          store?.changeDevice(DeviceType.MOBILE)
-          store?.toggleCollapse(true)
+          appConfig.changeDevice(DeviceType.MOBILE)
+          appConfig.toggleCollapse(true)
         } else if (width < 992 && width > 768) {
-          store?.changeDevice(DeviceType.PAD)
-          store?.toggleCollapse(true)
+          appConfig.changeDevice(DeviceType.PAD)
+          appConfig.toggleCollapse(true)
         } else if (width < 1200 && width >= 992) {
-          store?.changeDevice(DeviceType.PC)
-          store?.toggleCollapse(false)
+          appConfig.changeDevice(DeviceType.PC)
+          appConfig.toggleCollapse(false)
         } else {
-          store?.changeDevice(DeviceType.PC)
-          store?.toggleCollapse(false)
+          appConfig.changeDevice(DeviceType.PC)
+          appConfig.toggleCollapse(false)
         }
       }
       function closeMenu() {
-        store?.toggleCollapse(true)
+        appConfig.toggleCollapse(true)
       }
       return {
-        state: store?.state,
-        darkTheme,
+        appConfig,
+        theme,
+        themeOverrides,
+        layoutMode,
         zhCN,
-        isShowHeader,
         closeMenu,
       }
     },

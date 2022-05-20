@@ -6,8 +6,8 @@
       :content-style="{ padding: 0 }"
       style="border-radius: 0px"
       :class="[
-        !state.isCollapse ? 'open-status' : 'close-status',
-        state.sideBarBgColor === 'image' ? 'sidebar-bg-img' : '',
+        !appConfig.isCollapse ? 'open-status' : 'close-status',
+        appConfig.sideTheme === 'image' ? 'sidebar-bg-img' : '',
       ]"
     >
       <div class="tab-split-tab-wrapper" :style="{ backgroundColor: bgColor }">
@@ -45,9 +45,11 @@
 <script lang="ts">
   import { computed, defineComponent, onMounted, ref, shallowReactive, watch } from 'vue'
   import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
-  import { RouteRecordRawWithHidden, SideTheme, SplitTab, ThemeMode } from '../../types/store'
+  import { RouteRecordRawWithHidden, SplitTab } from '../../types/store'
   import { isExternal, transformSplitTabMenu } from '../../utils'
-  import { useLayoutStore } from '../../components/index'
+  import useAppConfigStore from '@/store/modules/app-config'
+  import { useLayoutStore } from '..'
+  import { SideTheme, ThemeMode } from '@/store/types'
   export default defineComponent({
     name: 'TabSplitSideBar',
     props: {
@@ -58,6 +60,7 @@
     },
     setup() {
       const store = useLayoutStore()
+      const appConfig = useAppConfigStore()
       const tabs = shallowReactive([] as Array<SplitTab>)
       const routes = shallowReactive([] as Array<RouteRecordRawWithHidden>)
       const route = useRoute()
@@ -126,10 +129,10 @@
         }
       }
       const themeOverThemes = computed(() => {
-        if (store?.state.theme === ThemeMode.DARK) {
+        if (appConfig.theme === ThemeMode.DARK) {
           return {}
         }
-        if (store?.state.sideBarBgColor === SideTheme.DARK)
+        if (appConfig.sideTheme === SideTheme.DARK)
           return {
             common: {
               cardColor: '#001428',
@@ -140,13 +143,13 @@
               itemColorActive: 'rgba(24, 160, 88, 0.4)',
             },
           }
-        if (store?.state.sideBarBgColor === SideTheme.WHITE)
+        if (appConfig.sideTheme === SideTheme.WHITE)
           return {
             common: {
               cardColor: '#ffffff',
             },
           }
-        if (store?.state.sideBarBgColor === SideTheme.IMAGE)
+        if (appConfig.sideTheme === SideTheme.IMAGE)
           return {
             common: {
               textColor1: '#bbbbbb',
@@ -163,23 +166,22 @@
       })
       const contentWrapperStyle = computed(() => {
         return `--select-text-color: ${
-          store?.state.theme === 'light' || store?.state.sideBarBgColor === 'white'
+          appConfig.theme === 'light' || appConfig.sideTheme === 'white'
             ? '#fff'
             : 'var(--text-color)'
         }`
       })
       const bgColor = computed(() => {
-        if (store?.state.theme === ThemeMode.DARK) {
+        if (appConfig.theme === ThemeMode.DARK) {
           return '#000000'
         }
-        if (store?.state.sideBarBgColor === SideTheme.DARK) return '#000000'
-        if (store?.state.sideBarBgColor === SideTheme.BLUE) return '#106dce'
-        if (store?.state.sideBarBgColor === SideTheme.WHITE) return '#f5f5f5'
-        if (store?.state.sideBarBgColor === SideTheme.IMAGE) return 'rgba(255,255,255, 0.1)'
+        if (appConfig.sideTheme === SideTheme.DARK) return '#000000'
+        if (appConfig.sideTheme === SideTheme.WHITE) return '#f5f5f5'
+        if (appConfig.sideTheme === SideTheme.IMAGE) return 'rgba(255,255,255, 0.1)'
         return '#ffffff'
       })
       return {
-        state: store?.state,
+        appConfig,
         tabs,
         routes,
         changeTab,

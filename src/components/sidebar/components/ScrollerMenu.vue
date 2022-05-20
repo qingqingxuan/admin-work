@@ -4,7 +4,7 @@
       <n-menu
         mode="vertical"
         :value="defaultPath"
-        :collapsed="state.isCollapse"
+        :collapsed="appConfig.isCollapse"
         :options="menuOptions"
         :default-value="defaultPath"
         :expanded-keys="defaultExpandKeys"
@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts">
+  import useAppConfigStore from '@/store/modules/app-config'
   import type { MenuOption } from 'naive-ui'
   import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
@@ -36,6 +37,7 @@
     },
     setup(props) {
       const store = useLayoutStore()
+      const appConfig = useAppConfigStore()
       const menuOptions = shallowReactive([] as Array<MenuOption>)
       const defaultPath = ref('')
       const defaultExpandKeys = ref<Array<string>>([])
@@ -87,6 +89,7 @@
         defaultPath,
         defaultExpandKeys,
         state: store?.state,
+        appConfig,
         menuOptions,
         onMenuClick,
         onMenuExpandedKeysClick,

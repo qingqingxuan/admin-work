@@ -1,15 +1,18 @@
 <template>
   <div class="logo-wrapper">
     <img v-if="showLogo" class="logo-img" src="../../assets/logo.png" />
-    <div v-if="showTitle" :class="[!state.isCollapse || alwaysShow ? 'show-title' : 'close-title']">
+    <div
+      v-if="showTitle"
+      :class="[!appConfig.isCollapse || alwaysShow ? 'show-title' : 'close-title']"
+    >
       <span class="logo-title">{{ projectName }}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+  import useAppConfigStore from '@/store/modules/app-config'
   import { defineComponent } from 'vue'
-  import { useLayoutStore } from '../../components/index'
   import { projectName } from '../../setting'
   export default defineComponent({
     name: 'Logo',
@@ -28,9 +31,9 @@
       },
     },
     setup() {
-      const store = useLayoutStore()
+      const appConfig = useAppConfigStore()
       return {
-        state: store?.state,
+        appConfig,
         projectName,
       }
     },

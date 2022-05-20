@@ -2,32 +2,29 @@
   <div
     class="vaw-main-layout-container scrollbar"
     :class="[
-      state.layoutMode === 'ttb'
+      layoutMode === 'ttb'
         ? 'main-layout-ttb-status'
-        : !state.isCollapse
+        : !appConfig.isCollapse
         ? 'main-layout-open-status'
         : 'main-layout-close-status',
-      state.isFixedNavBar ? 'main-layout_fixed-nav-bar' : 'main-layout',
+      appConfig.isFixedNavBar ? 'main-layout_fixed-nav-bar' : 'main-layout',
     ]"
   >
     <section
       :class="[
-        state.layoutMode === 'ttb'
+        layoutMode === 'ttb'
           ? 'nav-bar-ttb-status'
-          : !state.isCollapse
+          : !appConfig.isCollapse
           ? 'nav-bar-open-status'
           : 'nav-bar-close-status',
-        state.isFixedNavBar ? 'fixed-nav-bar' : '',
+        appConfig.isFixedNavBar ? 'fixed-nav-bar' : '',
         !showNavBar ? 'tab-bar-top' : '',
       ]"
     >
       <NavBar v-if="showNavBar" />
       <TabBar />
     </section>
-    <div
-      class="main-base-style scrollbar"
-      :class="[state.theme === 'light' ? 'main-base-light-theme' : 'main-base-dark-theme']"
-    >
+    <div class="main-base-style scrollbar" :class="[mainClass]">
       <section class="main-section">
         <Main />
       </section>
@@ -41,10 +38,12 @@
 </template>
 
 <script lang="ts">
+  import useAppConfigStore from '@/store/modules/app-config'
+  import { ThemeMode } from '@/store/types'
   import { useLoadingBar } from 'naive-ui'
   import { computed, defineComponent, onMounted, ref } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
-  import { useLayoutStore, useTitle } from './index'
+  import { useTitle } from './index'
   export default defineComponent({
     name: 'MainLayout',
     props: {
@@ -54,10 +53,15 @@
       },
     },
     setup() {
-      const store = useLayoutStore()
+      const appConfig = useAppConfigStore()
       const listenTo1 = ref<HTMLElement | null>(null)
       const listenTo2 = ref<HTMLElement | null>(null)
-      const isShowHeader = computed(() => store?.isShowHeader())
+      const mainClass = computed(() => {
+        return appConfig.theme === ThemeMode.DARK ? 'main-base-dark-theme' : 'main-base-light-theme'
+      })
+      const layoutMode = computed(() => {
+        return appConfig.getLayoutMode
+      })
       const router = useRouter()
       const route = useRoute()
       useTitle(route.meta.title as string)
@@ -74,10 +78,11 @@
         listenTo2.value = document.querySelector('.vaw-main-layout-container')
       })
       return {
-        state: store?.state,
+        appConfig,
+        mainClass,
+        layoutMode,
         listenTo1,
         listenTo2,
-        isShowHeader,
       }
     },
   })

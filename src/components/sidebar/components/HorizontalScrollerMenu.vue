@@ -11,12 +11,13 @@
 </template>
 
 <script lang="ts">
+  import useAppConfigStore from '@/store/modules/app-config'
+  import { DeviceType } from '@/store/types'
   import type { MenuOption } from 'naive-ui'
   import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { useLayoutStore } from '../../../components/index'
-  import { RouteRecordRawWithHidden } from '../../../types/store'
-  import { isExternal, transfromMenu } from '../../../utils'
+  import { RouteRecordRawWithHidden } from '@/types/store'
+  import { isExternal, transfromMenu } from '@/utils'
 
   export default defineComponent({
     name: 'HorizontalScrollerMenu',
@@ -27,8 +28,8 @@
       },
     },
     setup(props) {
-      const store = useLayoutStore()
-      const menuOptions = shallowReactive([] as Array<MenuOption>)
+      const appConfig = useAppConfigStore()
+      const menuOptions = shallowReactive<Array<MenuOption>>([])
       const defaultPath = ref('')
       const currentRoute = useRoute()
       const router = useRouter()
@@ -41,8 +42,8 @@
       function onMenuClick(key: string) {
         if (isExternal(key)) return
         router.push(key)
-        if (store.state.device === 'mobile') {
-          store.toggleCollapse(true)
+        if (appConfig.deviceType === DeviceType.MOBILE) {
+          appConfig.toggleCollapse(true)
         }
       }
       watch(
@@ -56,7 +57,6 @@
       })
       return {
         defaultPath,
-        state: store?.state,
         menuOptions,
         onMenuClick,
       }

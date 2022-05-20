@@ -1,9 +1,5 @@
 <template>
-  <n-drawer
-    v-model:show="opened"
-    placement="right"
-    :width="state.device === 'mobile' ? '75%' : '280px'"
-  >
+  <n-drawer v-model:show="opened" placement="right" :auto-focus="false">
     <n-drawer-content title="系统设置" closable class="wrapper">
       <n-divider dashed>主题设置</n-divider>
       <n-grid>
@@ -60,20 +56,21 @@
         </n-grid-item>
       </n-grid>
       <n-divider dashed>主题颜色</n-divider>
-      <n-space class="colors-wrapper">
-        <div
+      <n-grid class="colors-wrapper">
+        <n-grid-item
           v-for="(item, index) of primartyColorList"
           :key="index"
+          :span="4"
           class="color-wrapper"
           :class="{ circle: item.checked }"
           :style="{ backgroundColor: item.value }"
           @click="colorClick(item)"
-        ></div>
-      </n-space>
+        />
+      </n-grid>
       <div style="height: 20px"></div>
       <n-divider dashed>菜单设置</n-divider>
       <div class="setting-item-wrapper">
-        <span style="width: 100px">菜单宽度</span>
+        <span style="width: 150px">菜单宽度</span>
         <n-input-number v-model:value="menuWidth" size="small" :min="200" :max="400" :step="10">
           <template #suffix>px</template>
         </n-input-number>
@@ -82,7 +79,7 @@
       <div class="setting-item-wrapper">
         <span style="width: 100px">动画效果</span>
         <n-select
-          v-model:value="state.pageAnim"
+          v-model:value="appConfig.pageAnim"
           :options="animOptions"
           @update:value="onAnimUpdate"
         />
@@ -90,23 +87,26 @@
       <n-divider dashed>按钮显示</n-divider>
       <div class="setting-item-wrapper">
         <span>固定顶部导航</span>
-        <n-switch v-model:value="state.isFixedNavBar" :disabled="state.layoutMode === 'ttb'" />
+        <n-switch
+          v-model:value="appConfig.isFixedNavBar"
+          :disabled="appConfig.layoutMode === 'ttb'"
+        />
       </div>
       <div class="setting-item-wrapper">
         <span>搜索</span>
-        <n-switch v-model:value="state.actionItem.showSearch" />
+        <n-switch v-model:value="appConfig.actionBar.isShowSearch" />
       </div>
       <div class="setting-item-wrapper">
         <span>消息</span>
-        <n-switch v-model:value="state.actionItem.showMessage" />
+        <n-switch v-model:value="appConfig.actionBar.isShowMessage" />
       </div>
       <div class="setting-item-wrapper">
         <span>刷新</span>
-        <n-switch v-model:value="state.actionItem.showRefresh" />
+        <n-switch v-model:value="appConfig.actionBar.isShowRefresh" />
       </div>
       <div class="setting-item-wrapper">
         <span>全屏</span>
-        <n-switch v-model:value="state.actionItem.showFullScreen" />
+        <n-switch v-model:value="appConfig.actionBar.isShowFullScreen" />
       </div>
       <n-divider />
     </n-drawer-content>
@@ -115,10 +115,7 @@
 
 <script lang="ts">
   import { defineComponent, onMounted, reactive, ref, watch } from 'vue'
-  import { useLayoutStore } from '../../components/index'
-  import { useMessage } from 'naive-ui'
   import { ModalDialogType } from '@/types/components'
-  import { useChangeMenuWidth, useMenuWidth } from '@/hooks/useMenuWidth'
   import LeftBg from '@/assets/bg_img.webp'
   import useAppConfigStore from '@/store/modules/app-config'
   import { PageAnim } from '@/store/types'
@@ -127,12 +124,9 @@
     setup() {
       const appInfoDialog = ref<ModalDialogType | null>()
       const opened = ref(false)
-      const store = useLayoutStore()
       const appConfig = useAppConfigStore()
-      const state = store?.state
-      const message = useMessage()
       const showContact = ref(false)
-      const menuWidth = ref(useMenuWidth())
+      const menuWidth = ref(appConfig.sideWidth)
       const themeList = reactive([
         {
           leftBg: '#ffffff',
@@ -273,8 +267,28 @@
           value: '#1427df',
           checked: false,
         },
+        {
+          name: '43c628',
+          value: '#43c628',
+          checked: false,
+        },
+        {
+          name: 'ead41e',
+          value: '#ead41e',
+          checked: false,
+        },
+        {
+          name: '22bd7c',
+          value: '#22bd7c',
+          checked: false,
+        },
+        {
+          name: '9727bf',
+          value: '#9727bf',
+          checked: false,
+        },
       ])
-      const animOptions = reactive([
+      const animOptions = [
         {
           label: '渐隐渐现',
           value: 'opacity',
@@ -291,77 +305,74 @@
           label: '缩放效果',
           value: 'scale',
         },
-      ])
+      ]
       onMounted(() => {
         themeList.forEach((it) => {
-          it.checked = state?.theme === it.themeId
+          it.checked = appConfig.theme === it.themeId
         })
         sideExampleList.forEach((it) => {
-          it.checked = state?.sideBarBgColor === it.themeId
+          it.checked = appConfig.sideTheme === it.themeId
         })
         layoutExampleList.forEach((it) => {
-          it.checked = state?.layoutMode === it.layoutId
+          it.checked = appConfig.layoutMode === it.layoutId
         })
         primartyColorList.forEach((it) => {
-          it.checked = state?.themeOverrides.common.primaryColor === it.value
+          it.checked = appConfig.themeColor === it.value
         })
       })
       function openDrawer() {
         opened.value = true
       }
-      function themeClick(item: any) {
+      async function themeClick(item: any) {
         themeList.forEach((it) => {
           it.checked = it === item
         })
+        await appConfig.changeTheme(item.themeId)
         if (item.themeId === 'dark') {
           exampleClick(sideExampleList[0])
+        } else {
+          exampleClick(sideExampleList[1])
         }
-        store.changeTheme(item.themeId)
       }
       function exampleClick(item: any) {
-        if (store?.state.theme === 'dark') {
-          message.error('深色模式下不能更改侧边栏颜色')
-          return
-        }
         sideExampleList.forEach((it) => {
           it.checked = it === item
         })
-        store.changeSideBarBgColor(item.themeId)
+        appConfig.changeSideBarTheme(item.themeId)
       }
       function layoutExampleClick(item: any) {
         layoutExampleList.forEach((it) => {
           it.checked = it === item
         })
-        store.changeLayoutMode(item.layoutId)
+        appConfig.changeLayoutMode(item.layoutId)
       }
       function colorClick(item: any) {
         primartyColorList.forEach((it) => {
           it.checked = it === item
         })
-        store.changePrimaryColor(item)
+        appConfig.changePrimaryColor(item.value)
       }
       function openAppInfo() {
         appInfoDialog.value?.toggle()
       }
       function onAnimUpdate(val: PageAnim) {
-        // store.changePageAnim(val)
         appConfig.changePageAnim(val)
       }
       watch(
         () => menuWidth.value,
         (newVal) => {
-          useChangeMenuWidth(newVal)
+          appConfig.changeSideWith(newVal)
         }
       )
       return {
         appInfoDialog,
+        appConfig,
         showContact,
         opened,
         themeList,
         sideExampleList,
         layoutExampleList,
         primartyColorList,
-        state,
         openDrawer,
         themeClick,
         exampleClick,
@@ -376,20 +387,6 @@
   })
 </script>
 
-<style lang="scss">
-  .dark {
-    .el-drawer {
-      background-color: #272727 !important;
-    }
-  }
-  .light,
-  .dark-side,
-  .blue-side {
-    .el-drawer {
-      background-color: #ffff !important;
-    }
-  }
-</style>
 <style lang="scss" scoped>
   $width: 60px;
   .set-container {
