@@ -122,10 +122,8 @@
   import ImageBg1 from '@/assets/img_login_bg.png'
   import { post, Response } from '@/api/http'
   import { login } from '@/api/url'
-  import { UserState } from '@/store/types'
+  import { DeviceType, UserState } from '@/store/types'
   import { useMessage } from 'naive-ui'
-  import { useLayoutStore } from '@/components'
-  import { DeviceType } from '@/types/store'
   import {
     PhonePortraitOutline as PhoneIcon,
     LockClosedOutline as PasswordIcon,
@@ -135,6 +133,7 @@
   } from '@vicons/ionicons5'
   import useAppInfo from '@/hooks/useAppInfo'
   import useUserStore from '@/store/modules/user'
+  import useAppConfigStore from '@/store/modules/app-config'
   export default defineComponent({
     name: 'Login',
     components: { PhoneIcon, PasswordIcon, LogoGithub, LogoAlipay, LogoWechat },
@@ -148,9 +147,9 @@
       const route = useRoute()
       const userStore = useUserStore()
       const message = useMessage()
-      const layoutStore = useLayoutStore()
+      const appConfig = useAppConfigStore()
       const isMobileScreen = computed(() => {
-        return layoutStore.state.device === DeviceType.MOBILE
+        return appConfig.deviceType === DeviceType.MOBILE
       })
       const onLogin = () => {
         loading.value = true

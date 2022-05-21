@@ -3,35 +3,13 @@
 </template>
 
 <script lang="ts">
-  import { useLayoutStore } from '@/components'
-  import { DeviceType } from '@/types/store'
-  import { computed, defineComponent, onMounted, ref } from 'vue'
+  import { defineComponent } from 'vue'
   import LoginComponent from './LoginComponent.vue'
   export default defineComponent({
     name: 'Login',
     components: { LoginComponent },
     setup() {
-      const showAnimation = ref(false)
-      const showArrow = ref(false)
-      const showLoginPage = ref(false)
-      function onNextLogin() {
-        showLoginPage.value = !showLoginPage.value
-      }
-      const layoutStore = useLayoutStore()
-      const isMobile = computed(() => layoutStore.state.device === DeviceType.MOBILE)
-      onMounted(() => {
-        setTimeout(() => (showAnimation.value = true), 500)
-        setTimeout(() => {
-          showArrow.value = true
-        }, 6200)
-      })
-      return {
-        isMobile,
-        showAnimation,
-        showArrow,
-        showLoginPage,
-        onNextLogin,
-      }
+      return {}
     },
   })
 </script>

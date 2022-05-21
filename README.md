@@ -57,7 +57,7 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 
 - [🎉 Vue Admin Work X 演示地址（Vue3.x + Typescript + Element Plus + Webpack）](http://x.vueadminwork.com)
 
-- [🎉 Vue Admin Work P 演示地址（Vue3.x + Typescript + Navie UI + Vite2)](http://p.vueadminwork.com)
+- [🎉 Admin Work Pro 演示地址（Vue3.x + Typescript + Navie UI + Vite2)](http://p.vueadminwork.com)
 
 - [🎉 Vue Admin Work A 演示地址（Vue3.x + Typescript + Antd + Vite2)](http://a.vueadminwork.com)
 

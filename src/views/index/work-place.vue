@@ -205,7 +205,7 @@
             ui: 'Element Plus',
           },
           {
-            title: 'Vue Admin Work P',
+            title: 'Admin Work Pro',
             target: 'http://qingqingxuan.gitee.io/admin-work',
             gitee: 'http://www.vueadminwork.com',
             ui: 'NaiveUI',

@@ -7,13 +7,9 @@ import { LayoutMode, PageAnim, SideTheme, ThemeMode, DeviceType } from '../types
 import { useChangeMenuWidth } from '@/hooks/useMenuWidth'
 useChangeMenuWidth(defaultSetting.sideWidth)
 
-export function presistSettingInfo(setting: AppConfigState) {
-  localStorage.setItem('setting-info', JSON.stringify(setting))
-}
-
 const useAppConfigStore = defineStore<string, AppConfigState>('app-config', {
   state: () => {
-    return { ...defaultSetting }
+    return defaultSetting
   },
   getters: {
     getLayoutMode(state) {
@@ -38,11 +34,6 @@ const useAppConfigStore = defineStore<string, AppConfigState>('app-config', {
     },
     changePrimaryColor(color: string) {
       this.themeColor = color
-      presistSettingInfo(
-        Object.assign(this.$state, {
-          themeColor: color,
-        })
-      )
     },
     changeSideWith(sideWidth: number) {
       this.sideWidth = sideWidth
@@ -53,7 +44,14 @@ const useAppConfigStore = defineStore<string, AppConfigState>('app-config', {
       this.isCollapse = isCollapse
     },
   },
-  presist: true,
+  presist: {
+    enable: true,
+    option: {
+      storage: 'local',
+      exclude: ['theme', 'actionBar'],
+    },
+    resetToState: true,
+  },
 })
 
 export default useAppConfigStore
