@@ -10,7 +10,7 @@
       </n-icon>
       <n-scrollbar ref="scrollbar" :x-scrollable="true" :size="0">
         <n-button
-          v-for="item of state.visitedView"
+          v-for="item of getVisitedRoutes"
           :key="item.fullPath"
           :type="currentTab === item.fullPath ? 'primary' : 'default'"
           class="tab-item"
@@ -28,7 +28,7 @@
           >
             {{ item.meta ? item.meta.title : item.name }}
           </span>
-          <n-icon v-if="!item.meta?.affix" class="icon-item" @click="iconClick(item.fullPath)">
+          <n-icon v-if="!item.meta?.affix" class="icon-item" @click="removeTab(item)">
             <Close />
           </n-icon>
         </n-button>
@@ -98,6 +98,9 @@
   import { RouteRecordRawWithHidden } from '../../types/store'
   import { NIcon, NScrollbar } from 'naive-ui'
   import { Close, ChevronBack, Refresh, ArrowBack, ArrowForward, Menu } from '@vicons/ionicons5'
+  import { mapActions, mapState } from 'pinia'
+  import useVisitedRoutes from '@/store/modules/visited-routes'
+  import { RouteLocationNormalized } from 'vue-router'
   export default defineComponent({
     name: 'TabBar',
     components: { Close, ChevronBack, Refresh, ArrowBack, ArrowForward, Menu },
@@ -137,46 +140,22 @@
         ],
       }
     },
+    computed: {
+      ...mapState(useVisitedRoutes, ['getVisitedRoutes']),
+    },
     watch: {
       $route(newVal) {
-        if (['404', '500', '403', 'not-found', 'Login'].includes(newVal.name)) {
-          this.currentTab = ''
-          return
-        }
-        if (newVal.meta.noShowTabbar) {
-          this.currentTab = ''
-          return
-        }
-        if (newVal.query?.noShowTabbar) {
-          this.currentTab = ''
-          return
-        }
-        if (newVal.name) {
-          store.addVisitedView(newVal).then(({ route, isNewRoute }) => {
-            this.currentTab = route.fullPath || ''
-            const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
-            if (isNewRoute) {
-              scrollbar.scrollTo(
-                {
-                  left: 1000000000,
-                  debounce: true,
-                  behavior: 'smooth',
-                } as any,
-                0
-              )
-            } else {
-              const el = document.querySelector(`[data="${this.currentTab}"]`) as HTMLElement
-              scrollbar.scrollTo(
-                {
-                  left: el.offsetLeft,
-                  debounce: true,
-                  behavior: 'smooth',
-                } as any,
-                0
-              )
-            }
-          })
-        }
+        this.currentTab = newVal.fullPath || ''
+        const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
+        const el = document.querySelector(`[data="${this.currentTab}"]`) as HTMLElement
+        scrollbar.scrollTo(
+          {
+            left: el.offsetLeft,
+            debounce: true,
+            behavior: 'smooth',
+          } as any,
+          0
+        )
       },
       showContextMenu(val) {
         if (val) {
@@ -190,45 +169,17 @@
       this.initRoute()
     },
     methods: {
+      ...mapActions(useVisitedRoutes, [
+        'initAffixRoutes',
+        'removeVisitedRoute',
+        'findLastRoutePath',
+      ]),
       initRoute() {
         const affixedRoutes = this.findAffixedRoutes(
           this.state.permissionRoutes as Array<RouteRecordRawWithHidden>,
           '/'
         )
-        affixedRoutes.forEach((it) => {
-          store.addVisitedView(it)
-        })
-        if (['404', '500', '403', 'not-found', 'Login'].includes(this.$route.name as string)) {
-          this.currentTab = ''
-          return
-        }
-        if (this.$route.meta.noShowTabbar) {
-          this.currentTab = ''
-          return
-        }
-        store
-          .addVisitedView({
-            path: this.$route.path,
-            fullPath: this.$route.fullPath,
-            meta: this.$route.meta,
-          } as RouteRecordRawWithHidden)
-          .then(({ route }) => {
-            this.currentTab = route.fullPath as string
-            this.$nextTick(() => {
-              const elements = document.querySelector(`[data="${this.currentTab}"]`) as HTMLElement
-              const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
-              elements &&
-                scrollbar.scrollTo(
-                  {
-                    left: elements.offsetLeft,
-                    debounce: true,
-                    behavior: 'smooth',
-                  } as any,
-                  0
-                )
-              this.isDisabledArrow()
-            })
-          })
+        this.initAffixRoutes(affixedRoutes as unknown as RouteLocationNormalized[])
       },
       itemClick(path: string | undefined) {
         this.handleTabClick(path || '/')
@@ -238,9 +189,6 @@
       },
       handleTabClick(path: string) {
         this.$router.push(path)
-      },
-      iconClick(fullPath: string | undefined) {
-        this.removeTab(fullPath || '/')
       },
       findAffixedRoutes(routes: Array<RouteRecordRawWithHidden>, basePath: string) {
         const temp = [] as Array<RouteRecordRawWithHidden>
@@ -279,17 +227,10 @@
           this.showContextMenu = true
         }
       },
-      removeTab(fullPath: string) {
-        const findItem = this.state.visitedView.find((it) => it.fullPath === fullPath)
-        if (findItem) {
-          store.removeVisitedView(findItem as RouteRecordRawWithHidden).then(() => {
-            if (this.currentTab === fullPath) {
-              this.currentTab =
-                this.state.visitedView[this.state.visitedView.length - 1].fullPath || ''
-              this.$router.push(this.currentTab)
-            }
-          })
-        }
+      removeTab(item: RouteLocationNormalized) {
+        this.removeVisitedRoute(item).then((lastPath) => {
+          this.$router.push(lastPath)
+        })
       },
       // context menu actions
       isLeftLast(tempRoute: string) {

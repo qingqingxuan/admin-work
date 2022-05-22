@@ -1,3 +1,5 @@
+import { RouteLocationNormalized } from 'vue-router'
+
 export enum LayoutMode {
   LTR = 'ltr',
   LCR = 'lcr',
@@ -56,4 +58,12 @@ export interface AppConfigState {
     isShowRefresh: boolean
     isShowFullScreen: boolean
   }
+}
+
+export interface VisitedRouteState {
+  visitedRoutes: RouteLocationNormalized[]
+}
+
+export interface CachedRouteState {
+  cachedRoute: string[]
 }
