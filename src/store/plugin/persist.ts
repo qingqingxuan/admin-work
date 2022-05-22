@@ -48,7 +48,7 @@ export default ({ options, store }: PiniaPluginContext) => {
       Object.keys(toPersistObj).forEach((it) => {
         if (
           (presist.option?.include && !presist.option?.include?.includes(it)) ||
-          (presist.option?.exclude?.includes && presist.option?.exclude?.includes(it))
+          (presist.option?.exclude && presist.option?.exclude?.includes(it))
         ) {
           toPersistObj[it] = undefined
         }
