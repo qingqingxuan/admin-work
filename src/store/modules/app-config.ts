@@ -46,10 +46,6 @@ const useAppConfigStore = defineStore<string, AppConfigState>('app-config', {
   },
   presist: {
     enable: true,
-    option: {
-      storage: 'local',
-      exclude: ['theme', 'actionBar'],
-    },
     resetToState: true,
   },
 })

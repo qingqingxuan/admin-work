@@ -1,5 +1,4 @@
 import router, { constantRoutes, asyncRoutes } from '../router'
-import Cookies from 'js-cookie'
 import { post } from '@/api/http'
 import { baseAddress, getMenuListByRoleId } from '@/api/url'
 import { RouteRecordRaw } from 'vue-router'
@@ -9,6 +8,7 @@ import layoutStore from '@/store'
 import { defineAsyncComponent } from 'vue'
 import LoadingComponent from '../components/loading/index.vue'
 import { resolve } from 'path-browserify'
+import { useUserStoreContext } from '@/store/modules/user'
 
 interface OriginRoute {
   parentPath?: string
@@ -105,18 +105,15 @@ function getFilePath(it: OriginRoute) {
   return '../views' + it.localFilePath + '.vue'
 }
 
-async function getRoutes() {
+async function getRoutes(data: { userId: number; roleId: number }) {
   try {
     if (getMenuListByRoleId) {
       const res = await post({
         url: baseAddress + getMenuListByRoleId,
         method: 'POST',
-        data: {
-          // 在实际的开发中，这个地方可以换成 token，让后端解析用户信息获取 userId 和 roleId，前端可以不用传 userId 和 roleId。
-          // 这样可以增加安全性
-          userId: localStorage.getItem('userId'),
-          roleId: localStorage.getItem('roleId'),
-        },
+        // 在实际的开发中，这个地方可以换成 token，让后端解析用户信息获取 userId 和 roleId，前端可以不用传 userId 和 roleId。
+        // 这样可以增加安全性
+        data,
       })
       return generatorRoutes(res.data)
     } else {
@@ -232,30 +229,21 @@ function generatorRoutes(res: Array<OriginRoute>) {
 
 const whiteRoutes: string[] = ['/login', '/404', '/403', '/500']
 
-function isTokenExpired(): boolean {
-  const token = Cookies.get('admin-work-token')
-  return !!token
-}
-
 router.beforeEach(async (to) => {
   if (whiteRoutes.includes(to.path)) {
     return true
   } else {
-    if (!isTokenExpired()) {
+    const userStore = useUserStoreContext()
+    if (userStore.isTokenExpire()) {
       return {
         path: '/login',
         query: { redirect: to.fullPath },
       }
     } else {
-      // if (to.meta && to.meta.auth && !(to.meta.auth as Array<string>).includes('ROLE_admin')) {
-      //   return {
-      //     path: '/403',
-      //   }
-      // }
       const isEmptyRoute = layoutStore.isEmptyPermissionRoute()
       if (isEmptyRoute) {
         // 加载路由
-        const accessRoutes = await getRoutes()
+        const accessRoutes = await getRoutes({ roleId: userStore.roleId, userId: userStore.userId })
         const mapRoutes = mapTwoLevelRouter(accessRoutes)
         mapRoutes.forEach((it: any) => {
           router.addRoute(it)

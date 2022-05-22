@@ -16,7 +16,7 @@
     "js-cookie": "^2.2.1",
     "mockjs": "^1.1.0",
     "path-browserify": "^1.0.1",
-    "pinia": "^2.0.9",
+    "pinia": "^2.0.14",
     "print-js": "^1.6.0",
     "qrcode": "^1.4.4",
     "qs": "^6.10.1",
