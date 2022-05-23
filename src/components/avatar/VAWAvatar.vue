@@ -21,14 +21,14 @@
   import { defineComponent, h } from 'vue'
   import { Menu, LogInOutline, CaretDownSharp } from '@vicons/ionicons5'
   import useUserStore from '@/store/modules/user'
-  import { useLayoutStore } from '..'
+  import { useRouter } from 'vue-router'
 
   export default defineComponent({
     name: 'VAWAvatar',
     components: { CaretDownSharp },
     setup() {
       const userStore = useUserStore()
-      const layoutStore = useLayoutStore()
+      const router = useRouter()
       const options = [
         {
           label: '个人中心',
@@ -48,7 +48,7 @@
         },
       ]
       function personalCenter() {
-        ;(layoutStore as any).onPersonalCenter && (layoutStore as any).onPersonalCenter()
+        router.push('/personal')
       }
       const dialog = useDialog()
       function logout() {
@@ -59,7 +59,7 @@
           negativeText: '再想想',
           onPositiveClick: () => {
             userStore.logout().then(() => {
-              ;(layoutStore as any).onLogout && (layoutStore as any).onLogout()
+              router.push('/login')
             })
           },
         })

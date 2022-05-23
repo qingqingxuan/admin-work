@@ -1,7 +1,5 @@
 import '../assets/styles/transition.css'
-import store from '../store'
-import { App, inject } from 'vue'
-import { StoreType } from '../types/store'
+import { App } from 'vue'
 
 import DataForm from './common/DataForm'
 import { projectName } from '../setting'
@@ -35,24 +33,15 @@ export function registerComponents(app: App) {
   app.component('DataForm', DataForm)
 }
 
-const key = Symbol('layout_store')
-
-function install(app: App, options?: any) {
+function install(app: App) {
   adapterNaiveCss()
   if (import.meta.env.MODE === 'development') {
     console.warn('install layout store start')
   }
   registerComponents(app)
-  store.start(options || {})
-  app.config.globalProperties.$layoutStore = store
-  app.provide(key, store)
   if (import.meta.env.MODE === 'development') {
     console.warn('install layout store end')
   }
-}
-
-export function useLayoutStore() {
-  return inject<StoreType>(key) as StoreType
 }
 
 export function useTitle(title: string) {
@@ -60,8 +49,6 @@ export function useTitle(title: string) {
 }
 
 export { default as Layout } from './Layout.vue'
-
-export { mapTwoLevelRouter } from '../utils'
 
 export default {
   install,

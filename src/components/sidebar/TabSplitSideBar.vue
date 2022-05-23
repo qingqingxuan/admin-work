@@ -44,17 +44,12 @@
 
 <script lang="ts">
   import { computed, defineComponent, onMounted, ref, shallowReactive, watch } from 'vue'
-  import {
-    RouteLocationNormalizedLoaded,
-    RouteRecordNormalized,
-    useRoute,
-    useRouter,
-  } from 'vue-router'
+  import { RouteLocationNormalizedLoaded, RouteRecordRaw, useRoute, useRouter } from 'vue-router'
   import { SplitTab } from '../../types/store'
   import { isExternal, transformSplitTabMenu } from '../../utils'
   import useAppConfigStore from '@/store/modules/app-config'
-  import { useLayoutStore } from '..'
   import { SideTheme, ThemeMode } from '@/store/types'
+  import usePermissionStore from '@/store/modules/permission'
   export default defineComponent({
     name: 'TabSplitSideBar',
     props: {
@@ -64,10 +59,10 @@
       },
     },
     setup() {
-      const store = useLayoutStore()
       const appConfig = useAppConfigStore()
+      const permissionStore = usePermissionStore()
       const tabs = shallowReactive<SplitTab[]>([])
-      const routes = shallowReactive<RouteRecordNormalized[]>([])
+      const routes = shallowReactive<RouteRecordRaw[]>([])
       const route = useRoute()
       const router = useRouter()
       watch(
@@ -78,7 +73,7 @@
       )
       onMounted(() => {
         tabs.length = 0
-        tabs.push(...transformSplitTabMenu(store?.getSplitTabs()))
+        tabs.push(...transformSplitTabMenu(permissionStore.getPermissionSplitTabs))
         doChangeTab(route)
       })
       function doChangeTab(route: RouteLocationNormalizedLoaded) {
@@ -89,7 +84,7 @@
               it.checked.value = true
               if (it.children) {
                 routes.length = 0
-                routes.push(...(it.children as Array<RouteRecordNormalized>))
+                routes.push(...(it.children as Array<RouteRecordRaw>))
               }
             } else {
               it.checked.value = false

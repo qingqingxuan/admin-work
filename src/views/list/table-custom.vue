@@ -125,7 +125,7 @@
           .catch(console.log)
       }
       function onDeleteItem() {
-        if (table.selectRows.length !== 0) {
+        if (table.selectRows.value!.length !== 0) {
           navieDialog.warning({
             content: '是否要删除此数据，删除后不恢复？',
             positiveText: '删除',
@@ -133,7 +133,7 @@
               message.success(
                 '模拟删除成功，参数为：' +
                   JSON.stringify({
-                    ids: table.selectRows.join(','),
+                    ids: table.selectRows.value!.join(','),
                   })
               )
             },

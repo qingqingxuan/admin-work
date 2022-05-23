@@ -24,8 +24,8 @@
   import { isExternal } from '@/utils'
   import { defineComponent, onMounted, reactive, watch } from 'vue'
   import { RouteRecordNormalized, useRoute, useRouter } from 'vue-router'
-  import { useLayoutStore } from '..'
   import { ChevronDown } from '@vicons/ionicons5'
+  import usePermissionStore from '@/store/modules/permission'
   interface DropItem {
     label: string
     key: string
@@ -38,7 +38,7 @@
       const breadcrumbs = reactive([] as Array<DropItem>)
       const route = useRoute()
       const router = useRouter()
-      const store = useLayoutStore()
+      const permissionStore = usePermissionStore()
       function handlePath(path: string) {
         return path.split('/').reduce((pre: string[], cur: string) => {
           if (cur) {
@@ -82,7 +82,7 @@
       }
       function findRoute(paths: string[]) {
         const selectRoutes: Array<RouteRecordNormalized> = []
-        let tempOrigin = store.state.permissionRoutes
+        let tempOrigin = permissionStore.getPermissionSideBar
         paths.forEach((it) => {
           const selectRoute = tempOrigin.find((pIt) => pIt.path === it)
           if (selectRoute) {

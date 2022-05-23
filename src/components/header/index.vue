@@ -4,7 +4,7 @@
       <Logo :always-show="true" />
     </div>
     <div style="flex: 1; overflow: hidden; padding: 0 10px">
-      <HorizontalScrollerMenu :routes="routes" />
+      <HorizontalScrollerMenu :routes="permissionStore.getPermissionSideBar" />
     </div>
     <div v-if="appConfig.deviceType !== 'mobile'" class="right-wrapper">
       <ActionItems />
@@ -17,18 +17,15 @@
 
 <script lang="ts">
   import useAppConfigStore from '@/store/modules/app-config'
-  import { defineComponent, computed } from 'vue'
-  import { useLayoutStore } from '../../components/index'
+  import usePermissionStore from '@/store/modules/permission'
+  import { defineComponent } from 'vue'
   export default defineComponent({
     name: 'VAWHeader',
     setup() {
       const appConfig = useAppConfigStore()
-      const store = useLayoutStore()
-      const routes = computed(() => {
-        return store?.state.permissionRoutes.filter((it) => !!it.name)
-      })
+      const permissionStore = usePermissionStore()
       return {
-        routes,
+        permissionStore,
         appConfig,
       }
     },

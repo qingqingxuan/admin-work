@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { RouteRecordNormalized } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
 import pinia from '../pinia'
 
 // const LOCAL_STOREAGE_VISITED_KEY = 'admin-work-visited'
@@ -7,8 +7,8 @@ import pinia from '../pinia'
 const useVisitedRouteStore = defineStore('visited-routes', {
   state: () => {
     return {
-      visitedRoutes: [] as RouteRecordNormalized[],
-      affixRoutes: [] as RouteRecordNormalized[],
+      visitedRoutes: [] as RouteRecordRaw[],
+      affixRoutes: [] as RouteRecordRaw[],
     }
   },
   getters: {
@@ -17,11 +17,11 @@ const useVisitedRouteStore = defineStore('visited-routes', {
     },
   },
   actions: {
-    initAffixRoutes(affixRoutes: RouteRecordNormalized[]) {
+    initAffixRoutes(affixRoutes: RouteRecordRaw[]) {
       this.affixRoutes = affixRoutes
       this.visitedRoutes.unshift(...this.affixRoutes)
     },
-    addVisitedRoute(route: RouteRecordNormalized) {
+    addVisitedRoute(route: RouteRecordRaw) {
       return new Promise((resolve) => {
         let isNewRoute = false
         if (!this.visitedRoutes.find((it) => it.path === route.path)) {
@@ -32,7 +32,7 @@ const useVisitedRouteStore = defineStore('visited-routes', {
         resolve({ route, isNewRoute })
       })
     },
-    removeVisitedRoute(route: RouteRecordNormalized) {
+    removeVisitedRoute(route: RouteRecordRaw) {
       return new Promise<string>((resolve) => {
         this.visitedRoutes.splice(this.visitedRoutes.indexOf(route), 1)
         resolve(this.findLastRoutePath())
@@ -43,7 +43,7 @@ const useVisitedRouteStore = defineStore('visited-routes', {
         ? this.visitedRoutes[this.visitedRoutes.length - 1].path
         : '/'
     },
-    closeLeftVisitedView(selectRoute: RouteRecordNormalized) {
+    closeLeftVisitedView(selectRoute: RouteRecordRaw) {
       return new Promise((resolve) => {
         const selectIndex = this.visitedRoutes.indexOf(selectRoute)
         if (selectIndex !== -1) {
@@ -55,7 +55,7 @@ const useVisitedRouteStore = defineStore('visited-routes', {
         resolve(selectRoute)
       })
     },
-    closeRightVisitedView(selectRoute: RouteRecordNormalized) {
+    closeRightVisitedView(selectRoute: RouteRecordRaw) {
       return new Promise((resolve) => {
         const selectIndex = this.visitedRoutes.indexOf(selectRoute)
         if (selectIndex !== -1) {

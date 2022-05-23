@@ -8,25 +8,13 @@ import router from './router'
 import 'vfonts/Lato.css'
 import 'vfonts/FiraCode.css'
 import 'virtual:svg-icons-register'
-import './utils/router'
-import useVisitedGuard from './router/guard/visited'
-import useCachedGuard from './router/guard/cached'
+import useRouterGuard from './router/guard'
 import '../mock'
 
-useVisitedGuard()
-useCachedGuard()
+useRouterGuard()
 
 const app = createApp(App)
-app.use(LayoutStore, {
-  actions: {
-    onPersonalCenter() {
-      router.push('/personal')
-    },
-    onLogout() {
-      router.push('/login')
-    },
-  },
-})
+app.use(LayoutStore)
 app.use(pinia)
 app.use(router)
 router.isReady().then(() => {

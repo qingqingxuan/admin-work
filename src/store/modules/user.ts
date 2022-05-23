@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { UserState } from '../types'
-import layoutStore from '../index'
 import store from '../pinia'
 
 import Avatar from '@/assets/img_avatar.gif'
@@ -41,7 +40,6 @@ const useUserStore = defineStore('user-info', {
         this.$reset()
         localStorage.clear()
         sessionStorage.clear()
-        layoutStore.reset()
         resolve()
       })
     },

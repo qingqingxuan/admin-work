@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, h, onMounted, ref, Ref } from 'vue'
+  import { defineComponent, h, onMounted, ref, Ref, unref } from 'vue'
   import { post } from '@/api/http'
   import { getMenuList } from '@/api/url'
   import {
@@ -43,7 +43,7 @@
   import { DataFormType, ModalDialogType, FormItem } from '@/types/components'
   import { renderInput, renderSwitch, renderTreeSelect } from '@/hooks/form'
   import { findRouteByUrl, isExternal, transformTreeSelect } from '@/utils'
-  import { useLayoutStore } from '@/components'
+  import usePermissionStore from '@/store/modules/permission'
   export default defineComponent({
     name: 'Menu',
     setup() {
@@ -52,7 +52,7 @@
       const table = useTable()
       const naiveDialog = useDialog()
       const message = useMessage()
-      const layoutStore = useLayoutStore()
+      const permissionStore = usePermissionStore()
       const modalDialog = ref<ModalDialogType | null>(null)
       const dataForm = ref<DataFormType | null>(null)
       const rowKey = useRowKey('menuUrl')
@@ -154,7 +154,7 @@
           render: (formItem) =>
             renderTreeSelect(
               formItem.value,
-              transformTreeSelect(table.dataList, 'menuName', 'menuUrl'),
+              transformTreeSelect(unref(table.dataList)!, 'menuName', 'menuUrl'),
               {
                 showPath: true,
               }
@@ -270,7 +270,10 @@
           if (dataForm.value?.validator()) {
             const params = dataForm.value?.generatorParams()
             if (tempItem) {
-              const tempRoute = findRouteByUrl(layoutStore.state.permissionRoutes, tempItem.menuUrl)
+              const tempRoute = findRouteByUrl(
+                permissionStore.getPermissionSideBar,
+                tempItem.menuUrl
+              )
               if (tempRoute && tempRoute.meta && tempRoute.meta.badge) {
                 ;(tempRoute.meta as any).badge = (params as any).badge || ''
               }

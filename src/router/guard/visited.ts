@@ -1,6 +1,6 @@
 import useVisitedRouteStore from '@/store/modules/visited-routes'
 import { findAffixedRoutes } from '@/utils'
-import { RouteRecordNormalized } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
 import router from '..'
 
 function useVisitedGuard() {
@@ -22,7 +22,7 @@ function useVisitedGuard() {
     if (to.query?.noShowTabbar) {
       return true
     }
-    visitedRouteStore.addVisitedRoute(to as unknown as RouteRecordNormalized)
+    visitedRouteStore.addVisitedRoute(to as unknown as RouteRecordRaw)
     return true
   })
 }

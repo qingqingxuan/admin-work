@@ -285,7 +285,7 @@
           content: '确定要删除此数据吗？',
           positiveText: '确定',
           onPositiveClick: () => {
-            table.dataList.splice(table.dataList.indexOf(item), 1)
+            table.dataList.value!.splice(table.dataList.value!.indexOf(item), 1)
           },
         })
       }

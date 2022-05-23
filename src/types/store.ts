@@ -1,5 +1,5 @@
 import { Ref, UnwrapRef } from 'vue'
-import { RouteRecordRaw, RouteMeta, RouteRecordNormalized } from 'vue-router'
+import { RouteRecordRaw, RouteMeta } from 'vue-router'
 
 export interface RouteMetaType extends RouteMeta {
   icon?: string
@@ -21,19 +21,10 @@ export interface SplitTab {
   iconPrefix?: string | unknown
   icon: string
   fullPath: string
-  children?: Array<RouteRecordNormalized>
+  children?: Array<RouteRecordRaw>
   checked: Ref<UnwrapRef<boolean>>
 }
 
 export interface StateType {
   permissionRoutes: Array<RouteRecordRawWithHidden>
-}
-
-export interface StoreType {
-  state: UnwrapRef<StateType>
-  start: (params: any) => void
-  getSplitTabs: () => Array<RouteRecordRawWithHidden>
-  initPermissionRoute: (routes: Array<RouteRecordRaw>) => void
-  isEmptyPermissionRoute: () => boolean
-  reset: () => void
 }

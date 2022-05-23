@@ -24,7 +24,6 @@
   import type { MenuOption } from 'naive-ui'
   import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
   import { RouteRecordNormalized, useRoute, useRouter } from 'vue-router'
-  import { useLayoutStore } from '../../../components/index'
   import { isExternal, transfromMenu } from '../../../utils'
 
   export default defineComponent({
@@ -36,7 +35,6 @@
       },
     },
     setup(props) {
-      const store = useLayoutStore()
       const appConfig = useAppConfigStore()
       const menuOptions = shallowReactive([] as Array<MenuOption>)
       const defaultPath = ref('')
@@ -66,8 +64,6 @@
         defaultExpandKeys.value = Array.from(new Set([...defaultExpandKeys.value, ...results]))
       }
       function onMenuClick(key: string) {
-        console.log(key)
-
         if (isExternal(key)) return
         router.push(key)
         if (appConfig.deviceType === DeviceType.MOBILE) {
@@ -90,7 +86,6 @@
       return {
         defaultPath,
         defaultExpandKeys,
-        state: store?.state,
         appConfig,
         menuOptions,
         onMenuClick,

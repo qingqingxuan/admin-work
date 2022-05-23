@@ -92,13 +92,12 @@
 </template>
 
 <script lang="ts">
-  import store from '../../store'
   import { defineComponent, h } from 'vue'
   import { NIcon, NScrollbar } from 'naive-ui'
   import { Close, ChevronBack, Refresh, ArrowBack, ArrowForward, Menu } from '@vicons/ionicons5'
   import { mapActions, mapState } from 'pinia'
   import useVisitedRouteStore from '@/store/modules/visited-routes'
-  import { RouteRecordNormalized } from 'vue-router'
+  import { RouteRecordRaw } from 'vue-router'
   export default defineComponent({
     name: 'TabBar',
     components: { Close, ChevronBack, Refresh, ArrowBack, ArrowForward, Menu },
@@ -113,7 +112,6 @@
         selectRoute: {},
         showLeftMenu: true,
         showRightMenu: true,
-        state: store.state,
         rightArrowDisabled: false,
         leftArrowDisabled: false,
         contextMenuOptions: [
@@ -174,16 +172,16 @@
         'closeLeftVisitedView',
         'closeAllVisitedView',
       ]),
-      itemClick(item: RouteRecordNormalized) {
+      itemClick(item: RouteRecordRaw) {
         this.handleTabClick(item.path || item.path || '/')
       },
       handleTabClick(path: string) {
         this.$router.push(path)
       },
-      isAffix(route: RouteRecordNormalized) {
+      isAffix(route: RouteRecordRaw) {
         return route.meta && route.meta.affix
       },
-      onContextMenu(item: RouteRecordNormalized, e: MouseEvent) {
+      onContextMenu(item: RouteRecordRaw, e: MouseEvent) {
         const { clientX } = e
         const { x } = this.$el.getBoundingClientRect()
         e.preventDefault()
@@ -198,7 +196,7 @@
           this.showContextMenu = true
         }
       },
-      removeTab(item: RouteRecordNormalized) {
+      removeTab(item: RouteRecordRaw) {
         this.removeVisitedRoute(item).then((lastPath) => {
           this.$router.push(lastPath)
         })
@@ -228,16 +226,16 @@
       },
       closeLeft() {
         if (!this.selectRoute) return
-        this.closeLeftVisitedView(this.selectRoute as RouteRecordNormalized).then(() => {
-          if (this.$route.fullPath !== (this.selectRoute as RouteRecordNormalized).path) {
+        this.closeLeftVisitedView(this.selectRoute as RouteRecordRaw).then(() => {
+          if (this.$route.fullPath !== (this.selectRoute as RouteRecordRaw).path) {
             this.$router.push(this.findLastRoutePath())
           }
         })
       },
       closeRight() {
         if (!this.selectRoute) return
-        this.closeRightVisitedView(this.selectRoute as RouteRecordNormalized).then(() => {
-          if (this.$route.path !== (this.selectRoute as RouteRecordNormalized).path) {
+        this.closeRightVisitedView(this.selectRoute as RouteRecordRaw).then(() => {
+          if (this.$route.path !== (this.selectRoute as RouteRecordRaw).path) {
             this.$router.push(this.findLastRoutePath())
           }
         })

@@ -1,4 +1,4 @@
-import { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
 import path from 'path-browserify'
 import { SplitTab } from '../types/store'
 import { DataTableColumn, MenuOption, NIcon, TreeSelectOption } from 'naive-ui'
@@ -76,8 +76,8 @@ export function mapTwoLevelRouter(srcRoutes: Array<RouteRecordRaw>) {
   return []
 }
 
-export function findAffixedRoutes(routes: Array<RouteRecordNormalized>) {
-  const temp = [] as Array<RouteRecordNormalized>
+export function findAffixedRoutes(routes: Array<RouteRecordRaw>) {
+  const temp = [] as Array<RouteRecordRaw>
   routes.forEach((it) => {
     if (it.meta && it.meta.affix) {
       temp.push(it)
@@ -86,7 +86,7 @@ export function findAffixedRoutes(routes: Array<RouteRecordNormalized>) {
   return temp
 }
 
-export function findCachedRoutes(routes: Array<RouteRecordNormalized>) {
+export function findCachedRoutes(routes: Array<RouteRecordRaw>) {
   const temp = [] as Array<string>
   routes.forEach((it) => {
     if (it.name && it.meta && it.meta.cacheable) {
@@ -99,10 +99,7 @@ export function findCachedRoutes(routes: Array<RouteRecordNormalized>) {
 export function transfromRoutes(
   originRoutes: Array<RouteRecordRaw>,
   parentPath = '/'
-): Array<RouteRecordRaw> | undefined {
-  if (!originRoutes) {
-    return undefined
-  }
+): Array<RouteRecordRaw> {
   const tempRoutes: Array<RouteRecordRaw> = []
   originRoutes.forEach((it) => {
     const tempRoute = {
@@ -117,8 +114,8 @@ export function transfromRoutes(
   return tempRoutes
 }
 
-export function transfromMenu(originRoutes: Array<RouteRecordNormalized>): Array<MenuOption> {
-  function getLabel(item: RouteRecordNormalized) {
+export function transfromMenu(originRoutes: Array<RouteRecordRaw>): Array<MenuOption> {
+  function getLabel(item: RouteRecordRaw) {
     if (isExternal(item.path as string)) {
       return () =>
         h(
@@ -158,7 +155,7 @@ export function transfromMenu(originRoutes: Array<RouteRecordNormalized>): Array
           const item = it.children[0]
           tempMenu.key = path.resolve(tempMenu.key as string, item.path)
           tempMenu.label =
-            item.meta && item.meta.title ? getLabel(item as RouteRecordNormalized) : tempMenu.label
+            item.meta && item.meta.title ? getLabel(item as RouteRecordRaw) : tempMenu.label
           tempMenu.icon =
             item.meta && item.meta.icon
               ? renderMenuIcon(
@@ -171,7 +168,7 @@ export function transfromMenu(originRoutes: Array<RouteRecordNormalized>): Array
                 )
               : tempMenu.icon
         } else {
-          tempMenu.children = transfromMenu(it.children as RouteRecordNormalized[])
+          tempMenu.children = transfromMenu(it.children as RouteRecordRaw[])
         }
       }
       tempMenus.push(tempMenu)
@@ -179,10 +176,7 @@ export function transfromMenu(originRoutes: Array<RouteRecordNormalized>): Array
   return tempMenus
 }
 
-export function transformSplitTabMenu(routes?: Array<RouteRecordNormalized>): Array<SplitTab> {
-  if (!routes) {
-    return [] as Array<SplitTab>
-  }
+export function transformSplitTabMenu(routes: Array<RouteRecordRaw>): Array<SplitTab> {
   const tempTabs = [] as Array<SplitTab>
   routes.forEach((it) => {
     const splitTab: SplitTab = {
@@ -190,7 +184,7 @@ export function transformSplitTabMenu(routes?: Array<RouteRecordNormalized>): Ar
       fullPath: it.path || '',
       iconPrefix: it.meta?.iconPrefix || 'icon',
       icon: it.meta ? (it.meta?.icon as any) : undefined,
-      children: it.children as RouteRecordNormalized[],
+      children: it.children as RouteRecordRaw[],
       checked: ref(false),
     }
     tempTabs.push(splitTab)
@@ -247,7 +241,7 @@ export function transformTreeSelect(
   return tempSelections
 }
 
-export function findRouteByUrl(routes: Array<any>, path: string): RouteRecordNormalized | null {
+export function findRouteByUrl(routes: Array<any>, path: string): RouteRecordRaw | null {
   if (!path || !routes) {
     return null
   }

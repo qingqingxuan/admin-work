@@ -15,14 +15,14 @@
   import { DeviceType } from '@/store/types'
   import type { MenuOption } from 'naive-ui'
   import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
-  import { RouteRecordNormalized, useRoute, useRouter } from 'vue-router'
+  import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
   import { isExternal, transfromMenu } from '@/utils'
 
   export default defineComponent({
     name: 'HorizontalScrollerMenu',
     props: {
       routes: {
-        type: Object as PropType<Array<RouteRecordNormalized>>,
+        type: Object as PropType<Array<RouteRecordRaw>>,
         require: true,
       },
     },
@@ -33,7 +33,7 @@
       const currentRoute = useRoute()
       const router = useRouter()
       defaultPath.value = currentRoute.fullPath
-      function handleMenu(routes?: Array<RouteRecordNormalized>) {
+      function handleMenu(routes?: Array<RouteRecordRaw>) {
         menuOptions.length = 0
         const tempMenus = transfromMenu(routes || [])
         menuOptions.push(...tempMenus)

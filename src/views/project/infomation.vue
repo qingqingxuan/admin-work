@@ -34,11 +34,7 @@
         </n-descriptions-item>
       </n-descriptions>
     </n-card>
-    <n-modal
-      v-model:show="showContact"
-      display-directive="show"
-      :style="{ width: state.device === 'mobile' ? '80%' : '40%' }"
-    >
+    <n-modal v-model:show="showContact" display-directive="show">
       <n-card title="获取源码" :bordered="false" preset="card">
         <template #header-extra>
           <n-icon size="20">
@@ -55,13 +51,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { useLayoutStore } from '@/components'
   import useAppInfo from '@/hooks/useAppInfo'
   import { onMounted, reactive, ref } from 'vue'
   import { Close } from '@vicons/ionicons5'
   const { version, dependencies, devDependencies } = useAppInfo()
   const showContact = ref(false)
-  const state = useLayoutStore().state
   const dependenciesList = reactive<Record<string, string>[]>([])
   const devDependenciesList = reactive<Record<string, string>[]>([])
   onMounted(() => {

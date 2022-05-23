@@ -13,7 +13,7 @@
       <transition name="logo">
         <Logo v-if="showLogo" />
       </transition>
-      <ScrollerMenu :routes="routes" />
+      <ScrollerMenu :routes="permissionStore.getPermissionSideBar" />
       <div class="mobile-shadow"></div>
     </n-card>
   </n-config-provider>
@@ -22,8 +22,8 @@
 <script lang="ts">
   import useAppConfigStore from '@/store/modules/app-config'
   import { computed, defineComponent } from 'vue'
-  import { useLayoutStore } from '../../components/index'
   import { SideTheme, ThemeMode } from '@/store/types'
+  import usePermissionStore from '@/store/modules/permission'
   export default defineComponent({
     name: 'SideBar',
     props: {
@@ -33,11 +33,8 @@
       },
     },
     setup() {
-      const store = useLayoutStore()
       const appConfig = useAppConfigStore()
-      const routes = computed(() => {
-        return store?.state.permissionRoutes.filter((it) => !!it.name)
-      })
+      const permissionStore = usePermissionStore()
       const themeOverThemes = computed(() => {
         if (appConfig.theme === ThemeMode.DARK) {
           return {}
@@ -82,7 +79,7 @@
       })
       return {
         appConfig,
-        routes,
+        permissionStore,
         themeOverThemes,
       }
     },
