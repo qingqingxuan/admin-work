@@ -36,8 +36,6 @@ const useVisitedRoutes = defineStore('visited-routes', {
     removeVisitedRoute(route: RouteLocationNormalized) {
       return new Promise<string>((resolve) => {
         this.visitedRoutes.splice(this.visitedRoutes.indexOf(route), 1)
-        // ;(this as StoreType).persistentVisitedView()
-        // ;(this as StoreType).removeCachedView && (this as StoreType).removeCachedView(route)
         resolve(this.findLastRoutePath())
       })
     },
@@ -46,42 +44,38 @@ const useVisitedRoutes = defineStore('visited-routes', {
         ? this.visitedRoutes[this.visitedRoutes.length - 1].fullPath
         : '/'
     },
-    // closeLeftVisitedView(selectRoute: RouteRecordRawWithHidden) {
-    //   return new Promise((resolve) => {
-    //     const selectIndex = this.visitedRoute.indexOf(selectRoute)
-    //     if (selectIndex !== -1) {
-    //       this.visitedRoute = this.visitedRoute.filter((it, index) => {
-    //         return (it.meta && it.meta.affix) || index >= selectIndex
-    //       })
-    //       // this.persistentVisitedView()
-    //     }
-    //     // ;(this as StoreType).resetCachedView && (this as StoreType).resetCachedView()
-    //     resolve(selectRoute)
-    //   })
-    // },
-    // closeRightVisitedView(selectRoute: RouteRecordRawWithHidden) {
-    //   return new Promise((resolve) => {
-    //     const selectIndex = this.visitedRoute.indexOf(selectRoute)
-    //     if (selectIndex !== -1) {
-    //       this.visitedRoute = this.visitedRoute.filter((it, index) => {
-    //         return (it.meta && it.meta.affix) || index <= selectIndex
-    //       })
-    //       // this.persistentVisitedView()
-    //     }
-    //     // ;(this as StoreType).resetCachedView && (this as StoreType).resetCachedView()
-    //     resolve(selectRoute)
-    //   })
-    // },
-    // closeAllVisitedView() {
-    //   return new Promise<void>((resolve) => {
-    //     this.visitedRoute = this.visitedRoute.filter((it) => {
-    //       return it.meta && it.meta.affix
-    //     })
-    //     // ;(this as StoreType).persistentVisitedView()
-    //     // ;(this as StoreType).resetCachedView && (this as StoreType).resetCachedView()
-    //     resolve()
-    //   })
-    // },
+    closeLeftVisitedView(selectRoute: RouteLocationNormalized) {
+      return new Promise((resolve) => {
+        const selectIndex = this.visitedRoutes.indexOf(selectRoute)
+        if (selectIndex !== -1) {
+          this.visitedRoutes = this.visitedRoutes.filter((it, index) => {
+            return (it.meta && it.meta.affix) || index >= selectIndex
+          })
+          // this.persistentVisitedView()
+        }
+        resolve(selectRoute)
+      })
+    },
+    closeRightVisitedView(selectRoute: RouteLocationNormalized) {
+      return new Promise((resolve) => {
+        const selectIndex = this.visitedRoutes.indexOf(selectRoute)
+        if (selectIndex !== -1) {
+          this.visitedRoutes = this.visitedRoutes.filter((it, index) => {
+            return (it.meta && it.meta.affix) || index <= selectIndex
+          })
+          // this.persistentVisitedView()
+        }
+        resolve(selectRoute)
+      })
+    },
+    closeAllVisitedView() {
+      return new Promise<void>((resolve) => {
+        this.visitedRoutes = this.visitedRoutes.filter((it) => {
+          return it.meta && it.meta.affix
+        })
+        resolve()
+      })
+    },
     // persistentVisitedView() {
     //   const tempPersistendRoutes = this.visitedRoute.map((it) => {
     //     return {

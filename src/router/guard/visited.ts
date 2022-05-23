@@ -6,6 +6,9 @@ function useVisitedGuard() {
     if (['404', '500', '403', 'not-found', 'Login'].includes(to.name as string)) {
       return true
     }
+    if (to.path.startsWith('/redirect')) {
+      return true
+    }
     if (to.meta.noShowTabbar) {
       return true
     }

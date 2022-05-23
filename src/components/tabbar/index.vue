@@ -19,7 +19,7 @@
           style="--n-height: 24px; --n-font-weight: 200"
           :data="item.fullPath"
           @click.self="itemClick(item.fullPath)"
-          @contextmenu="onContextMenu(item.fullPath, $event)"
+          @contextmenu="onContextMenu(item, $event)"
         >
           <span
             style="font-size: 12px; margin-top: 2px"
@@ -146,16 +146,19 @@
     watch: {
       $route(newVal) {
         this.currentTab = newVal.fullPath || ''
-        const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
-        const el = document.querySelector(`[data="${this.currentTab}"]`) as HTMLElement
-        scrollbar.scrollTo(
-          {
-            left: el.offsetLeft,
-            debounce: true,
-            behavior: 'smooth',
-          } as any,
-          0
-        )
+        setTimeout(() => {
+          const scrollbar = this.$refs.scrollbar as InstanceType<typeof NScrollbar>
+          const el = document.querySelector(`[data="${this.currentTab}"]`) as HTMLElement
+          el &&
+            scrollbar.scrollTo(
+              {
+                left: el.offsetLeft,
+                debounce: true,
+                behavior: 'smooth',
+              } as any,
+              0
+            )
+        }, 0)
       },
       showContextMenu(val) {
         if (val) {
@@ -173,6 +176,9 @@
         'initAffixRoutes',
         'removeVisitedRoute',
         'findLastRoutePath',
+        'closeRightVisitedView',
+        'closeLeftVisitedView',
+        'closeAllVisitedView',
       ]),
       initRoute() {
         const affixedRoutes = this.findAffixedRoutes(
@@ -210,16 +216,14 @@
       isAffix(route: RouteRecordRawWithHidden) {
         return route.meta && route.meta.affix
       },
-      onContextMenu(fullPath: string | undefined, e: MouseEvent) {
-        const tempView = this.state.visitedView.find((it) => it.fullPath === fullPath)
-        if (!tempView) return
+      onContextMenu(item: RouteLocationNormalized, e: MouseEvent) {
         const { clientX } = e
         const { x } = this.$el.getBoundingClientRect()
         e.preventDefault()
-        this.selectRoute = tempView
+        this.selectRoute = item
         if (this.selectRoute) {
-          this.showLeftMenu = this.isLeftLast(fullPath || '/')
-          this.showRightMenu = this.isRightLast(fullPath || '/')
+          this.showLeftMenu = this.isLeftLast(item.fullPath || '/')
+          this.showRightMenu = this.isRightLast(item.fullPath || '/')
           const screenWidth = document.body.clientWidth
           this.contextMenuStyle.left =
             (clientX + 130 > screenWidth ? clientX - 130 - x - 15 : clientX - x + 15) + 'px'
@@ -234,12 +238,12 @@
       },
       // context menu actions
       isLeftLast(tempRoute: string) {
-        return this.state.visitedView.findIndex((it) => it.fullPath === tempRoute) === 0
+        return this.getVisitedRoutes.findIndex((it) => it.fullPath === tempRoute) === 0
       },
       isRightLast(tempRoute: string) {
         return (
-          this.state.visitedView.findIndex((it) => it.fullPath === tempRoute) ===
-          this.state.visitedView.length - 1
+          this.getVisitedRoutes.findIndex((it) => it.fullPath === tempRoute) ===
+          this.getVisitedRoutes.length - 1
         )
       },
       onDropDownSelect(key: string) {
@@ -257,29 +261,23 @@
       },
       closeLeft() {
         if (!this.selectRoute) return
-        store.closeLeftVisitedView(this.selectRoute as RouteRecordRawWithHidden).then(() => {
+        this.closeLeftVisitedView(this.selectRoute as RouteLocationNormalized).then(() => {
           if (this.$route.fullPath !== (this.selectRoute as RouteRecordRawWithHidden).fullPath) {
-            this.$router.push(
-              this.state.visitedView[this.state.visitedView.length - 1].fullPath as string
-            )
+            this.$router.push(this.findLastRoutePath())
           }
         })
       },
       closeRight() {
         if (!this.selectRoute) return
-        store.closeRightVisitedView(this.selectRoute as RouteRecordRawWithHidden).then(() => {
+        this.closeRightVisitedView(this.selectRoute as RouteLocationNormalized).then(() => {
           if (this.$route.fullPath !== (this.selectRoute as RouteRecordRawWithHidden).fullPath) {
-            this.$router.push(
-              this.state.visitedView[this.state.visitedView.length - 1].fullPath as string
-            )
+            this.$router.push(this.findLastRoutePath())
           }
         })
       },
       closeAll() {
-        store.closeAllVisitedView().then(() => {
-          this.$router.push(
-            this.state.visitedView[this.state.visitedView.length - 1].fullPath as string
-          )
+        this.closeAllVisitedView().then(() => {
+          this.$router.push(this.findLastRoutePath())
         })
       },
       closeMenu() {
