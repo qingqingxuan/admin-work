@@ -16,7 +16,8 @@
   import type { MenuOption } from 'naive-ui'
   import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
   import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
-  import { isExternal, transfromMenu } from '@/utils'
+  import { isExternal } from '@/utils'
+  import { transfromMenu } from '@/store/help'
 
   export default defineComponent({
     name: 'HorizontalScrollerMenu',

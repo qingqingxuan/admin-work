@@ -42,7 +42,8 @@
   import IconSelector from '@/components/common/IconSelector.vue'
   import { DataFormType, ModalDialogType, FormItem } from '@/types/components'
   import { renderInput, renderSwitch, renderTreeSelect } from '@/hooks/form'
-  import { findRouteByUrl, isExternal, transformTreeSelect } from '@/utils'
+  import { isExternal, transformTreeSelect } from '@/utils'
+  import { findRouteByUrl } from '@/store/help'
   import usePermissionStore from '@/store/modules/permission'
   export default defineComponent({
     name: 'Menu',

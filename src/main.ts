@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import pinia from './store/pinia'
-import LayoutStore from './components/index'
+import LayoutStore, { Layout } from './components/index'
 import './styles/index.css'
 import './icons/iconfont/iconfont.css'
 import router from './router'
@@ -10,6 +10,8 @@ import 'vfonts/FiraCode.css'
 import 'virtual:svg-icons-register'
 import useRouterGuard from './router/guard'
 import '../mock'
+
+console.log(Layout)
 
 useRouterGuard()
 

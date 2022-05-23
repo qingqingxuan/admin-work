@@ -45,11 +45,12 @@
 <script lang="ts">
   import { computed, defineComponent, onMounted, ref, shallowReactive, watch } from 'vue'
   import { RouteLocationNormalizedLoaded, RouteRecordRaw, useRoute, useRouter } from 'vue-router'
-  import { SplitTab } from '../../types/store'
-  import { isExternal, transformSplitTabMenu } from '../../utils'
+  import { isExternal } from '@/utils'
   import useAppConfigStore from '@/store/modules/app-config'
-  import { SideTheme, ThemeMode } from '@/store/types'
+  import { SideTheme, SplitTab, ThemeMode } from '@/store/types'
   import usePermissionStore from '@/store/modules/permission'
+  import { transformSplitTabMenu } from '@/store/help'
+
   export default defineComponent({
     name: 'TabSplitSideBar',
     props: {

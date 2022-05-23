@@ -1,5 +1,5 @@
+import { findCachedRoutes } from '@/store/help'
 import useCachedRouteStore from '@/store/modules/cached-routes'
-import { findCachedRoutes } from '@/utils'
 import router from '..'
 
 function useCachedGuard() {

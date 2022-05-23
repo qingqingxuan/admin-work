@@ -1,4 +1,5 @@
-import { RouteRecordNormalized } from 'vue-router'
+import { Ref, UnwrapRef } from 'vue'
+import { RouteMeta, RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 
 export enum LayoutMode {
   LTR = 'ltr',
@@ -67,4 +68,38 @@ export interface VisitedRouteState {
 
 export interface CachedRouteState {
   cachedRoutes: string[]
+}
+
+export interface OriginRoute {
+  parentPath?: string
+  menuUrl: string
+  menuName?: string
+  routeName?: string
+  hidden?: boolean
+  outLink?: string
+  affix?: boolean
+  cacheable?: boolean
+  isRootPath?: boolean
+  iconPrefix?: string
+  icon?: string
+  badge?: string | number
+  isSingle?: boolean
+  localFilePath?: string
+  children?: Array<OriginRoute>
+}
+
+export interface RouteMetaType extends RouteMeta {
+  icon?: string
+  title?: string
+  cacheable?: boolean
+  affix?: boolean
+}
+
+export interface SplitTab {
+  label: string
+  iconPrefix?: string | unknown
+  icon: string
+  fullPath: string
+  children?: Array<RouteRecordRaw>
+  checked: Ref<UnwrapRef<boolean>>
 }

@@ -1,5 +1,5 @@
+import { findAffixedRoutes } from '@/store/help'
 import useVisitedRouteStore from '@/store/modules/visited-routes'
-import { findAffixedRoutes } from '@/utils'
 import { RouteRecordRaw } from 'vue-router'
 import router from '..'
 
