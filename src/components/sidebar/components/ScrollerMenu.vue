@@ -20,6 +20,7 @@
 
 <script lang="ts">
   import useAppConfigStore from '@/store/modules/app-config'
+  import { DeviceType } from '@/store/types'
   import type { MenuOption } from 'naive-ui'
   import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
@@ -66,10 +67,12 @@
         defaultExpandKeys.value = Array.from(new Set([...defaultExpandKeys.value, ...results]))
       }
       function onMenuClick(key: string) {
+        console.log(key)
+
         if (isExternal(key)) return
         router.push(key)
-        if (store.state.device === 'mobile') {
-          store.toggleCollapse(true)
+        if (appConfig.deviceType === DeviceType.MOBILE) {
+          appConfig.toggleCollapse(true)
         }
       }
       function onMenuExpandedKeysClick(keys: string[]) {

@@ -1,7 +1,5 @@
 import { Ref, UnwrapRef } from 'vue'
 import { RouteRecordRaw, RouteMeta } from 'vue-router'
-import CacheView from './cached-view'
-import VisitedView from './visited-view'
 
 export interface RouteMetaType extends RouteMeta {
   icon?: string
@@ -29,11 +27,9 @@ export interface SplitTab {
 
 export interface StateType {
   permissionRoutes: Array<RouteRecordRawWithHidden>
-  visitedView: Array<RouteRecordRawWithHidden>
-  cachedView: Array<string>
 }
 
-export interface StoreType extends CacheView, VisitedView {
+export interface StoreType {
   state: UnwrapRef<StateType>
   start: (params: any) => void
   getSplitTabs: () => Array<RouteRecordRawWithHidden>

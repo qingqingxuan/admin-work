@@ -260,7 +260,8 @@ router.beforeEach(async (to) => {
           redirect: '/404',
           hidden: true,
         } as RouteRecordRawWithHidden)
-        layoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
+        const permissionRoute = [...constantRoutes, ...accessRoutes]
+        layoutStore.initPermissionRoute(permissionRoute)
         return { ...to, replace: true }
       } else {
         return true

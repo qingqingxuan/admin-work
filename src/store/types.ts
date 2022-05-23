@@ -1,4 +1,4 @@
-import { RouteLocationNormalized } from 'vue-router'
+import { RouteRecordNormalized } from 'vue-router'
 
 export enum LayoutMode {
   LTR = 'ltr',
@@ -61,9 +61,10 @@ export interface AppConfigState {
 }
 
 export interface VisitedRouteState {
-  visitedRoutes: RouteLocationNormalized[]
+  visitedRoutes: RouteRecordNormalized[]
+  affixRoutes: RouteRecordNormalized[]
 }
 
 export interface CachedRouteState {
-  cachedRoute: string[]
+  cachedRoutes: string[]
 }

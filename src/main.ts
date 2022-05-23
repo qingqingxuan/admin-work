@@ -10,9 +10,11 @@ import 'vfonts/FiraCode.css'
 import 'virtual:svg-icons-register'
 import './utils/router'
 import useVisitedGuard from './router/guard/visited'
+import useCachedGuard from './router/guard/cached'
 import '../mock'
 
 useVisitedGuard()
+useCachedGuard()
 
 const app = createApp(App)
 app.use(LayoutStore, {

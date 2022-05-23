@@ -1,14 +1,10 @@
 import { StoreType, RouteRecordRawWithHidden, StateType } from './../types/store'
 import { reactive } from 'vue'
 import { transfromRoutes } from '../utils'
-import CachedViewAction from './modules/cached-view'
-import VisitedViewAction from './modules/visited-view'
 import { RouteRecordRaw } from 'vue-router'
 
 const originState = {
   permissionRoutes: [],
-  visitedView: [],
-  cachedView: [],
 } as StateType
 
 const store: StoreType = {
@@ -20,7 +16,6 @@ const store: StoreType = {
         ;(this as any)[key] = actions[key]
       }
     }
-    this.restoreVisitedView()
   },
   getSplitTabs() {
     return this.state.permissionRoutes.filter((it) => {
@@ -38,12 +33,8 @@ const store: StoreType = {
   reset() {
     this.state = reactive<StateType>({
       permissionRoutes: [],
-      visitedView: [],
-      cachedView: [],
     })
   },
-  ...CachedViewAction,
-  ...VisitedViewAction,
 }
 
 export default store

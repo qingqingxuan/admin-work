@@ -1,8 +1,15 @@
-import useVisitedRoute from '@/store/modules/visited-routes'
+import useVisitedRouteStore from '@/store/modules/visited-routes'
+import { findAffixedRoutes } from '@/utils'
+import { RouteRecordNormalized } from 'vue-router'
 import router from '..'
 
 function useVisitedGuard() {
   router.beforeEach((to) => {
+    const visitedRouteStore = useVisitedRouteStore()
+    if (!visitedRouteStore.affixRoutes || visitedRouteStore.affixRoutes.length === 0) {
+      const affixRoutes = findAffixedRoutes(router.getRoutes())
+      visitedRouteStore.initAffixRoutes(affixRoutes)
+    }
     if (['404', '500', '403', 'not-found', 'Login'].includes(to.name as string)) {
       return true
     }
@@ -15,8 +22,7 @@ function useVisitedGuard() {
     if (to.query?.noShowTabbar) {
       return true
     }
-    const visitedRoutesStore = useVisitedRoute()
-    visitedRoutesStore.addVisitedRoute(to)
+    visitedRouteStore.addVisitedRoute(to as unknown as RouteRecordNormalized)
     return true
   })
 }

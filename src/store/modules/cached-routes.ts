@@ -1,27 +1,22 @@
 import { toHump } from '@/utils'
 import { defineStore } from 'pinia'
-import { RouteRecordRaw } from 'vue-router'
-import { CachedRouteState } from '../types'
 
-const useCachedRoutes = defineStore('cached-routes', {
+const useCachedRouteStore = defineStore('cached-routes', {
   state: () => {
     return {
-      cachedRoute: [],
-    } as CachedRouteState
+      cachedRoutes: [] as string[],
+    }
   },
   getters: {
     getCachedRouteName(state) {
-      return state.cachedRoute
+      return state.cachedRoutes
     },
   },
   actions: {
-    addCachedRoute(route: RouteRecordRaw) {
-      if (route.name && route.meta && route.meta.cacheable) {
-        const humName = toHump(route.name as string)
-        if (!this.cachedRoute.includes(humName)) {
-          this.cachedRoute.push(humName)
-        }
-      }
+    initCachedRoute(routes: string[]) {
+      this.cachedRoutes = routes.map((it) => {
+        return toHump(it as string)
+      })
     },
     resetCachedRoutes() {
       this.$reset()
@@ -29,4 +24,4 @@ const useCachedRoutes = defineStore('cached-routes', {
   },
 })
 
-export default useCachedRoutes
+export default useCachedRouteStore

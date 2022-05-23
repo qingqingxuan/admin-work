@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 import path from 'path-browserify'
 import { SplitTab, RouteRecordRawWithHidden } from '../types/store'
 import { DataTableColumn, MenuOption, NIcon, TreeSelectOption } from 'naive-ui'
@@ -74,6 +74,26 @@ export function mapTwoLevelRouter(srcRoutes: Array<RouteRecordRaw>) {
     return tempRoutes
   }
   return []
+}
+
+export function findAffixedRoutes(routes: Array<RouteRecordNormalized>) {
+  const temp = [] as Array<RouteRecordNormalized>
+  routes.forEach((it) => {
+    if (it.meta && it.meta.affix) {
+      temp.push(it)
+    }
+  })
+  return temp
+}
+
+export function findCachedRoutes(routes: Array<RouteRecordNormalized>) {
+  const temp = [] as Array<string>
+  routes.forEach((it) => {
+    if (it.name && it.meta && it.meta.cacheable) {
+      temp.push(it.name as string)
+    }
+  })
+  return temp
 }
 
 export function transfromRoutes(

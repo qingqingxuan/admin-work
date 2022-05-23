@@ -11,20 +11,20 @@
       <n-scrollbar ref="scrollbar" :x-scrollable="true" :size="0">
         <n-button
           v-for="item of getVisitedRoutes"
-          :key="item.fullPath"
-          :type="currentTab === item.fullPath ? 'primary' : 'default'"
+          :key="item.path"
+          :type="currentTab === item.path ? 'primary' : 'default'"
           class="tab-item"
           strong
           secondary
           style="--n-height: 24px; --n-font-weight: 200"
-          :data="item.fullPath"
-          @click.self="itemClick(item.fullPath)"
+          :data="item.path"
+          @click.self="itemClick(item)"
           @contextmenu="onContextMenu(item, $event)"
         >
           <span
             style="font-size: 12px; margin-top: 2px"
             class="text-item"
-            @click.self="itemChildClick(item.fullPath)"
+            @click.self="itemClick(item)"
           >
             {{ item.meta ? item.meta.title : item.name }}
           </span>
@@ -93,13 +93,12 @@
 
 <script lang="ts">
   import store from '../../store'
-  import path from 'path-browserify'
   import { defineComponent, h } from 'vue'
   import { RouteRecordRawWithHidden } from '../../types/store'
   import { NIcon, NScrollbar } from 'naive-ui'
   import { Close, ChevronBack, Refresh, ArrowBack, ArrowForward, Menu } from '@vicons/ionicons5'
   import { mapActions, mapState } from 'pinia'
-  import useVisitedRoutes from '@/store/modules/visited-routes'
+  import useVisitedRouteStore from '@/store/modules/visited-routes'
   import { RouteLocationNormalized } from 'vue-router'
   export default defineComponent({
     name: 'TabBar',
@@ -141,7 +140,7 @@
       }
     },
     computed: {
-      ...mapState(useVisitedRoutes, ['getVisitedRoutes']),
+      ...mapState(useVisitedRouteStore, ['getVisitedRoutes']),
     },
     watch: {
       $route(newVal) {
@@ -168,52 +167,21 @@
         }
       },
     },
-    mounted() {
-      this.initRoute()
-    },
     methods: {
-      ...mapActions(useVisitedRoutes, [
-        'initAffixRoutes',
+      ...mapActions(useVisitedRouteStore, [
         'removeVisitedRoute',
         'findLastRoutePath',
         'closeRightVisitedView',
         'closeLeftVisitedView',
         'closeAllVisitedView',
       ]),
-      initRoute() {
-        const affixedRoutes = this.findAffixedRoutes(
-          this.state.permissionRoutes as Array<RouteRecordRawWithHidden>,
-          '/'
-        )
-        this.initAffixRoutes(affixedRoutes as unknown as RouteLocationNormalized[])
-      },
-      itemClick(path: string | undefined) {
-        this.handleTabClick(path || '/')
-      },
-      itemChildClick(path: string | undefined) {
-        this.handleTabClick(path || '/')
+      itemClick(item: RouteLocationNormalized) {
+        this.handleTabClick(item.fullPath || item.path || '/')
       },
       handleTabClick(path: string) {
         this.$router.push(path)
       },
-      findAffixedRoutes(routes: Array<RouteRecordRawWithHidden>, basePath: string) {
-        const temp = [] as Array<RouteRecordRawWithHidden>
-        routes.forEach((it) => {
-          if (!it.hidden && it.meta && it.meta.affix) {
-            temp.push({
-              name: it.name,
-              fullPath: it.fullPath,
-              path: it.path,
-              meta: it.meta,
-            } as RouteRecordRawWithHidden)
-          }
-          if (it.children && it.children.length > 0) {
-            temp.push(...this.findAffixedRoutes(it.children, path.resolve(basePath, it.path)))
-          }
-        })
-        return temp
-      },
-      isAffix(route: RouteRecordRawWithHidden) {
+      isAffix(route: RouteLocationNormalized) {
         return route.meta && route.meta.affix
       },
       onContextMenu(item: RouteLocationNormalized, e: MouseEvent) {
