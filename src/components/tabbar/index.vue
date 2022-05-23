@@ -94,12 +94,11 @@
 <script lang="ts">
   import store from '../../store'
   import { defineComponent, h } from 'vue'
-  import { RouteRecordRawWithHidden } from '../../types/store'
   import { NIcon, NScrollbar } from 'naive-ui'
   import { Close, ChevronBack, Refresh, ArrowBack, ArrowForward, Menu } from '@vicons/ionicons5'
   import { mapActions, mapState } from 'pinia'
   import useVisitedRouteStore from '@/store/modules/visited-routes'
-  import { RouteLocationNormalized } from 'vue-router'
+  import { RouteRecordNormalized } from 'vue-router'
   export default defineComponent({
     name: 'TabBar',
     components: { Close, ChevronBack, Refresh, ArrowBack, ArrowForward, Menu },
@@ -175,23 +174,23 @@
         'closeLeftVisitedView',
         'closeAllVisitedView',
       ]),
-      itemClick(item: RouteLocationNormalized) {
-        this.handleTabClick(item.fullPath || item.path || '/')
+      itemClick(item: RouteRecordNormalized) {
+        this.handleTabClick(item.path || item.path || '/')
       },
       handleTabClick(path: string) {
         this.$router.push(path)
       },
-      isAffix(route: RouteLocationNormalized) {
+      isAffix(route: RouteRecordNormalized) {
         return route.meta && route.meta.affix
       },
-      onContextMenu(item: RouteLocationNormalized, e: MouseEvent) {
+      onContextMenu(item: RouteRecordNormalized, e: MouseEvent) {
         const { clientX } = e
         const { x } = this.$el.getBoundingClientRect()
         e.preventDefault()
         this.selectRoute = item
         if (this.selectRoute) {
-          this.showLeftMenu = this.isLeftLast(item.fullPath || '/')
-          this.showRightMenu = this.isRightLast(item.fullPath || '/')
+          this.showLeftMenu = this.isLeftLast(item.path || '/')
+          this.showRightMenu = this.isRightLast(item.path || '/')
           const screenWidth = document.body.clientWidth
           this.contextMenuStyle.left =
             (clientX + 130 > screenWidth ? clientX - 130 - x - 15 : clientX - x + 15) + 'px'
@@ -199,18 +198,18 @@
           this.showContextMenu = true
         }
       },
-      removeTab(item: RouteLocationNormalized) {
+      removeTab(item: RouteRecordNormalized) {
         this.removeVisitedRoute(item).then((lastPath) => {
           this.$router.push(lastPath)
         })
       },
       // context menu actions
       isLeftLast(tempRoute: string) {
-        return this.getVisitedRoutes.findIndex((it) => it.fullPath === tempRoute) === 0
+        return this.getVisitedRoutes.findIndex((it) => it.path === tempRoute) === 0
       },
       isRightLast(tempRoute: string) {
         return (
-          this.getVisitedRoutes.findIndex((it) => it.fullPath === tempRoute) ===
+          this.getVisitedRoutes.findIndex((it) => it.path === tempRoute) ===
           this.getVisitedRoutes.length - 1
         )
       },
@@ -229,16 +228,16 @@
       },
       closeLeft() {
         if (!this.selectRoute) return
-        this.closeLeftVisitedView(this.selectRoute as RouteLocationNormalized).then(() => {
-          if (this.$route.fullPath !== (this.selectRoute as RouteRecordRawWithHidden).fullPath) {
+        this.closeLeftVisitedView(this.selectRoute as RouteRecordNormalized).then(() => {
+          if (this.$route.fullPath !== (this.selectRoute as RouteRecordNormalized).path) {
             this.$router.push(this.findLastRoutePath())
           }
         })
       },
       closeRight() {
         if (!this.selectRoute) return
-        this.closeRightVisitedView(this.selectRoute as RouteLocationNormalized).then(() => {
-          if (this.$route.fullPath !== (this.selectRoute as RouteRecordRawWithHidden).fullPath) {
+        this.closeRightVisitedView(this.selectRoute as RouteRecordNormalized).then(() => {
+          if (this.$route.path !== (this.selectRoute as RouteRecordNormalized).path) {
             this.$router.push(this.findLastRoutePath())
           }
         })

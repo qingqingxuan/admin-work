@@ -1,5 +1,5 @@
 import { Ref, UnwrapRef } from 'vue'
-import { RouteRecordRaw, RouteMeta } from 'vue-router'
+import { RouteRecordRaw, RouteMeta, RouteRecordNormalized } from 'vue-router'
 
 export interface RouteMetaType extends RouteMeta {
   icon?: string
@@ -21,7 +21,7 @@ export interface SplitTab {
   iconPrefix?: string | unknown
   icon: string
   fullPath: string
-  children?: Array<RouteRecordRawWithHidden>
+  children?: Array<RouteRecordNormalized>
   checked: Ref<UnwrapRef<boolean>>
 }
 

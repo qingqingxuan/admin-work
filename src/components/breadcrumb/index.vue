@@ -21,10 +21,9 @@
 </template>
 
 <script lang="ts">
-  import { RouteRecordRawWithHidden } from '@/types/store'
   import { isExternal } from '@/utils'
   import { defineComponent, onMounted, reactive, watch } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
+  import { RouteRecordNormalized, useRoute, useRouter } from 'vue-router'
   import { useLayoutStore } from '..'
   import { ChevronDown } from '@vicons/ionicons5'
   interface DropItem {
@@ -54,7 +53,7 @@
         }, [])
       }
       function generatorDropdown(
-        routes: Array<RouteRecordRawWithHidden> | undefined,
+        routes: Array<RouteRecordNormalized> | undefined,
         parentPath = '/'
       ) {
         if (!routes) return
@@ -70,7 +69,10 @@
             children: [],
           }
           if (it.children && it.children.length > 0) {
-            tempItem.children = generatorDropdown(it.children, tempItem.key)
+            tempItem.children = generatorDropdown(
+              it.children as unknown as RouteRecordNormalized[],
+              tempItem.key
+            )
           } else {
             delete tempItem.children
           }
@@ -79,14 +81,14 @@
         return tempArray
       }
       function findRoute(paths: string[]) {
-        const selectRoutes: Array<RouteRecordRawWithHidden> = []
+        const selectRoutes: Array<RouteRecordNormalized> = []
         let tempOrigin = store.state.permissionRoutes
         paths.forEach((it) => {
           const selectRoute = tempOrigin.find((pIt) => pIt.path === it)
           if (selectRoute) {
             tempOrigin = selectRoute.children as []
           }
-          selectRoutes.push(selectRoute as RouteRecordRawWithHidden)
+          selectRoutes.push(selectRoute as RouteRecordNormalized)
         })
         return selectRoutes
       }

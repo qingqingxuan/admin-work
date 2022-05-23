@@ -44,8 +44,13 @@
 
 <script lang="ts">
   import { computed, defineComponent, onMounted, ref, shallowReactive, watch } from 'vue'
-  import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router'
-  import { RouteRecordRawWithHidden, SplitTab } from '../../types/store'
+  import {
+    RouteLocationNormalizedLoaded,
+    RouteRecordNormalized,
+    useRoute,
+    useRouter,
+  } from 'vue-router'
+  import { SplitTab } from '../../types/store'
   import { isExternal, transformSplitTabMenu } from '../../utils'
   import useAppConfigStore from '@/store/modules/app-config'
   import { useLayoutStore } from '..'
@@ -61,8 +66,8 @@
     setup() {
       const store = useLayoutStore()
       const appConfig = useAppConfigStore()
-      const tabs = shallowReactive([] as Array<SplitTab>)
-      const routes = shallowReactive([] as Array<RouteRecordRawWithHidden>)
+      const tabs = shallowReactive<SplitTab[]>([])
+      const routes = shallowReactive<RouteRecordNormalized[]>([])
       const route = useRoute()
       const router = useRouter()
       watch(
@@ -84,7 +89,7 @@
               it.checked.value = true
               if (it.children) {
                 routes.length = 0
-                routes.push(...(it.children as Array<RouteRecordRawWithHidden>))
+                routes.push(...(it.children as Array<RouteRecordNormalized>))
               }
             } else {
               it.checked.value = false
@@ -106,21 +111,21 @@
               label: firstItem.meta?.title,
               iconPrefix: firstItem.meta?.iconPrefix,
               icon: firstItem.meta?.icon,
-              fullPath: firstItem.fullPath,
+              fullPath: firstItem.path,
               children: firstItem.children,
               checked: ref(false),
             } as SplitTab)
           } else {
-            if (isExternal(firstItem.fullPath as string)) {
+            if (isExternal(firstItem.path as string)) {
               routes.length = 0
-              routes.push(...(item.children as Array<RouteRecordRawWithHidden>))
-              window.open(firstItem.fullPath)
+              routes.push(...item.children)
+              window.open(firstItem.path)
             } else {
-              router.push(firstItem.fullPath || '/').then((error) => {
+              router.push(firstItem.path || '/').then((error) => {
                 if (error) {
-                  if (firstItem.fullPath === route.path || firstItem.fullPath === route.fullPath) {
+                  if (firstItem.path === route.path || firstItem.path === route.fullPath) {
                     routes.length = 0
-                    routes.push(...(item.children as Array<RouteRecordRawWithHidden>))
+                    item.children && routes.push(...item.children)
                   }
                 }
               })

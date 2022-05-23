@@ -1,7 +1,7 @@
-import { StoreType, RouteRecordRawWithHidden, StateType } from './../types/store'
+import { StoreType, StateType } from './../types/store'
 import { reactive } from 'vue'
 import { transfromRoutes } from '../utils'
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 
 const originState = {
   permissionRoutes: [],
@@ -20,7 +20,7 @@ const store: StoreType = {
   getSplitTabs() {
     return this.state.permissionRoutes.filter((it) => {
       return it.path && !it.hidden && it.children && it.children.length > 0
-    }) as Array<RouteRecordRawWithHidden>
+    }) as Array<RouteRecordNormalized>
   },
   initPermissionRoute(routes: Array<RouteRecordRaw>) {
     const tempRoutes = transfromRoutes(routes) || []

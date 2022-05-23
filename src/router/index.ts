@@ -28,9 +28,9 @@ export const constantRoutes = [
     path: '/personal',
     name: 'personal',
     component: Layout,
-    hidden: true,
     meta: {
       title: '个人中心',
+      hidden: true,
     },
     children: [
       {

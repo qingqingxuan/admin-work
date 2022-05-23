@@ -23,16 +23,15 @@
   import { DeviceType } from '@/store/types'
   import type { MenuOption } from 'naive-ui'
   import { defineComponent, PropType, ref, shallowReactive, watch, watchEffect } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
+  import { RouteRecordNormalized, useRoute, useRouter } from 'vue-router'
   import { useLayoutStore } from '../../../components/index'
-  import { RouteRecordRawWithHidden } from '../../../types/store'
   import { isExternal, transfromMenu } from '../../../utils'
 
   export default defineComponent({
     name: 'ScrollerMenu',
     props: {
       routes: {
-        type: Object as PropType<Array<RouteRecordRawWithHidden>>,
+        type: Object as PropType<Array<RouteRecordNormalized>>,
         require: true,
       },
     },
@@ -46,7 +45,7 @@
       const router = useRouter()
       defaultPath.value = currentRoute.fullPath
       handleExpandPath()
-      function handleMenu(routes?: Array<RouteRecordRawWithHidden>) {
+      function handleMenu(routes?: Array<RouteRecordNormalized>) {
         menuOptions.length = 0
         const tempMenus = transfromMenu(routes || [])
         menuOptions.push(...tempMenus)

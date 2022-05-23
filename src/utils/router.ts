@@ -28,8 +28,6 @@ interface OriginRoute {
   children?: Array<OriginRoute>
 }
 
-type RouteRecordRawWithHidden = RouteRecordRaw & { hidden: boolean }
-
 /**
  * 这里的 defaultRoutes 是为了在一开始对接项目的时候，后端人员还没有准备好菜单接口，导致前端开发者不能进入主页面。
  * 所以这里返回默认的菜单数据，同时也向大家说明菜单数据的数据结构。后端的菜单接口一定要按这个格式去返回json数据，否则会解析菜单失败
@@ -134,7 +132,7 @@ function getComponent(it: OriginRoute) {
   })
 }
 
-function findRootPathRoute(routes: RouteRecordRawWithHidden[]) {
+function findRootPathRoute(routes: RouteRecordRaw[]) {
   for (let index = 0; index < routes.length; index++) {
     const route = routes[index]
     const rootRoute = route.children?.find((it) => it.meta && it.meta.isRootPath)
@@ -163,6 +161,7 @@ function filterRoutesFromLocalRoutes(
       icon: route.icon || 'menu',
       iconPrefix: route.iconPrefix || 'iconfont',
       badge: route.badge,
+      hidden: !!route.hidden,
       isRootPath: !!route.isRootPath,
       isSingle: !!route.isSingle,
       ...filterRoute.meta,
@@ -195,19 +194,19 @@ function getNameByUrl(menuUrl: string) {
 }
 
 function generatorRoutes(res: Array<OriginRoute>) {
-  const tempRoutes: Array<RouteRecordRawWithHidden> = []
+  const tempRoutes: Array<RouteRecordRaw> = []
   res.forEach((it) => {
     const isMenuFlag = isMenu(it)
     const localRoute = isMenuFlag ? filterRoutesFromLocalRoutes(it, asyncRoutes) : null
     if (localRoute) {
-      tempRoutes.push(localRoute as RouteRecordRawWithHidden)
+      tempRoutes.push(localRoute as RouteRecordRaw)
     } else {
-      const route: RouteRecordRawWithHidden = {
+      const route: RouteRecordRaw = {
         path: it.outLink && isExternal(it.outLink) ? it.outLink : it.menuUrl,
         name: it.routeName || getNameByUrl(it.menuUrl),
-        hidden: !!it.hidden,
         component: isMenuFlag ? Layout : getComponent(it),
         meta: {
+          hidden: !!it.hidden,
           title: it.menuName,
           affix: !!it.affix,
           cacheable: !!it.cacheable,
@@ -252,14 +251,18 @@ router.beforeEach(async (to) => {
         router.addRoute({
           path: '/',
           redirect: findRootPathRoute(accessRoutes),
-          hidden: true,
-        } as RouteRecordRawWithHidden)
+          meta: {
+            hidden: true,
+          },
+        })
         // 这个路由一定要放在最后
         router.addRoute({
           path: '/:pathMatch(.*)*',
           redirect: '/404',
-          hidden: true,
-        } as RouteRecordRawWithHidden)
+          meta: {
+            hidden: true,
+          },
+        })
         const permissionRoute = [...constantRoutes, ...accessRoutes]
         layoutStore.initPermissionRoute(permissionRoute)
         return { ...to, replace: true }

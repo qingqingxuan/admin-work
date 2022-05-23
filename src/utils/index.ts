@@ -1,6 +1,6 @@
 import { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 import path from 'path-browserify'
-import { SplitTab, RouteRecordRawWithHidden } from '../types/store'
+import { SplitTab } from '../types/store'
 import { DataTableColumn, MenuOption, NIcon, TreeSelectOption } from 'naive-ui'
 import { h, ref } from 'vue'
 import SvgIcon from '../components/svg-icon/index.vue'
@@ -99,27 +99,26 @@ export function findCachedRoutes(routes: Array<RouteRecordNormalized>) {
 export function transfromRoutes(
   originRoutes: Array<RouteRecordRaw>,
   parentPath = '/'
-): Array<RouteRecordRawWithHidden> | undefined {
+): Array<RouteRecordRaw> | undefined {
   if (!originRoutes) {
     return undefined
   }
-  const tempRoutes: Array<RouteRecordRawWithHidden> = []
+  const tempRoutes: Array<RouteRecordRaw> = []
   originRoutes.forEach((it) => {
     const tempRoute = {
       ...it,
-      hidden: (it as any).hidden ? !!(it as any).hidden : false,
       fullPath: isExternal(it.path) ? it.path : path.resolve(parentPath, it.path),
-    } as RouteRecordRawWithHidden
+    } as unknown as RouteRecordRaw
     if (tempRoute.children) {
-      tempRoute.children = transfromRoutes(tempRoute.children, tempRoute.fullPath)
+      tempRoute.children = transfromRoutes(tempRoute.children as RouteRecordRaw[], tempRoute.path)!
     }
     tempRoutes.push(tempRoute)
   })
   return tempRoutes
 }
 
-export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Array<MenuOption> {
-  function getLabel(item: RouteRecordRawWithHidden) {
+export function transfromMenu(originRoutes: Array<RouteRecordNormalized>): Array<MenuOption> {
+  function getLabel(item: RouteRecordNormalized) {
     if (isExternal(item.path as string)) {
       return () =>
         h(
@@ -139,10 +138,15 @@ export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Ar
   }
   const tempMenus: Array<MenuOption> = []
   originRoutes
-    .filter((it) => !it.hidden)
+    .filter((it) => {
+      if (!it.meta) {
+        return false
+      }
+      return !it.meta.hidden
+    })
     .forEach((it) => {
       const tempMenu = {
-        key: it.fullPath,
+        key: it.path,
         label: getLabel(it),
         icon: renderMenuIcon(
           it.meta ? (it.meta.iconPrefix ? (it.meta.iconPrefix as string) : 'icon') : 'icon',
@@ -152,8 +156,9 @@ export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Ar
       if (it.children) {
         if (it.meta && it.meta.isSingle && it.children.length === 1) {
           const item = it.children[0]
-          tempMenu.key = path.resolve(tempMenu.key, item.path)
-          tempMenu.label = item.meta && item.meta.title ? getLabel(item) : tempMenu.label
+          tempMenu.key = path.resolve(tempMenu.key as string, item.path)
+          tempMenu.label =
+            item.meta && item.meta.title ? getLabel(item as RouteRecordNormalized) : tempMenu.label
           tempMenu.icon =
             item.meta && item.meta.icon
               ? renderMenuIcon(
@@ -166,7 +171,7 @@ export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Ar
                 )
               : tempMenu.icon
         } else {
-          tempMenu.children = transfromMenu(it.children)
+          tempMenu.children = transfromMenu(it.children as RouteRecordNormalized[])
         }
       }
       tempMenus.push(tempMenu)
@@ -174,7 +179,7 @@ export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Ar
   return tempMenus
 }
 
-export function transformSplitTabMenu(routes?: Array<RouteRecordRawWithHidden>): Array<SplitTab> {
+export function transformSplitTabMenu(routes?: Array<RouteRecordNormalized>): Array<SplitTab> {
   if (!routes) {
     return [] as Array<SplitTab>
   }
@@ -182,10 +187,10 @@ export function transformSplitTabMenu(routes?: Array<RouteRecordRawWithHidden>):
   routes.forEach((it) => {
     const splitTab: SplitTab = {
       label: it.meta ? (it.meta?.title as string) : '',
-      fullPath: it.fullPath || '',
+      fullPath: it.path || '',
       iconPrefix: it.meta?.iconPrefix || 'icon',
       icon: it.meta ? (it.meta?.icon as any) : undefined,
-      children: it.children,
+      children: it.children as RouteRecordNormalized[],
       checked: ref(false),
     }
     tempTabs.push(splitTab)
@@ -242,7 +247,7 @@ export function transformTreeSelect(
   return tempSelections
 }
 
-export function findRouteByUrl(routes: Array<any>, path: string): RouteRecordRawWithHidden | null {
+export function findRouteByUrl(routes: Array<any>, path: string): RouteRecordNormalized | null {
   if (!path || !routes) {
     return null
   }
