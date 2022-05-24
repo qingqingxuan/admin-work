@@ -6,7 +6,7 @@ import router from '..'
 function useVisitedGuard() {
   router.beforeEach((to) => {
     const visitedRouteStore = useVisitedRouteStore()
-    if (!visitedRouteStore.affixRoutes || visitedRouteStore.affixRoutes.length === 0) {
+    if (!visitedRouteStore.isLoadAffix) {
       const affixRoutes = findAffixedRoutes(router.getRoutes())
       visitedRouteStore.initAffixRoutes(affixRoutes)
     }

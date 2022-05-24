@@ -2,13 +2,13 @@ import { defineStore } from 'pinia'
 import { RouteRecordRaw } from 'vue-router'
 import pinia from '../pinia'
 
-// const LOCAL_STOREAGE_VISITED_KEY = 'admin-work-visited'
+const visitedRoutes = JSON.parse(localStorage.getItem('visited-routes') || '[]')
 
 const useVisitedRouteStore = defineStore('visited-routes', {
   state: () => {
     return {
-      visitedRoutes: [] as RouteRecordRaw[],
-      affixRoutes: [] as RouteRecordRaw[],
+      visitedRoutes: visitedRoutes as RouteRecordRaw[],
+      isLoadAffix: false,
     }
   },
   getters: {
@@ -18,8 +18,12 @@ const useVisitedRouteStore = defineStore('visited-routes', {
   },
   actions: {
     initAffixRoutes(affixRoutes: RouteRecordRaw[]) {
-      this.affixRoutes = affixRoutes
-      this.visitedRoutes.unshift(...this.affixRoutes)
+      affixRoutes.forEach((affixRoute) => {
+        if (!this.visitedRoutes.find((it) => it.path === affixRoute.path)) {
+          this.visitedRoutes.unshift(affixRoute)
+        }
+      })
+      this.isLoadAffix = true
     },
     addVisitedRoute(route: RouteRecordRaw) {
       return new Promise((resolve) => {
@@ -27,7 +31,7 @@ const useVisitedRouteStore = defineStore('visited-routes', {
         if (!this.visitedRoutes.find((it) => it.path === route.path)) {
           isNewRoute = true
           this.visitedRoutes.push(route)
-          // this.persistentVisitedView()
+          this.persistentVisitedView()
         }
         resolve({ route, isNewRoute })
       })
@@ -50,7 +54,7 @@ const useVisitedRouteStore = defineStore('visited-routes', {
           this.visitedRoutes = this.visitedRoutes.filter((it, index) => {
             return (it.meta && it.meta.affix) || index >= selectIndex
           })
-          // this.persistentVisitedView()
+          this.persistentVisitedView()
         }
         resolve(selectRoute)
       })
@@ -62,7 +66,7 @@ const useVisitedRouteStore = defineStore('visited-routes', {
           this.visitedRoutes = this.visitedRoutes.filter((it, index) => {
             return (it.meta && it.meta.affix) || index <= selectIndex
           })
-          // this.persistentVisitedView()
+          this.persistentVisitedView()
         }
         resolve(selectRoute)
       })
@@ -72,38 +76,29 @@ const useVisitedRouteStore = defineStore('visited-routes', {
         this.visitedRoutes = this.visitedRoutes.filter((it) => {
           return it.meta && it.meta.affix
         })
+        this.persistentVisitedView()
         resolve()
       })
     },
-    // persistentVisitedView() {
-    //   const tempPersistendRoutes = this.visitedRoute.map((it) => {
-    //     return {
-    //       fullPath: it.fullPath,
-    //       meta: it.meta,
-    //       name: it.name,
-    //       params: it.params,
-    //       path: it.path,
-    //       query: it.query,
-    //     }
-    //   })
-    //   localStorage.setItem(LOCAL_STOREAGE_VISITED_KEY, JSON.stringify(tempPersistendRoutes))
-    // },
+    persistentVisitedView() {
+      const tempPersistendRoutes = this.visitedRoutes.map((it) => {
+        return {
+          fullPath: it.path,
+          meta: it.meta,
+          name: it.name,
+          path: it.path,
+        }
+      })
+      localStorage.setItem(this.$id, JSON.stringify(tempPersistendRoutes))
+    },
     restoreVisitedView() {
       this.$reset()
-      // ;(this as StoreType).state.visitedView = [...(this as StoreType).state.visitedView]
-      // const originRouteString = localStorage.getItem(LOCAL_STOREAGE_VISITED_KEY)
-      // const persistentVisitedRoutes = JSON.parse(originRouteString || '[]')
-      // persistentVisitedRoutes.forEach((originRoute: RouteRecordRawWithHidden) => {
-      //   if (
-      //     !(this as StoreType).state.visitedView.find(
-      //       (it) => it.fullPath === originRoute.fullPath && it.name === originRoute.name
-      //     )
-      //   ) {
-      //     ;(this as StoreType).state.visitedView.push(originRoute)
-      //   }
-      // })
     },
   },
+  // 由于需要自定义持久化过程，所以这里就不能用插件来实现
+  // presist: {
+  //   enable: true,
+  // },
 })
 
 export function useVisitedRoutesContext() {
