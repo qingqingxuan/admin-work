@@ -37,13 +37,10 @@ export const useTableHeight = async function (): Promise<number> {
       let tempHeight = 0
       const header = document.getElementById('tableHeaderContainer')
       if (header) {
-        console.log(header.clientHeight)
-
         tempHeight += header.clientHeight
       }
       const footer = document.querySelector('.table-footer-container')
       if (footer) {
-        console.log(footer.clientHeight)
         tempHeight += footer.clientHeight
       }
       tempHeight += 20 + 2 // 加是 table-body 上下 10px的间距 和 1px的border

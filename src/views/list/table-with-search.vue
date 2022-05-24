@@ -22,6 +22,7 @@
       </template>
       <template #default>
         <n-data-table
+          size="small"
           :loading="tableLoading"
           :data="dataList"
           :columns="tableColumns"
@@ -229,6 +230,7 @@
           {
             title: '上次登录时间',
             key: 'lastLoginTime',
+            width: 180,
           },
           {
             title: '上次登录IP',

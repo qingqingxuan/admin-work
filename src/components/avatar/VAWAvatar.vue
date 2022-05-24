@@ -48,7 +48,7 @@
         },
       ]
       function personalCenter() {
-        router.push('/personal')
+        router.push('/personal/info')
       }
       const dialog = useDialog()
       function logout() {

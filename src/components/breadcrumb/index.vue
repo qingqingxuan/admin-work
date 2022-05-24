@@ -25,7 +25,6 @@
   import { defineComponent, onMounted, reactive, watch } from 'vue'
   import { RouteRecordNormalized, useRoute, useRouter } from 'vue-router'
   import { ChevronDown } from '@vicons/ionicons5'
-  import usePermissionStore from '@/store/modules/permission'
   interface DropItem {
     label: string
     key: string
@@ -38,7 +37,6 @@
       const breadcrumbs = reactive([] as Array<DropItem>)
       const route = useRoute()
       const router = useRouter()
-      const permissionStore = usePermissionStore()
       function handlePath(path: string) {
         return path.split('/').reduce((pre: string[], cur: string) => {
           if (cur) {
@@ -70,7 +68,7 @@
           }
           if (it.children && it.children.length > 0) {
             tempItem.children = generatorDropdown(
-              it.children as unknown as RouteRecordNormalized[],
+              it.children as RouteRecordNormalized[],
               tempItem.key
             )
           } else {
@@ -82,13 +80,13 @@
       }
       function findRoute(paths: string[]) {
         const selectRoutes: Array<RouteRecordNormalized> = []
-        let tempOrigin = permissionStore.getPermissionSideBar
+        let tempOrigin = router.getRoutes()
         paths.forEach((it) => {
           const selectRoute = tempOrigin.find((pIt) => pIt.path === it)
           if (selectRoute) {
-            tempOrigin = selectRoute.children as []
+            tempOrigin = selectRoute.children as unknown as RouteRecordNormalized[]
+            selectRoutes.push(selectRoute)
           }
-          selectRoutes.push(selectRoute as RouteRecordNormalized)
         })
         return selectRoutes
       }
@@ -111,7 +109,7 @@
         () => {
           if (
             route.path.startsWith('/redirect') ||
-            ['/login', '/404', '/405', '/403'].includes(route.path)
+            ['/login', '/404', '/405', '/403', '/500'].includes(route.path)
           )
             return
           generatorBreadcrumb()

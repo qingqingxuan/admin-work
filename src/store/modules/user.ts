@@ -3,6 +3,7 @@ import { UserState } from '../types'
 import store from '../pinia'
 
 import Avatar from '@/assets/img_avatar.gif'
+import usePermissionStore from './permission'
 
 const defaultAvatar = Avatar
 
@@ -36,8 +37,10 @@ const useUserStore = defineStore('user-info', {
       this.nickName = newNickName
     },
     logout() {
+      const permissionStore = usePermissionStore()
       return new Promise<void>((resolve) => {
         this.$reset()
+        permissionStore.$reset()
         localStorage.clear()
         sessionStorage.clear()
         resolve()

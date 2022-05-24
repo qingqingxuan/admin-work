@@ -54,6 +54,7 @@
     RefreshOutline as RefreshIcon,
   } from '@vicons/ionicons5'
   import useAppConfigStore from '@/store/modules/app-config'
+  import { useDebounceFn } from '@vueuse/core'
   export default defineComponent({
     name: 'ActionItems',
     components: {
@@ -83,8 +84,11 @@
         }
         screenfull.toggle()
       }
-      function onRefrehRoute() {
+      const fn = useDebounceFn(() => {
         router.replace({ path: '/redirect' + route.path })
+      })
+      function onRefrehRoute() {
+        fn()
       }
       function onShowSetting() {
         settingRef.value.openDrawer()

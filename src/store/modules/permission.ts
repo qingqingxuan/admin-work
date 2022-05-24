@@ -50,10 +50,6 @@ const usePermissionStore = defineStore('permission-route', {
     },
     async initPermissionRoute() {
       const userStore = useUserStore()
-      // 添加系统运行不可缺少的常量路由
-      constantRoutes.forEach((it) => {
-        router.addRoute(it)
-      })
       // 加载路由
       const accessRoutes = await this.getRoutes({
         roleId: userStore.roleId,

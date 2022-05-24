@@ -10,7 +10,14 @@
         @update:page="onChange"
         @update:page-size="onPageSizeChange"
       />
-      <n-button v-if="showRefresh" circle class="ml-1" size="small" type="primary" @click="refresh">
+      <n-button
+        v-if="showRefresh"
+        circle
+        style="margin-left: 10px"
+        size="small"
+        type="primary"
+        @click="refresh"
+      >
         <template #icon>
           <n-icon>
             <RefreshIcon />
