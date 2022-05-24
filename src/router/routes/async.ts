@@ -29,6 +29,7 @@ export const asyncRoutes = [
         component: () => import('@/views/index/work-place.vue'),
         meta: {
           title: '工作台',
+          affix: true,
           iconPrefix: 'iconfont',
           icon: 'menu',
         },

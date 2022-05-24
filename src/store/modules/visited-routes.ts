@@ -18,7 +18,7 @@ const useVisitedRouteStore = defineStore('visited-routes', {
   },
   actions: {
     initAffixRoutes(affixRoutes: RouteRecordRaw[]) {
-      affixRoutes.forEach((affixRoute) => {
+      affixRoutes.reverse().forEach((affixRoute) => {
         if (!this.visitedRoutes.find((it) => it.path === affixRoute.path)) {
           this.visitedRoutes.unshift(affixRoute)
         }
@@ -39,6 +39,7 @@ const useVisitedRouteStore = defineStore('visited-routes', {
     removeVisitedRoute(route: RouteRecordRaw) {
       return new Promise<string>((resolve) => {
         this.visitedRoutes.splice(this.visitedRoutes.indexOf(route), 1)
+        this.persistentVisitedView()
         resolve(this.findLastRoutePath())
       })
     },
