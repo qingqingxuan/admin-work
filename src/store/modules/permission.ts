@@ -32,7 +32,6 @@ const usePermissionStore = defineStore('permission-route', {
         if (getMenuListByRoleId) {
           const res = await post({
             url: baseAddress + getMenuListByRoleId,
-            method: 'POST',
             // 在实际的开发中，这个地方可以换成 token，让后端解析用户信息获取 userId 和 roleId，前端可以不用传 userId 和 roleId。
             // 这样可以增加安全性
             data,
