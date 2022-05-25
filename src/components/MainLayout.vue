@@ -42,8 +42,7 @@
   import { ThemeMode } from '@/store/types'
   import { useLoadingBar } from 'naive-ui'
   import { computed, defineComponent, onMounted, ref } from 'vue'
-  import { useRouter, useRoute } from 'vue-router'
-  import { useTitle } from './index'
+  import { useRouter } from 'vue-router'
   export default defineComponent({
     name: 'MainLayout',
     props: {
@@ -63,14 +62,11 @@
         return appConfig.getLayoutMode
       })
       const router = useRouter()
-      const route = useRoute()
-      useTitle(route.meta.title as string)
       const loadingBar = useLoadingBar()
       router.beforeEach(() => {
         loadingBar?.start()
       })
       router.afterEach(() => {
-        useTitle(route.meta.title as string)
         loadingBar?.finish()
       })
       onMounted(() => {

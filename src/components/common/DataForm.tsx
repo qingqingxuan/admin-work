@@ -1,4 +1,4 @@
-import { FormItem } from './../../types/components'
+import { FormItem } from '../../types/components'
 import { defineComponent, h, PropType, ref, toRef } from 'vue'
 import { FormProps, NForm, NFormItem, NFormItemGridItem, NGrid, useMessage } from 'naive-ui'
 

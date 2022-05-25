@@ -15,19 +15,19 @@ export function loadComponents() {
 
 export const asynComponents = loadComponents()
 
+export function getComponent(it: OriginRoute) {
+  return defineAsyncComponent({
+    loader: asynComponents[getFilePath(it)],
+    loadingComponent: LoadingComponent,
+  })
+}
+
 export function getFilePath(it: OriginRoute) {
   if (!it.localFilePath) {
     it.localFilePath = it.menuUrl
   }
   it.localFilePath = resolve('/', it.localFilePath)
   return '/src/views' + it.localFilePath + '.vue'
-}
-
-export function getComponent(it: OriginRoute) {
-  return defineAsyncComponent({
-    loader: asynComponents[getFilePath(it)],
-    loadingComponent: LoadingComponent,
-  })
 }
 
 export function findRootPathRoute(routes: RouteRecordRaw[]) {
@@ -170,24 +170,6 @@ export function findCachedRoutes(routes: Array<RouteRecordRaw>) {
     }
   })
   return temp
-}
-
-export function transfromRoutes(
-  originRoutes: Array<RouteRecordRaw>,
-  parentPath = '/'
-): Array<RouteRecordRaw> {
-  const tempRoutes: Array<RouteRecordRaw> = []
-  originRoutes.forEach((it) => {
-    const tempRoute = {
-      ...it,
-      fullPath: isExternal(it.path) ? it.path : resolve(parentPath, it.path),
-    } as unknown as RouteRecordRaw
-    if (tempRoute.children) {
-      tempRoute.children = transfromRoutes(tempRoute.children as RouteRecordRaw[], tempRoute.path)!
-    }
-    tempRoutes.push(tempRoute)
-  })
-  return tempRoutes
 }
 
 export function transfromMenu(originRoutes: Array<RouteRecordRaw>): Array<MenuOption> {
