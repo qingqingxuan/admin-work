@@ -33,7 +33,6 @@
 </script>
 
 <style scoped lang="scss">
-  @import '../../assets/styles/variables.scss';
   .vaw-header-layout {
     height: $logoHeight;
     position: fixed;

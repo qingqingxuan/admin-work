@@ -27,7 +27,6 @@
 </script>
 
 <style scoped lang="scss">
-  @import '../../assets/styles/variables.scss';
   .vaw-nav-bar-wrapper {
     height: $logoHeight;
     max-height: $logoHeight;

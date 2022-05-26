@@ -84,7 +84,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/styles/variables.scss';
   .vaw-avatar-container {
     .action-wrapper {
       display: flex;

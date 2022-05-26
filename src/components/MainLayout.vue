@@ -85,7 +85,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../assets/styles/variables.scss';
   .scrollbar::-webkit-scrollbar {
     width: 0;
   }

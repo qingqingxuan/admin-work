@@ -287,7 +287,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../assets/styles/variables.scss';
   .vaw-tab-bar-container {
     position: relative;
     height: $tabHeight;

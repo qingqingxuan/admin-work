@@ -81,5 +81,4 @@
   :deep(.n-menu-item-content-header) {
     overflow: inherit !important;
   }
-  @import '../../../assets/styles/variables.scss';
 </style>

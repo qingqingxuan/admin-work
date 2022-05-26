@@ -196,7 +196,6 @@
 </script>
 
 <style scoped lang="scss">
-  @import '../../assets/styles/variables.scss';
   .sidebar-bg-img {
     background-image: url('../../assets/bg_img.webp') !important;
     background-size: cover;

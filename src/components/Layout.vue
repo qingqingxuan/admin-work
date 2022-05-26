@@ -98,7 +98,6 @@
 </script>
 
 <style scoped lang="scss">
-  @import '../assets/styles/variables.scss';
   .vaw-layout-container {
     height: 100%;
     max-width: 100%;

@@ -115,7 +115,6 @@
   :deep(.n-menu .n-menu-item:hover) {
     background-color: var(--item-color-active);
   }
-  @import '../../../assets/styles/variables.scss';
   .scrollbar {
     height: calc(100vh - #{$logoHeight}) !important;
   }
