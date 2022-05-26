@@ -1,22 +1,20 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import pinia from './store/pinia'
-import LayoutStore from './components/index'
-import './styles/index.css'
-import './icons/iconfont/iconfont.css'
-import router from './router'
-import 'vfonts/Lato.css'
-import 'vfonts/FiraCode.css'
-import 'virtual:svg-icons-register'
+import './styles'
+import useGlobalComponents from './components'
+import { useAppRouter } from './router'
 import useRouterGuard from './router/guard'
-import '../mock'
+import usePinia from './store'
+import useMock from '../mock'
 
-useRouterGuard()
-
-const app = createApp(App)
-app.use(LayoutStore)
-app.use(pinia)
-app.use(router)
-router.isReady().then(() => {
+function boot() {
+  const app = createApp(App)
+  usePinia(app)
+  useAppRouter(app)
+  useGlobalComponents(app)
+  useRouterGuard()
+  useMock()
   app.mount('#app')
-})
+}
+
+boot()

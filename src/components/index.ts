@@ -1,4 +1,3 @@
-import '../assets/styles/transition.css'
 import { App } from 'vue'
 import { toHump } from '../utils'
 
@@ -33,11 +32,9 @@ export function registerComponents(app: App) {
   })
 }
 
-function install(app: App) {
+function useGlobalComponents(app: App) {
   adapterNaiveCss()
   registerComponents(app)
 }
 
-export default {
-  install,
-}
+export default useGlobalComponents
