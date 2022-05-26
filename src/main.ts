@@ -4,12 +4,12 @@ import './styles'
 import useGlobalComponents from './components'
 import { useAppRouter } from './router'
 import useRouterGuard from './router/guard'
-import usePinia from './store'
+import useAppPinia from './store'
 import useMock from '../mock'
 
-function boot() {
+function vawBoot() {
   const app = createApp(App)
-  usePinia(app)
+  useAppPinia(app)
   useAppRouter(app)
   useGlobalComponents(app)
   useRouterGuard()
@@ -17,4 +17,4 @@ function boot() {
   app.mount('#app')
 }
 
-boot()
+vawBoot()
