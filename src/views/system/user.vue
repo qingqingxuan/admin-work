@@ -206,26 +206,16 @@
             key: 'address',
           },
           {
-            title: '名称',
-            key: 'nickName',
-          },
-          {
             title: '上次登录时间',
             key: 'lastLoginTime',
-            fixed: 'right',
-            width: 120,
           },
           {
             title: '上次登录IP',
             key: 'lastLoginIp',
-            width: 100,
-            fixed: 'right',
           },
           {
             title: '状态',
             key: 'status',
-            fixed: 'right',
-            width: 80,
             render: (rowData) =>
               renderTag(!!rowData.status ? '正常' : '禁用', {
                 type: !!rowData.status ? 'success' : 'error',
