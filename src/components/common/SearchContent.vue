@@ -1,12 +1,12 @@
 <template>
   <teleport to="body">
     <div v-show="show" class="search-content-container" @click.self="onClose">
-      <div class="w-4/5 search-content-wrapper sm:w-1/2">
+      <n-el class="w-4/5 search-content-wrapper sm:w-1/2">
         <n-input-group>
           <n-input v-model:value="content" placeholder="请输入要搜索的内容" />
           <n-button type="primary" @click="onSearch">搜索</n-button>
         </n-input-group>
-      </div>
+      </n-el>
     </div>
   </teleport>
 </template>
@@ -63,8 +63,8 @@
       padding-bottom: 50px;
       margin-top: 20vh;
       height: fit-content;
-      background-color: #fff;
       border-radius: 5px;
+      background-color: var(--card-color);
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
     }
   }
