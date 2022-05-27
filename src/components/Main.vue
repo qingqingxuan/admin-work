@@ -1,8 +1,8 @@
 <template>
-  <router-view v-slot="{ Component }">
+  <router-view v-slot="{ Component, route }">
     <transition :name="pageAnim + '-transform'" mode="out-in" appear>
       <keep-alive :include="cachedRouteStore.getCachedRouteName">
-        <component :is="Component" />
+        <component :is="Component" :key="route.fullPath" />
       </keep-alive>
     </transition>
   </router-view>
