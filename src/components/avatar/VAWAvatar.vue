@@ -59,7 +59,7 @@
           negativeText: '再想想',
           onPositiveClick: () => {
             userStore.logout().then(() => {
-              router.push('/login')
+              window.location.reload()
             })
           },
         })
