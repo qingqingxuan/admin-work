@@ -1,4 +1,4 @@
-import { h, reactive, Ref, ref, VNode } from 'vue'
+import { h, reactive, Ref, ref, unref, VNode } from 'vue'
 
 import { DataTableColumn, NButton } from 'naive-ui'
 import { TableFooterType, TableHeaderType } from '@/types/components'
@@ -20,7 +20,7 @@ interface Table<T = any> {
   tableHeight: Ref<number>
   handleSuccess: ({ data }: { data: T[] }) => Promise<T[]>
   handleSelectionChange: (tempSelectRows: Array<string | number>) => void
-  useTableColumn: (columns: DataTableColumn[], options: DataTableColumn) => Array<any>
+  useTableColumn: (columns: DataTableColumn[], options: DataTableColumn) => Array<DataTableColumn>
   selectionColumn: { type: 'selection' }
   indexColumn: {
     title: string
@@ -110,7 +110,9 @@ export const useRowKey = function (propName: string) {
 }
 
 export const useTableColumn = function (columns: DataTableColumn[], options: DataTableColumn) {
-  return columns.map((it) => Object.assign(it, options))
+  const tempColumns = ref<DataTableColumn[]>()
+  tempColumns.value = columns.map((it) => Object.assign(it, options))
+  return unref(tempColumns)!
 }
 
 export const useTableIndexColumn = function () {
