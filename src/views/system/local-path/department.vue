@@ -131,7 +131,7 @@
     },
   ] as Array<FormItem>
   export default defineComponent({
-    name: 'Department',
+    name: 'MyDepartment',
     setup() {
       const table = useTable<Department>()
       const message = useMessage()
