@@ -18,6 +18,9 @@ const useCachedRouteStore = defineStore('cached-routes', {
         return toHump(it as string)
       })
     },
+    setCachedRoutes(cachedRoutes: string[] = []) {
+      this.cachedRoutes = cachedRoutes
+    },
     resetCachedRoutes() {
       this.$reset()
     },

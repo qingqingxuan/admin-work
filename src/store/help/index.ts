@@ -1,10 +1,9 @@
 import { isExternal, toHump } from '@/utils'
 import { resolve } from 'path-browserify'
-import { defineAsyncComponent, h, ref } from 'vue'
+import { h, ref } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
 import { OriginRoute, SplitTab } from '../types'
 import { MenuOption, NIcon } from 'naive-ui'
-import LoadingComponent from '@/components/loading/index.vue'
 import SvgIcon from '@/components/svg-icon/index.vue'
 import { asyncRoutes } from '@/router/routes/async'
 import { LAYOUT } from '../keys'
@@ -16,10 +15,11 @@ export function loadComponents() {
 export const asynComponents = loadComponents()
 
 export function getComponent(it: OriginRoute) {
-  return defineAsyncComponent({
-    loader: asynComponents[getFilePath(it)],
-    loadingComponent: LoadingComponent,
-  })
+  // return defineAsyncComponent({
+  //   loader: asynComponents[getFilePath(it)],
+  //   loadingComponent: LoadingComponent,
+  // })
+  return asynComponents[getFilePath(it)]
 }
 
 export function getFilePath(it: OriginRoute) {

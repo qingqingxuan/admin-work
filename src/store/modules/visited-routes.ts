@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { RouteRecordRaw } from 'vue-router'
 import pinia from '../pinia'
+import useCachedRouteStore from './cached-routes'
+import { findCachedRoutes } from '../help'
 
 const visitedRoutes = JSON.parse(localStorage.getItem('visited-routes') || '[]')
 
@@ -27,19 +29,32 @@ const useVisitedRouteStore = defineStore('visited-routes', {
     },
     addVisitedRoute(route: RouteRecordRaw) {
       return new Promise((resolve) => {
-        let isNewRoute = false
         if (!this.visitedRoutes.find((it) => it.path === route.path)) {
-          isNewRoute = true
           this.visitedRoutes.push(route)
+          if (route.name) {
+            const cachedRoutesStore = useCachedRouteStore()
+            if (!cachedRoutesStore.cachedRoutes.includes(route.name as string)) {
+              cachedRoutesStore.cachedRoutes.push(route.name as string)
+            }
+          }
           this.persistentVisitedView()
         }
-        resolve({ route, isNewRoute })
+        resolve(route)
       })
     },
     removeVisitedRoute(route: RouteRecordRaw) {
       return new Promise<string>((resolve) => {
         this.visitedRoutes.splice(this.visitedRoutes.indexOf(route), 1)
         this.persistentVisitedView()
+        if (route.name) {
+          const cachedRoutesStore = useCachedRouteStore()
+          if (cachedRoutesStore.cachedRoutes.includes(route.name as string)) {
+            cachedRoutesStore.cachedRoutes.splice(
+              cachedRoutesStore.cachedRoutes.indexOf(route.name as string),
+              1
+            )
+          }
+        }
         resolve(this.findLastRoutePath())
       })
     },
@@ -55,6 +70,8 @@ const useVisitedRouteStore = defineStore('visited-routes', {
           this.visitedRoutes = this.visitedRoutes.filter((it, index) => {
             return (it.meta && it.meta.affix) || index >= selectIndex
           })
+          const cachedRoutesStore = useCachedRouteStore()
+          cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
           this.persistentVisitedView()
         }
         resolve(selectRoute)
@@ -67,6 +84,8 @@ const useVisitedRouteStore = defineStore('visited-routes', {
           this.visitedRoutes = this.visitedRoutes.filter((it, index) => {
             return (it.meta && it.meta.affix) || index <= selectIndex
           })
+          const cachedRoutesStore = useCachedRouteStore()
+          cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
           this.persistentVisitedView()
         }
         resolve(selectRoute)
@@ -77,6 +96,8 @@ const useVisitedRouteStore = defineStore('visited-routes', {
         this.visitedRoutes = this.visitedRoutes.filter((it) => {
           return it.meta && it.meta.affix
         })
+        const cachedRoutesStore = useCachedRouteStore()
+        cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
         this.persistentVisitedView()
         resolve()
       })
