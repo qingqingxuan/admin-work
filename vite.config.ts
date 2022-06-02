@@ -7,8 +7,9 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
-export default ({ mode }) => {
-  const config = {
+export default () => {
+  return {
+    base: '/',
     plugins: [
       vue(),
       viteSvgIcons({
@@ -41,20 +42,5 @@ export default ({ mode }) => {
     server: {
       open: true,
     },
-  }
-  if (mode === 'staging') {
-    return Object.assign(
-      {
-        base: '/admin-work/',
-      },
-      config
-    )
-  } else {
-    return Object.assign(
-      {
-        base: '/',
-      },
-      config
-    )
   }
 }
