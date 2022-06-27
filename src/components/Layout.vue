@@ -41,10 +41,16 @@
   import { darkTheme, zhCN } from 'naive-ui'
   import { computed, defineComponent, onBeforeUnmount, onMounted } from 'vue'
   import { DeviceType, ThemeMode } from '@/store/types'
+  import useAxios from '@/hooks/useAxios'
+  import CustomRequestInterceptor from '@/api/interceptors/CustomRequestInterceptor'
   export default defineComponent({
     name: 'Layout',
     setup() {
       const appConfig = useAppConfigStore()
+      const axios = useAxios()
+      axios.interceptors.request.use((config) => {
+        return CustomRequestInterceptor(config)
+      })
       const theme = computed(() => {
         return appConfig.theme === ThemeMode.DARK ? darkTheme : null
       })
