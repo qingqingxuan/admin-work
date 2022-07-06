@@ -109,9 +109,10 @@ export const useRowKey = function (propName: string) {
   }
 }
 
-export const useTableColumn = function (columns: DataTableColumn[], options: DataTableColumn) {
+export const useTableColumn = function (columns: DataTableColumn[], options?: DataTableColumn) {
   const tempColumns = ref<DataTableColumn[]>()
-  tempColumns.value = columns.map((it) => Object.assign(it, options))
+  const tempOpt = options ?? {}
+  tempColumns.value = columns.map((it) => Object.assign({ ...tempOpt }, it))
   return unref(tempColumns)!
 }
 
