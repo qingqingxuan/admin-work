@@ -1,6 +1,6 @@
 {
   "name": "admin-work",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "scripts": {
     "dev": "vite",
     "staging": "vite build  --mode staging",
@@ -49,7 +49,7 @@
     "eslint-define-config": "^1.0.9",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.13.0",
-    "naive-ui": "^2.30.6",
+    "naive-ui": "^2.33.0",
     "postcss": "^8.4.13",
     "prettier": "^2.3.2",
     "sass": "^1.35.1",
