@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@vue/runtime-core'
+  import { defineComponent } from 'vue'
   import AccountInfo from './components/AccountInfo.vue'
   import PasswordInfo from './components/PasswordInfo.vue'
   import ResultInfo from './components/ResultInfo.vue'

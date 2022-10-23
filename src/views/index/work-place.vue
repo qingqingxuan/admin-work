@@ -87,7 +87,7 @@
   import TodoItem from './components/TodoItem.vue'
   import { computed, defineComponent } from 'vue'
   import { useRouter } from 'vue-router'
-  import { random } from 'lodash'
+  import { random } from 'lodash-es'
   import useUserStore from '@/store/modules/user'
   import { DeviceType } from '@/store/types'
   import useAppConfigStore from '@/store/modules/app-config'

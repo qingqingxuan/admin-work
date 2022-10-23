@@ -1,4 +1,4 @@
-import { isObject } from '@vue/shared'
+import { isObject } from '@vueuse/core'
 import { PiniaPluginContext } from 'pinia'
 import { toRaw } from 'vue'
 
