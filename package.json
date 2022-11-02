@@ -2,7 +2,7 @@
   "name": "admin-work",
   "version": "2.1.4",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "staging": "vite build  --mode staging",
     "build": "vite build",
     "tsc": "vue-tsc --noEmit",
