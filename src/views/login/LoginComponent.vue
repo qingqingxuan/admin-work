@@ -204,7 +204,7 @@
     overflow: hidden;
     height: 100vh;
     width: 100%;
-    @media screen and(max-width:960px) {
+    @media screen and (max-width:960px) {
       .left {
         display: none !important;
       }

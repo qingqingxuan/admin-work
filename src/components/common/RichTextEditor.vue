@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted } from '@vue/runtime-core'
+  import { defineComponent, onMounted } from 'vue'
   import Quill from 'quill'
   import 'quill/dist/quill.snow.css'
   export default defineComponent({

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { App } from '@vue/runtime-core'
+import { App } from 'vue'
 import request from './axios.config'
 
 export interface HttpOption {
@@ -83,12 +83,4 @@ export default {
   install,
   get,
   post,
-}
-
-declare module '@vue/runtime-core' {
-  // 为 `this.$` 提供类型声明
-  interface ComponentCustomProperties {
-    $get: <T>(options: HttpOption) => Promise<Response<T>>
-    $post: <T>(options: HttpOption) => Promise<Response<T>>
-  }
 }

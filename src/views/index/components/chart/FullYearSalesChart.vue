@@ -22,7 +22,7 @@
   import useEcharts from '@/hooks/useEcharts'
   import { defineComponent, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
   import { dispose, graphic } from 'echarts'
-  import { random } from 'lodash'
+  import { random } from 'lodash-es'
   function getData() {
     const data: number[] = []
     while (data.length < 6) {

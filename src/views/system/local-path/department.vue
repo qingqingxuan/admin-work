@@ -29,7 +29,7 @@
   import { getDepartmentList } from '@/api/url'
   import { TableActionModel, useTable, useRenderAction, useTableColumn } from '@/hooks/table'
   import { defineComponent, h, nextTick, onMounted, ref, shallowReactive } from 'vue'
-  import _ from 'lodash'
+  import _ from 'lodash-es'
   import {
     DataTableColumn,
     NInput,

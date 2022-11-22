@@ -1,10 +1,15 @@
 <template>
   <div class="main-container">
-    整理中
+    功能开发中……
   </div>
 </template>
 
 <script lang="ts">
+  import { defineComponent } from 'vue'
+
+  export default defineComponent({
+    name: 'Markdown',
+  })
 </script>
 
 <style lang="scss" scoped>
