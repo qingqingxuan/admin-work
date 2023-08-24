@@ -47,6 +47,7 @@
           <n-space>
             <n-button type="warning" size="small" @click="doResetSearch">重置</n-button>
             <n-button type="primary" size="small" @click="doSearch">搜索</n-button>
+            <n-button type="info" size="small" @click="showSearchContent = false">关闭</n-button>
           </n-space>
         </div>
       </template>
