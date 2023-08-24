@@ -35,7 +35,7 @@ export const useTableHeight = async function (): Promise<number> {
   return new Promise((resolve) => {
     setTimeout(() => {
       let tempHeight = 0
-      const header = document.getElementById('tableHeaderContainer')
+      const header = document.getElementById('tableHeaderContainer')      
       if (header) {
         tempHeight += header.clientHeight
       }
@@ -43,7 +43,7 @@ export const useTableHeight = async function (): Promise<number> {
       if (footer) {
         tempHeight += footer.clientHeight
       }
-      tempHeight += 20 + 2 // 加是 table-body 上下 10px的间距 和 1px的border
+      tempHeight += 2 // 上下1px的border
       resolve(clientHeight - tempHeight)
     }, 1000)
   })

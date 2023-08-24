@@ -4,14 +4,14 @@
       :title="title"
       :content-style="{ padding: '0px' }"
       :bordered="false"
-      header-style="font-size: 16px; padding: 5px 5px; border-radius: 0"
+      header-style="font-size: 16px; padding: 10px; border-radius: 0"
     >
       <template #header-extra>
         <n-space>
           <slot name="table-config"></slot>
           <n-tooltip class="ml-2 mr-2" trigger="hover" v-if="showFilter">
             <template #trigger>
-              <n-button type="warning" size="small" @click="showSearchContent = !showSearchContent">
+              <n-button type="warning" size="tiny" @click="showSearchContent = !showSearchContent">
                 <template #icon>
                   <n-icon>
                     <FilterIcon />

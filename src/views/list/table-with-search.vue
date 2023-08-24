@@ -12,7 +12,7 @@
             <DataForm
               ref="searchForm"
               :form-config="{
-                labelWidth: 60,
+                labelWidth: 70,
               }"
               :options="conditionItems"
               preset="grid-item"
