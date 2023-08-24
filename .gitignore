@@ -5,3 +5,4 @@ dist-ssr
 /dist
 dist
 package-lock.json
+components.d.ts
