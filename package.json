@@ -32,6 +32,7 @@
   "devDependencies": {
     "@types/js-cookie": "^2.2.7",
     "@types/lodash-es": "^4.17.6",
+    "@types/node": "*",
     "@types/path-browserify": "^1.0.0",
     "@types/qrcode": "^1.4.1",
     "@types/qs": "^6.9.7",
