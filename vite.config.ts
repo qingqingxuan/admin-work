@@ -1,5 +1,5 @@
 import vue from '@vitejs/plugin-vue'
-import viteSvgIcons from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import path from 'path'
 import vitePluginCompression from 'vite-plugin-compression'
 import ViteComponents from 'unplugin-vue-components/vite'
@@ -12,7 +12,7 @@ export default () => {
     base: '/',
     plugins: [
       vue(),
-      viteSvgIcons({
+      createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), 'src/icons')],
         symbolId: 'icon-[dir]-[name]',
       }),
