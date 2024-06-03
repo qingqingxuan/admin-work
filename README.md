@@ -18,9 +18,9 @@
 
 ## 简介：
 
-Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下最流行的 Vue3 UI 库--NaiveUI
+[Admin Work](http://aw.vueadminwork.com)，是 Vue Admini Work 系列中最成熟和完善的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下最流行的 Vue3 UI 库--NaiveUI
 
-使用了当今最流行的技术框架： `Vue3 + Vite2 + Typescript + Navie UI`
+使用了当今最流行的技术框架： `Vue3 + Vite5 + TypeScript + Navie UI + Pinia`
 
 ## 特性：
 
@@ -72,7 +72,7 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 ## 请关注我们的微信公众号 `知码前端` ，里面包含了各个版本的源码和进入微信福利群的方式
 
 <div  align="center">
-<img width="30%" src="http://qingqingxuan.gitee.io/img/wx-service.jpg"/>
+<img width="30%" src="http://www.vueadminwork.com/assets/zhimaqianduan.3a926537.jpg"/>
 </div>
 
 ## 适合人群
@@ -161,17 +161,9 @@ Admin Work，是 Vue Admini Work 系列中最成熟和完善的中后台框架�
 vue-admin-work 有如下优势:
 1. 支持前端控制路由权限和后端控制路由模式
 2. 支持 mock ，完全独立于后台
-3. 提供了非常多的 mxin 代码块，方便集成各种功能
-4. 内置了大量常用的组件，比如，上传，消息提示等
-5. 支持多主题、多布局切换
+3. 内置了大量常用的组件，比如，上传，消息提示等
+4. 支持多主题、多布局切换
 使用注意事项:
 1. 项目默认使用使用vscode工具进行开发，也是唯一推荐的开发工具
 2. 项目默认eslint校验规范
 ```
-
-## 效果图
-
-| <img src="http://qingqingxuan.gitee.io/img/demo-arco-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-2.png" style="zoom:20%;" /> |
-| :-: | --- |
-| <img src="http://qingqingxuan.gitee.io/img/demo-arco-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-4.png" style="zoom:20%;" /> |
-| <img src="http://qingqingxuan.gitee.io/img/demo-arco-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-6.png" style="zoom:20%;" /> |
