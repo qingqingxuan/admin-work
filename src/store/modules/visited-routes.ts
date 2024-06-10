@@ -31,12 +31,12 @@ const useVisitedRouteStore = defineStore('visited-routes', {
       return new Promise((resolve) => {
         if (!this.visitedRoutes.find((it) => it.path === route.path)) {
           this.visitedRoutes.push(route)
-          if (route.name) {
-            const cachedRoutesStore = useCachedRouteStore()
-            if (!cachedRoutesStore.cachedRoutes.includes(route.name as string)) {
-              cachedRoutesStore.cachedRoutes.push(route.name as string)
-            }
-          }
+          // if (route.name) {
+          //   const cachedRoutesStore = useCachedRouteStore()
+          //   if (!cachedRoutesStore.cachedRoutes.includes(route.name as string)) {
+          //     cachedRoutesStore.cachedRoutes.push(route.name as string)
+          //   }
+          // }
           this.persistentVisitedView()
         }
         resolve(route)
@@ -46,15 +46,15 @@ const useVisitedRouteStore = defineStore('visited-routes', {
       return new Promise<string>((resolve) => {
         this.visitedRoutes.splice(this.visitedRoutes.indexOf(route), 1)
         this.persistentVisitedView()
-        if (route.name) {
-          const cachedRoutesStore = useCachedRouteStore()
-          if (cachedRoutesStore.cachedRoutes.includes(route.name as string)) {
-            cachedRoutesStore.cachedRoutes.splice(
-              cachedRoutesStore.cachedRoutes.indexOf(route.name as string),
-              1
-            )
-          }
-        }
+        // if (route.name) {
+        //   const cachedRoutesStore = useCachedRouteStore()
+        //   if (cachedRoutesStore.cachedRoutes.includes(route.name as string)) {
+        //     cachedRoutesStore.cachedRoutes.splice(
+        //       cachedRoutesStore.cachedRoutes.indexOf(route.name as string),
+        //       1
+        //     )
+        //   }
+        // }
         resolve(this.findLastRoutePath())
       })
     },
@@ -70,8 +70,8 @@ const useVisitedRouteStore = defineStore('visited-routes', {
           this.visitedRoutes = this.visitedRoutes.filter((it, index) => {
             return (it.meta && it.meta.affix) || index >= selectIndex
           })
-          const cachedRoutesStore = useCachedRouteStore()
-          cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
+          // const cachedRoutesStore = useCachedRouteStore()
+          // cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
           this.persistentVisitedView()
         }
         resolve(selectRoute)
@@ -84,8 +84,8 @@ const useVisitedRouteStore = defineStore('visited-routes', {
           this.visitedRoutes = this.visitedRoutes.filter((it, index) => {
             return (it.meta && it.meta.affix) || index <= selectIndex
           })
-          const cachedRoutesStore = useCachedRouteStore()
-          cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
+          // const cachedRoutesStore = useCachedRouteStore()
+          // cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
           this.persistentVisitedView()
         }
         resolve(selectRoute)
@@ -96,8 +96,8 @@ const useVisitedRouteStore = defineStore('visited-routes', {
         this.visitedRoutes = this.visitedRoutes.filter((it) => {
           return it.meta && it.meta.affix
         })
-        const cachedRoutesStore = useCachedRouteStore()
-        cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
+        // const cachedRoutesStore = useCachedRouteStore()
+        // cachedRoutesStore.setCachedRoutes(findCachedRoutes(this.visitedRoutes))
         this.persistentVisitedView()
         resolve()
       })
