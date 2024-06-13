@@ -63,12 +63,6 @@
 
 - [🎉 Arco Work 演示地址（Vue3.x + Typescript + Arco Design + Vite2)](http://arco.vueadminwork.com)
 
-## 现在微信技术交流群需要添加好友之后邀请，如需要入群讨论请关注微信公众号添加好友。
-
-<div  align="center">
-<img width="30%" src="http://www.vueadminwork.com/weixin-custom.jpg"/>
-</div>
-
 ## 请关注我们的微信公众号 `知码前端` ，里面包含了各个版本的源码和进入微信福利群的方式
 
 <div  align="center">
