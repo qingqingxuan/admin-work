@@ -18,7 +18,7 @@
 
 ## 简介：
 
-[Admin Work](http://aw.vueadminwork.com)，是 Vue Admini Work 系列中最成熟和完善的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下最流行的 Vue3 UI 库--NaiveUI
+[Admin Work](http://www.vueadminwork.com)，是 Vue Admini Work 系列中最成熟和完善的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下最流行的 Vue3 UI 库--NaiveUI
 
 使用了当今最流行的技术框架： `Vue3 + Vite5 + TypeScript + Navie UI + Pinia`
 
@@ -49,21 +49,9 @@
 
 - [🎉 文档地址](http://www.vueadminwork.com)
 
-- [🎉 演示地址（Vuex.x + Typescript + Navie UI + Vite2)](http://aw.vueadminwork.com)
+- [🎉 演示地址](http://aw.vueadminwork.com)
 
-## Vue Admin Work 系列中其它开源项目的演示地址
-
-- [🎉 Vue Admin Work 演示地址（Vue2.x + Javascript + Element UI + Webpack）](http://x.vueadminwork.com)
-
-- [🎉 Vue Admin Work X 演示地址（Vue3.x + Typescript + Element Plus + Webpack）](http://x.vueadminwork.com)
-
-- [🎉 Admin Work Pro 演示地址（Vue3.x + Typescript + Navie UI + Vite2)](http://p.vueadminwork.com)
-
-- [🎉 Vue Admin Work A 演示地址（Vue3.x + Typescript + Antd + Vite2)](http://a.vueadminwork.com)
-
-- [🎉 Arco Work 演示地址（Vue3.x + Typescript + Arco Design + Vite2)](http://arco.vueadminwork.com)
-
-## 请关注我们的微信公众号 `知码前端` ，里面包含了各个版本的源码和进入微信福利群的方式
+## 请关注公众号 `知码前端` ，获取更多版本的源码
 
 <div  align="center">
 <img width="30%" src="http://www.vueadminwork.com/static/logo/zhimaqianduan.jpg"/>
