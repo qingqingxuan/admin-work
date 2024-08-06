@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.6.1",
-    "axios": "^1.6.2",
+    "axios": "^1.7.3",
     "clipboard": "^2.0.8",
     "echarts": "^5.1.2",
     "lodash-es": "^4.17.21",
@@ -48,7 +48,7 @@
     "eslint-define-config": "^1.0.9",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.13.0",
-    "naive-ui": "^2.38.2",
+    "naive-ui": "^2.39.0",
     "postcss": "^8.4.13",
     "prettier": "^2.3.2",
     "sass": "^1.35.1",
