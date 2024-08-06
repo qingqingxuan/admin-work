@@ -1,5 +1,5 @@
 <div align="center">
-<img src="http://www.vueadminwork.com/assets/logo.e3a501dd.png" align="center" width="150" height="150"/>
+<img src="http://www.vueadminwork.com/static/logo/logo.png" align="center" width="150" height="150"/>
 </div>
 
 <p align="center">
