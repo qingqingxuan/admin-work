@@ -66,7 +66,7 @@
 ## 请关注我们的微信公众号 `知码前端` ，里面包含了各个版本的源码和进入微信福利群的方式
 
 <div  align="center">
-<img width="30%" src="http://www.vueadminwork.com/assets/zhimaqianduan.jpg"/>
+<img width="30%" src="http://www.vueadminwork.com/static/logo/zhimaqianduan.jpg"/>
 </div>
 
 ## 适合人群
