@@ -3,14 +3,18 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import path from 'path'
 import vitePluginCompression from 'vite-plugin-compression'
 import ViteComponents from 'unplugin-vue-components/vite'
-import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import { NaiveUiResolver, ArcoResolver } from 'unplugin-vue-components/resolvers'
 
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import vueTemplate from './plugins/gen-template'
 
-export default () => {
+export default (config) => {
+  console.log(config)
+
   return {
     base: '/',
     plugins: [
+      vueTemplate(),
       vue(),
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), 'src/icons')],
@@ -20,10 +24,21 @@ export default () => {
         threshold: 1024 * 10,
       }),
       ViteComponents({
-        resolvers: [NaiveUiResolver()],
+        // excludeNames: ['Logo'],
+        resolvers: [
+          (name: string) => {
+            console.log(config)
+          },
+          NaiveUiResolver(),
+          ArcoResolver({ sideEffect: true }),
+        ],
       }),
       vueJsx(),
     ],
+    define: {
+      __APP_UI_COMPONENT__: JSON.stringify('naive'),
+      __APP_COMPILE_MODE__: JSON.stringify('multi'),
+    },
     css: {
       preprocessorOptions: {
         scss: {

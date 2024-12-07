@@ -16,7 +16,7 @@
           class="tab-item"
           strong
           secondary
-          style="--n-height: 24px; --n-font-weight: 200"
+          style="--n-height: 24px"
           :data="item.path"
           @click.self="itemClick(item)"
           @contextmenu="onContextMenu(item, $event)"
@@ -294,6 +294,7 @@
     box-sizing: border-box;
     white-space: nowrap;
     box-shadow: 10px 5px 10px rgb(0 0 0 / 10%);
+
     .contex-menu-wrapper {
       position: absolute;
       width: 130px;
@@ -302,6 +303,7 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
       background-color: var(--base-color);
       padding-left: 0;
+
       & > li {
         width: 100%;
         box-sizing: border-box;
@@ -309,10 +311,12 @@
         align-items: center;
         padding: 5px 0;
       }
+
       & > li:hover {
         color: var(--primary-color);
       }
     }
+
     .humburger-wrapper {
       position: absolute;
       top: 0;
@@ -323,10 +327,12 @@
       align-items: center;
       height: 100%;
     }
+
     .tab-humburger-wrapper {
       margin-left: 40px;
       transition: margin-left $transitionTime;
     }
+
     .tab-no-humburger-wrapper {
       margin-left: 0;
       transition: margin-left $transitionTime;
@@ -335,6 +341,7 @@
     .tab-item {
       padding: 7px 10px;
       cursor: pointer;
+
       .icon-item {
         margin-left: 0;
         width: 0;
@@ -342,6 +349,7 @@
         transition: all 0.2s ease-in-out;
         overflow: hidden;
       }
+
       &:hover {
         .icon-item {
           display: inline;
@@ -356,14 +364,17 @@
         }
       }
     }
+
     .tab-item + .tab-item {
       margin-left: 10px;
     }
+
     .arrow-wrapper {
       cursor: pointer;
       font-size: 20px;
       margin: 0 8px;
     }
+
     .arrow-wrapper__disabled {
       cursor: not-allowed;
       color: #b9b9b9;

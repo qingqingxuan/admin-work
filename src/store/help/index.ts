@@ -1,12 +1,13 @@
 import { isExternal, toHump } from '@/utils'
-import { resolve } from 'path-browserify'
+import { join, resolve } from 'path-browserify'
 import { h, ref } from 'vue'
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw, RouteRecordSingleViewWithChildren } from 'vue-router'
 import { OriginRoute, SplitTab } from '../types'
 import { MenuOption, NIcon } from 'naive-ui'
 import SvgIcon from '@/components/svg-icon/index.vue'
 import { asyncRoutes } from '@/router/routes/async'
 import { LAYOUT } from '../keys'
+import { initFileGraph } from '@/utils/FileGraph'
 
 export function loadComponents() {
   return import.meta.glob('/src/views/**/*.vue')
@@ -14,11 +15,13 @@ export function loadComponents() {
 
 export const asynComponents = loadComponents()
 
+export const fileGraph = initFileGraph(asynComponents)
+
 export function getComponent(it: OriginRoute) {
-  // return defineAsyncComponent({
-  //   loader: asynComponents[getFilePath(it)],
-  //   loadingComponent: LoadingComponent,
-  // })
+  const fileGraphItem = fileGraph[join('/src/views', it.menuUrl)]
+  if (fileGraphItem && fileGraphItem.componentPath) {
+    return asynComponents[fileGraphItem.componentPath]
+  }
   return asynComponents[getFilePath(it)]
 }
 
@@ -83,7 +86,7 @@ export function filterRoutesFromLocalRoutes(
 }
 
 export function isMenu(it: OriginRoute) {
-  return it.children && it.children.length > 0
+  return !!it.children && it.children.length > 0
 }
 
 export function getNameByUrl(menuUrl: string) {
@@ -99,10 +102,11 @@ export function generatorRoutes(res: Array<OriginRoute>) {
     if (localRoute) {
       tempRoutes.push(localRoute as RouteRecordRaw)
     } else {
-      const route: RouteRecordRaw = {
+      const route: RouteRecordSingleViewWithChildren = {
         path: it.outLink && isExternal(it.outLink) ? it.outLink : it.menuUrl,
         name: it.routeName || getNameByUrl(it.menuUrl),
         component: isMenuFlag ? LAYOUT : getComponent(it),
+        children: null,
         meta: {
           hidden: !!it.hidden,
           title: it.menuName,
@@ -116,7 +120,7 @@ export function generatorRoutes(res: Array<OriginRoute>) {
         },
       }
       if (it.children) {
-        route.children = generatorRoutes(it.children) as any
+        route.children = generatorRoutes(it.children)
       }
       tempRoutes.push(route)
     }

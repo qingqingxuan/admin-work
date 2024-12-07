@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { toHump } from '../utils'
+import { initFileGraph } from '@/utils/FileGraph'
 
 function adapterNaiveCss() {
   const meta = document.createElement('meta')
@@ -7,28 +7,16 @@ function adapterNaiveCss() {
   document.head.appendChild(meta)
 }
 
-function getComponentName(key: string) {
-  const paths = key.split('/')
-  const name = paths
-    .filter((it) => !!it && it !== '.')
-    .reverse()
-    .find(
-      (it) =>
-        it !== 'index.vue' &&
-        it !== 'index.ts' &&
-        it !== 'index.tsx' &&
-        it !== 'index.js' &&
-        it !== 'index.jsx'
-    )
-    ?.replace('.vue', '')
-  return name || ''
-}
-
 export function registerComponents(app: App) {
-  const components = import.meta.glob('./**/**.{vue,tsx}', { eager: true })
-  Object.keys(components).forEach((it: string) => {
-    const component = components[it] as any
-    app.component(component.default.name || toHump(getComponentName(it)), component.default)
+  const components = import.meta.glob('/src/components/**/**.{vue,tsx}', { eager: true }) as any
+  const fileGraph = initFileGraph(components)
+  Object.keys(fileGraph).forEach((it: string) => {
+    app.component(
+      fileGraph[it].componentName,
+      fileGraph[it].templateFile
+        ? components[fileGraph[it].templateFile].default
+        : fileGraph[it].component
+    )
   })
 }
 
