@@ -8,9 +8,7 @@ import { NaiveUiResolver, ArcoResolver } from 'unplugin-vue-components/resolvers
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueTemplate from './plugins/gen-template'
 
-export default (config) => {
-  console.log(config)
-
+export default () => {
   return {
     base: '/',
     plugins: [
@@ -24,14 +22,8 @@ export default (config) => {
         threshold: 1024 * 10,
       }),
       ViteComponents({
-        // excludeNames: ['Logo'],
-        resolvers: [
-          (name: string) => {
-            console.log(config)
-          },
-          NaiveUiResolver(),
-          ArcoResolver({ sideEffect: true }),
-        ],
+        globs: ['src/components/*.{vue}'],
+        resolvers: [NaiveUiResolver(), ArcoResolver({ sideEffect: true })],
       }),
       vueJsx(),
     ],

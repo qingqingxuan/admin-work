@@ -1,4 +1,4 @@
-import { App } from 'vue'
+import { App, defineAsyncComponent } from 'vue'
 import { initFileGraph } from '@/utils/FileGraph'
 
 function adapterNaiveCss() {
@@ -8,14 +8,19 @@ function adapterNaiveCss() {
 }
 
 export function registerComponents(app: App) {
-  const components = import.meta.glob('/src/components/**/**.{vue,tsx}', { eager: true }) as any
+  const components = import.meta.glob('/src/components/**/**.{vue,tsx}') as any
+  console.log(components)
+
   const fileGraph = initFileGraph(components)
+  console.log(fileGraph)
+
   Object.keys(fileGraph).forEach((it: string) => {
     app.component(
       fileGraph[it].componentName,
-      fileGraph[it].templateFile
-        ? components[fileGraph[it].templateFile].default
-        : fileGraph[it].component
+      defineAsyncComponent(() => import(fileGraph[it].componentPath))
+      // fileGraph[it].templateFile
+      //   ? components[fileGraph[it].templateFile].default
+      //   : fileGraph[it].component
     )
   })
 }

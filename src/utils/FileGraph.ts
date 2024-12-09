@@ -1,4 +1,4 @@
-import { basename, dirname, resolve } from 'path-browserify'
+import { basename, dirname, resolve, extname } from 'path-browserify'
 import { toHump } from '.'
 import type { Component, DefineComponent } from 'vue'
 
@@ -16,6 +16,7 @@ export interface FileGraphItemInterface {
   url: string
   componentPath: string
   templateFile: string
+  extName: string
   uiFiles: string[]
   normalFiles: string[]
 }
@@ -29,17 +30,7 @@ export function getComponentName(key: string) {
   const name = paths
     .filter((it) => !!it && it !== '.')
     .reverse()
-    .find(
-      (it) =>
-        it !== 'index.vue' &&
-        it !== 'index.ts' &&
-        it !== 'index.tsx' &&
-        it !== 'index.js' &&
-        it !== 'index.jsx'
-    )
-    ?.replace('.vue', '')
-    .replace('.tsx', '')
-    .replace('.jsx', '')
+    .find((it) => !it.includes('index') && !it.includes('Index'))
   return name || ''
 }
 
@@ -48,13 +39,15 @@ export function initFileGraph(
 ) {
   const fileGraph = Object.keys(asynComponents).reduce((pre: any, cur) => {
     const baseName = basename(cur)
+    const extName = extname(cur)
     const dirName = resolve(dirname(cur), baseName.split('.')[0])
     if (!pre[dirName]) {
       pre[dirName] = {
         componentName: (asynComponents[cur] as any).default
           ? (asynComponents[cur] as any).default.name || toHump(getComponentName(cur))
-          : '',
+          : toHump(getComponentName(dirName)),
         component: (asynComponents[cur] as any).default || null,
+        extName,
         url: dirName.replace('.', ''),
         componentPath: '',
         templateFile: '',
@@ -72,23 +65,14 @@ export function initFileGraph(
     return pre
   }, {}) as FileGraphInterface
   Object.keys(fileGraph).forEach((it) => {
-    const dirName = it
     const item = fileGraph[it]
-
-    const indexVueFile = dirName + '/index.vue'
-    const indexTsxFile = dirName + '/index.tsx'
-    const indexJsxFile = dirName + '/index.jsx'
-
+    const fullFileName = it + item.extName
     if (item.templateFile) {
       item.componentPath = item.templateFile
-    } else if (asynComponents[indexVueFile]) {
-      item.componentPath = indexVueFile
-    } else if (asynComponents[indexTsxFile]) {
-      item.componentPath = indexTsxFile
-    } else if (asynComponents[indexJsxFile]) {
-      item.componentPath = indexJsxFile
+    } else if (asynComponents[fullFileName]) {
+      item.componentPath = fullFileName
     } else {
-      // throw new Error('请确保' + dirName + '目录下有 xx.template.vue 文件 或者 index.{vue|tsx|jsx} 文件 ')
+      item.componentPath = fullFileName
     }
   })
   return fileGraph

@@ -4,10 +4,10 @@
     <Breadcrumb v-if="appConfig.deviceType !== 'mobile'" />
     <div style="flex: 1"></div>
     <div class="right-wrapper" v-if="appConfig.deviceType !== 'mobile'">
-      <ActionItems />
+      <Actions />
     </div>
     <div class="avatar-wrapper">
-      <VAWAvatar />
+      <Avatar />
     </div>
   </div>
 </template>

@@ -21,8 +21,8 @@
         !showNavBar ? 'tab-bar-top' : '',
       ]"
     >
-      <NavBar v-if="showNavBar" />
-      <TabBar />
+      <Navbar v-if="showNavBar" />
+      <Tabbar />
     </section>
     <div class="main-base-style scrollbar" :class="[mainClass]">
       <section class="main-section">

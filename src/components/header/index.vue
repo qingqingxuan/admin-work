@@ -7,10 +7,10 @@
       <HorizontalScrollerMenu :routes="permissionStore.getPermissionSideBar" />
     </div>
     <div v-if="appConfig.deviceType !== 'mobile'" class="right-wrapper">
-      <ActionItems />
+      <Actions />
     </div>
     <div class="avatar-wrapper">
-      <VAWAvatar />
+      <Avatar />
     </div>
   </div>
 </template>
