@@ -1,22 +1,7 @@
 import fs from 'node:fs/promises'
 import { resolve, dirname, basename, extname } from 'node:path';
-import { getTempFileScriptPart, getTempFileTemplatePart } from './utils';
+import { getTempFileScriptPart, getTempFileTemplatePart, templateFileRegex, regexVueArray, regexJsxArray, regexTsxArray, ComponentMap } from './utils';
 import colors from 'picocolors'
-
-const templateFileRegex = /[^.]+\.template\.vue$/
-const elementRegex = /\.element\.vue$/
-const naiveRegex = /\.naive\.vue$/
-const antdRegex = /\.ant\.vue$/
-const arcoRegex = /\.arco\.vue$/
-
-const CompoentMap = {
-  element: "ElementPlus",
-  naive: "NaiveUI",
-  arco: "ArcoDesign",
-  ant: "antDesign",
-}
-
-const regexArray = [elementRegex, naiveRegex, antdRegex, arcoRegex]
 
 let currentUIComponent = 'naive'
 let compileMode = 'single'
@@ -39,7 +24,7 @@ async function getTempFileContent(tempFilePath) {
       return multiModeContent
     }
   }
-  return `<template>${dirname(tempFilePath)}目录下未找到${CompoentMap[currentUIComponent]}组件库对应的.vue文件，如${basename(tempFilePath).split('.')[0]}.${currentUIComponent}.vue</template>`
+  return `<template>${dirname(tempFilePath)}目录下未找到${ComponentMap[currentUIComponent]}组件库对应的.vue文件，如${basename(tempFilePath).split('.')[0]}.${currentUIComponent}.vue</template>`
 }
 
 async function handleSrcDir(src) {
@@ -78,7 +63,7 @@ function getCreateTemplateFilePath(relativeFilePath) {
 }
 
 function isTargetFile(path) {
-  return regexArray.some(reg => reg.test(basename(path)))
+  return regexVueArray.some(reg => reg.test(basename(path))) || regexJsxArray.some(reg => reg.test(basename(path))) || regexTsxArray.some(reg => reg.test(basename(path)))
 }
 
 function initTempFileGraph(tempFilePath, relativeFilePath) {

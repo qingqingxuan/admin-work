@@ -3,12 +3,23 @@ import { toHump } from '.'
 import type { Component, DefineComponent } from 'vue'
 
 const templateRegex = /[^.]+\.template\.vue$/
-const elementRegex = /\.element\.vue$/
-const naiveRegex = /\.naive\.vue$/
-const antdRegex = /\.ant\.vue$/
-const arcoRegex = /\.arco\.vue$/
 
-const regexArray = [elementRegex, naiveRegex, antdRegex, arcoRegex]
+const fileExtTypeList = ['.vue', '.jsx', '.tsx']
+const uiTypeList = ['element', 'naive', 'ant', 'arco']
+
+function generateRegex() {
+  return fileExtTypeList.reduce((pre, ext) => {
+    pre.push(
+      uiTypeList.reduce((p, ui) => {
+        p.push(new RegExp(`.${ui}${ext}$`))
+        return p
+      }, [])
+    )
+    return pre
+  }, [])
+}
+
+const [regexVueArray, regexJsxArray, regexTsxArray] = generateRegex()
 
 export interface FileGraphItemInterface {
   componentName?: string
@@ -17,8 +28,10 @@ export interface FileGraphItemInterface {
   componentPath: string
   templateFile: string
   extName: string
-  uiFiles: string[]
   normalFiles: string[]
+  vueFiles: string[]
+  jsxFiles: string[]
+  tsxFiles: string[]
 }
 
 export interface FileGraphInterface {
@@ -51,14 +64,20 @@ export function initFileGraph(
         url: dirName.replace('.', ''),
         componentPath: '',
         templateFile: '',
-        uiFiles: [],
         normalFiles: [],
-      }
+        vueFiles: [],
+        jsxFiles: [],
+        tsxFiles: [],
+      } as FileGraphItemInterface
     }
     if (templateRegex.test(baseName)) {
       pre[dirName].templateFile = cur
-    } else if (regexArray.some((it) => it.test(baseName))) {
-      pre[dirName].uiFiles.push(cur)
+    } else if (regexVueArray.some((it) => it.test(baseName))) {
+      pre[dirName].vueFiles.push(cur)
+    } else if (regexJsxArray.some((it) => it.test(baseName))) {
+      pre[dirName].jsxFiles.push(cur)
+    } else if (regexTsxArray.some((it) => it.test(baseName))) {
+      pre[dirName].tsxFiles.push(cur)
     } else {
       pre[dirName].normalFiles.push(cur)
     }
@@ -66,12 +85,11 @@ export function initFileGraph(
   }, {}) as FileGraphInterface
   Object.keys(fileGraph).forEach((it) => {
     const item = fileGraph[it]
-    const fullFileName = it + item.extName
     if (item.templateFile) {
       item.componentPath = item.templateFile
-    } else if (asynComponents[fullFileName]) {
-      item.componentPath = fullFileName
     } else {
+      const ext = fileExtTypeList.find((ext) => !!asynComponents[it + ext])
+      const fullFileName = it + ext
       item.componentPath = fullFileName
     }
   })

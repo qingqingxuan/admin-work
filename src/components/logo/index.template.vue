@@ -10,7 +10,7 @@
 <script setup lang="tsx">
 import { computed, defineAsyncComponent, inject, ref, unref } from "vue"
 import type { DefineComponent } from "vue"
-const IndexArco = defineAsyncComponent(() => import("./index.arco.vue"))
+const IndexArco = defineAsyncComponent(() => import("./index.arco"))
 const IndexNaive = defineAsyncComponent(() => import("./index.naive.vue"))
 const componentGraph = {
   IndexArco,

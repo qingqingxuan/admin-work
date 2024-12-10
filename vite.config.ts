@@ -28,7 +28,7 @@ export default () => {
       vueJsx(),
     ],
     define: {
-      __APP_UI_COMPONENT__: JSON.stringify('naive'),
+      __APP_UI_COMPONENT__: JSON.stringify('arco'),
       __APP_COMPILE_MODE__: JSON.stringify('multi'),
     },
     css: {

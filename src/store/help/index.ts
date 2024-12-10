@@ -15,7 +15,7 @@ export function loadComponents() {
 
 export const asynComponents = loadComponents()
 
-export const fileGraph = initFileGraph(asynComponents)
+const fileGraph = initFileGraph(asynComponents)
 
 export function getComponent(it: OriginRoute) {
   const fileGraphItem = fileGraph[join('/src/views', it.menuUrl)]
