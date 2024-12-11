@@ -128,9 +128,7 @@ function toCamelCase(filename) {
   const nameParts = parts.slice(0, -1);
   return nameParts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join("");
 }
-async function getRefFileList(fileList) {
-  const componetList = [];
-  const componetNameList = [];
+function getExts(fileList) {
   const fileModel = fileList.reduce((pre, cur) => {
     const ext = extname(cur);
     const name = cur.replace(ext, "");
@@ -146,6 +144,12 @@ async function getRefFileList(fileList) {
     }
     return pre;
   }, {});
+  return fileModel;
+}
+async function getRefFileList(fileList) {
+  const componetList = [];
+  const componetNameList = [];
+  const fileModel = getExts(fileList);
   for (const it of Object.keys(fileModel)) {
     const fileName = basename(it);
     const ext = fileModel[it].find((it2) => !!it2) || ".vue";
@@ -227,7 +231,16 @@ async function getTempFileContent(tempFilePath) {
     const findedFile = tempFileGraph[tempFilePath].find((it) => basename2(it).includes(currentUIComponent));
     if (findedFile) {
       if (compileMode === "single") {
-        return `<template>${findedFile}?${getTimestamp()}</template>`;
+        const exts = getExts(tempFileGraph[tempFilePath]);
+        const fileNameWithoutExt = findedFile.replace(extname2(findedFile), "");
+        const ext = (exts[fileNameWithoutExt].find((ext2) => !!ext2) || ".vue").replace(".", "");
+        const finalFileName = fileNameWithoutExt + "." + ext;
+        if (ext === "jsx" || ext === "tsx") {
+          return `<script lang="${ext}">
+${await fs.readFile(finalFileName, "utf-8")}
+</script>`;
+        }
+        return `<template>${finalFileName}?${getTimestamp()}</template>`;
       }
       const multiModeContent = `${getTempFileTemplatePart()}
 ${await getTempFileScriptPart(findedFile, tempFileGraph[tempFilePath])}`;
@@ -343,9 +356,13 @@ function generate_main_vue_file_default() {
       if (templateFileRegex.test(id)) {
         if (compileMode === "single") {
           const reg = /<template>(.*?)<\/template>/;
+          const regex = /<script\s+lang="(jsx|tsx)">/;
           const matched = code.match(reg);
           const matchedPath = matched && matched[1] ? matched[1] : "";
-          return await fs.readFile(matchedPath.split("?")[0], "utf-8");
+          const fileName = matchedPath.split("?")[0];
+          if (/<script\s+lang="(jsx|tsx)">/.test(code))
+            return code;
+          return await fs.readFile(fileName, "utf-8");
         }
         return code;
       }
@@ -353,8 +370,9 @@ function generate_main_vue_file_default() {
     handleHotUpdate(ctx) {
       if (compileMode === "single") {
         const { file } = ctx;
-        if (isTargetFile(file))
+        if (isTargetFile(file)) {
           createTemplateFile(getCreateTemplateFilePath(file));
+        }
       }
     }
   };

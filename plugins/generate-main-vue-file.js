@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 import { resolve, dirname, basename, extname } from 'node:path';
-import { getTempFileScriptPart, getTempFileTemplatePart, templateFileRegex, regexVueArray, regexJsxArray, regexTsxArray, ComponentMap } from './utils';
+import { getTempFileScriptPart, getTempFileTemplatePart, templateFileRegex, regexVueArray, regexJsxArray, regexTsxArray, ComponentMap, getExts } from './utils';
 import colors from 'picocolors'
 
 let currentUIComponent = 'naive'
@@ -17,7 +17,14 @@ async function getTempFileContent(tempFilePath) {
     const findedFile = tempFileGraph[tempFilePath].find(it => basename(it).includes(currentUIComponent))
     if (findedFile) {
       if (compileMode === 'single') {
-        return `<template>${findedFile}?${getTimestamp()}</template>`
+        const exts = getExts(tempFileGraph[tempFilePath])
+        const fileNameWithoutExt = findedFile.replace(extname(findedFile), '')
+        const ext = (exts[fileNameWithoutExt].find(ext => !!ext) || '.vue').replace('.', '')
+        const finalFileName = fileNameWithoutExt + '.' + ext
+        if (ext === 'jsx' || ext === 'tsx') {
+          return `<script lang="${ext}">\n${await fs.readFile(finalFileName, 'utf-8')}\n</script>`
+        }
+        return `<template>${finalFileName}?${getTimestamp()}</template>`
       }
       const multiModeContent =
         `${getTempFileTemplatePart()}\n${await getTempFileScriptPart(findedFile, tempFileGraph[tempFilePath])}`
@@ -143,9 +150,13 @@ export default function () {
       if (templateFileRegex.test(id)) {
         if (compileMode === 'single') {
           const reg = /<template>(.*?)<\/template>/
+          const regex = /<script\s+lang="(jsx|tsx)">/;
           const matched = code.match(reg)
           const matchedPath = matched && matched[1] ? matched[1] : ''
-          return await fs.readFile(matchedPath.split('?')[0], 'utf-8')
+          const fileName = matchedPath.split('?')[0];
+          if (/<script\s+lang="(jsx|tsx)">/.test(code))
+            return code
+          return await fs.readFile(fileName, 'utf-8')
         }
         return code
       }
@@ -153,8 +164,9 @@ export default function () {
     handleHotUpdate(ctx) {
       if (compileMode === 'single') {
         const { file } = ctx
-        if (isTargetFile(file))
+        if (isTargetFile(file)) {
           createTemplateFile(getCreateTemplateFilePath(file))
+        }
       }
     }
   }
