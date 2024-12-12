@@ -1,12 +1,20 @@
 import fs from 'node:fs/promises'
 import { resolve, dirname, basename, extname } from 'node:path';
-import { getTempFileScriptPart, getTempFileTemplatePart, templateFileRegex, regexVueArray, regexJsxArray, regexTsxArray, ComponentMap, getExts } from './utils';
+import { getTempFileScriptPart, getTempFileTemplatePart, templateFileRegex, regexVueArray, regexJsxArray, regexTsxArray, ComponentMap, getExts, createComponentListJsonFile, fileExtTypeList, unlinkComponentImportsFile, getComponentImportInfo } from './utils';
 import colors from 'picocolors'
+
+const virtualModuleId = 'virtual:component-import'
+const resolvedVirtualModuleId = '\0' + virtualModuleId
 
 let currentUIComponent = 'naive'
 let compileMode = 'single'
 
 const tempFileGraph = {}
+const allFilePaths = []
+
+function isSingleMode() {
+  return compileMode === 'single'
+}
 
 function getTimestamp() {
   return new Date().getTime()
@@ -43,6 +51,7 @@ async function handleSrcDir(src) {
       return { file: it, isDirectory: stat.isDirectory() }
     }))
     const fileList = allFileList.filter(it => !it.isDirectory).map(it => it.file)
+    allFilePaths.push(...allFileList.filter(it => !it.isDirectory && fileExtTypeList.includes(extname(it.file))).map(it => resolve(src, it.file)))
     let createFilePath = ''
     for (const file of fileList) {
       if (isTargetFile(file)) {
@@ -109,11 +118,11 @@ async function createTemplateFile(createFilePath) {
     await fs.chmod(createFilePath, 0o777)
     await fs.writeFile(createFilePath, await getTempFileContent(createFilePath))
     await fs.chmod(createFilePath, 0o444)
-    console.info(colors.green(`"${createFilePath}" file changed`));
+    console.info(colors.green(`【gen-template】"${createFilePath}" file changed`));
   } catch (error) {
     await fs.writeFile(createFilePath, await getTempFileContent(createFilePath))
     await fs.chmod(createFilePath, 0o444)
-    console.info(colors.green(`"${createFilePath}" file changed`));
+    console.info(colors.green(`【gen-template】"${createFilePath}" file changed`));
   }
 }
 
@@ -121,12 +130,18 @@ export default function () {
   const watchPath = resolve(__dirname, '../src')
   return {
     name: "vite:gen-template-file",
-    configResolved(config) {
+    async configResolved(config) {
       currentUIComponent = JSON.parse(config.define['__APP_UI_COMPONENT__'])
       compileMode = JSON.parse(config.define['__APP_COMPILE_MODE__'])
+      await handleSrcDir(watchPath)
     },
     configureServer(server) {
       server.watcher.on('add', async (path) => {
+        if (isSingleMode()) {
+          if (fileExtTypeList.includes(extname(path))) {
+            allFilePaths.push(path)
+          }
+        }
         if (isTargetFile(path)) {
           const tempFilePath = getCreateTemplateFilePath(path)
           await updateFileGraph(tempFilePath)
@@ -134,6 +149,12 @@ export default function () {
         }
       });
       server.watcher.on('unlink', async (path) => {
+        if (isSingleMode()) {
+          const indexOf = allFilePaths.indexOf(path)
+          if (~indexOf) {
+            allFilePaths.splice(indexOf, 1)
+          }
+        }
         if (isTargetFile(path)) {
           const tempFilePath = getCreateTemplateFilePath(path)
           const res = await updateFileGraph(tempFilePath)
@@ -142,15 +163,27 @@ export default function () {
           console.error(colors.red(`${path} 模板文件已被删除，请重新运行项目生成该文件`))
         }
       });
-      return () => {
-        handleSrcDir(watchPath)
+    },
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        if (isSingleMode()) {
+          return resolvedVirtualModuleId
+        }
+        throw new Error(virtualModuleId + ' 虚拟导入只能在 single 编译模式下使用')
+      }
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId) {
+        if (isSingleMode()) {
+          return getComponentImportInfo(new Set(allFilePaths), currentUIComponent)
+        }
+        throw new Error(virtualModuleId + ' 虚拟导入只能在 single 编译模式下使用')
       }
     },
     async transform(code, id) {
       if (templateFileRegex.test(id)) {
         if (compileMode === 'single') {
           const reg = /<template>(.*?)<\/template>/
-          const regex = /<script\s+lang="(jsx|tsx)">/;
           const matched = code.match(reg)
           const matchedPath = matched && matched[1] ? matched[1] : ''
           const fileName = matchedPath.split('?')[0];

@@ -29,7 +29,7 @@ export default () => {
     ],
     define: {
       __APP_UI_COMPONENT__: JSON.stringify('arco'),
-      __APP_COMPILE_MODE__: JSON.stringify('multi'),
+      __APP_COMPILE_MODE__: JSON.stringify('single'),
     },
     css: {
       preprocessorOptions: {

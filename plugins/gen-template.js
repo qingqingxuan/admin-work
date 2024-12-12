@@ -98,10 +98,10 @@ var require_picocolors = __commonJS({
 
 // generate-main-vue-file.js
 import fs from "node:fs/promises";
-import { resolve, dirname as dirname2, basename as basename2, extname as extname2 } from "node:path";
+import { resolve as resolve2, dirname, basename as basename2, extname as extname2 } from "node:path";
 
 // utils.js
-import { basename, dirname, extname } from "node:path";
+import { basename, extname, resolve } from "node:path";
 var templateFileRegex = /[^.]+\.template\.vue$/;
 var fileExtTypeList = [".vue", ".jsx", ".tsx"];
 var uiTypeList = ["element", "naive", "ant", "arco"];
@@ -217,12 +217,33 @@ const exposeProxy = new Proxy(expose, {
 defineExpose(exposeProxy)
 </script>`;
 }
+function getComponentImportInfo(fileList, uiComponent) {
+  const reg = new RegExp(`(pages)/(?:[^/]+/)*[^/]+.(${uiComponent}|template).(vue|jsx|tsx)$`);
+  const imports = Array.from(fileList).filter((it) => reg.test(it)).reduce((pre, cur) => {
+    const relativePath = cur.split("src")[1];
+    pre += `
+  {
+    path:'.${relativePath}',
+    fullPath: '${cur}',
+    loader: () => import('${cur}')
+  },`;
+    return pre;
+  }, "");
+  return `export default [${imports}
+]`;
+}
 
 // generate-main-vue-file.js
 var import_picocolors = __toESM(require_picocolors());
+var virtualModuleId = "virtual:component-import";
+var resolvedVirtualModuleId = "\0" + virtualModuleId;
 var currentUIComponent = "naive";
 var compileMode = "single";
 var tempFileGraph = {};
+var allFilePaths = [];
+function isSingleMode() {
+  return compileMode === "single";
+}
 function getTimestamp() {
   return (/* @__PURE__ */ new Date()).getTime();
 }
@@ -247,21 +268,22 @@ ${await getTempFileScriptPart(findedFile, tempFileGraph[tempFilePath])}`;
       return multiModeContent;
     }
   }
-  return `<template>${dirname2(tempFilePath)}\u76EE\u5F55\u4E0B\u672A\u627E\u5230${ComponentMap[currentUIComponent]}\u7EC4\u4EF6\u5E93\u5BF9\u5E94\u7684.vue\u6587\u4EF6\uFF0C\u5982${basename2(tempFilePath).split(".")[0]}.${currentUIComponent}.vue</template>`;
+  return `<template>${dirname(tempFilePath)}\u76EE\u5F55\u4E0B\u672A\u627E\u5230${ComponentMap[currentUIComponent]}\u7EC4\u4EF6\u5E93\u5BF9\u5E94\u7684.vue\u6587\u4EF6\uFF0C\u5982${basename2(tempFilePath).split(".")[0]}.${currentUIComponent}.vue</template>`;
 }
 async function handleSrcDir(src) {
   try {
     const srcPath = src;
     const dirContentList = await fs.readdir(srcPath);
     const allFileList = await Promise.all(dirContentList.map(async (it) => {
-      const stat = await fs.stat(resolve(srcPath, it));
+      const stat = await fs.stat(resolve2(srcPath, it));
       return { file: it, isDirectory: stat.isDirectory() };
     }));
     const fileList = allFileList.filter((it) => !it.isDirectory).map((it) => it.file);
+    allFilePaths.push(...allFileList.filter((it) => !it.isDirectory && fileExtTypeList.includes(extname2(it.file))).map((it) => resolve2(src, it.file)));
     let createFilePath = "";
     for (const file of fileList) {
       if (isTargetFile(file)) {
-        const fullPath = resolve(srcPath, file);
+        const fullPath = resolve2(srcPath, file);
         if (!createFilePath)
           createFilePath = getCreateTemplateFilePath(fullPath);
         initTempFileGraph(createFilePath, fullPath);
@@ -272,7 +294,7 @@ async function handleSrcDir(src) {
     }
     const dirList = allFileList.filter((it) => it.isDirectory).map((it) => it.file);
     for (const dir of dirList) {
-      await handleSrcDir(resolve(srcPath, dir));
+      await handleSrcDir(resolve2(srcPath, dir));
     }
   } catch (error) {
     console.log(error);
@@ -280,7 +302,7 @@ async function handleSrcDir(src) {
 }
 function getCreateTemplateFilePath(relativeFilePath) {
   const createFileName = basename2(relativeFilePath).split(".")[0];
-  return resolve(dirname2(relativeFilePath), createFileName + ".template.vue");
+  return resolve2(dirname(relativeFilePath), createFileName + ".template.vue");
 }
 function isTargetFile(path) {
   return regexVueArray.some((reg) => reg.test(basename2(path))) || regexJsxArray.some((reg) => reg.test(basename2(path))) || regexTsxArray.some((reg) => reg.test(basename2(path)));
@@ -294,14 +316,14 @@ function initTempFileGraph(tempFilePath, relativeFilePath) {
   }
 }
 async function updateFileGraph(tempFilePath) {
-  const dirPath = dirname2(tempFilePath);
+  const dirPath = dirname(tempFilePath);
   const dirContentList = await fs.readdir(dirPath);
   const allFileList = await Promise.all(dirContentList.map(async (it) => {
-    const stat = await fs.stat(resolve(dirPath, it));
+    const stat = await fs.stat(resolve2(dirPath, it));
     return { file: it, isDirectory: stat.isDirectory() };
   }));
   const tempFileName = basename2(tempFilePath).split(".")[0];
-  const fileList = allFileList.filter((it) => !it.isDirectory && isTargetFile(it.file) && basename2(it.file).split(".")[0] === tempFileName).map((it) => resolve(dirPath, it.file));
+  const fileList = allFileList.filter((it) => !it.isDirectory && isTargetFile(it.file) && basename2(it.file).split(".")[0] === tempFileName).map((it) => resolve2(dirPath, it.file));
   tempFileGraph[tempFilePath] = fileList;
   if (!Array.isArray(tempFileGraph[tempFilePath]) || tempFileGraph[tempFilePath].length === 0) {
     delete tempFileGraph[tempFilePath];
@@ -316,23 +338,29 @@ async function createTemplateFile(createFilePath) {
     await fs.chmod(createFilePath, 511);
     await fs.writeFile(createFilePath, await getTempFileContent(createFilePath));
     await fs.chmod(createFilePath, 292);
-    console.info(import_picocolors.default.green(`"${createFilePath}" file changed`));
+    console.info(import_picocolors.default.green(`\u3010gen-template\u3011"${createFilePath}" file changed`));
   } catch (error) {
     await fs.writeFile(createFilePath, await getTempFileContent(createFilePath));
     await fs.chmod(createFilePath, 292);
-    console.info(import_picocolors.default.green(`"${createFilePath}" file changed`));
+    console.info(import_picocolors.default.green(`\u3010gen-template\u3011"${createFilePath}" file changed`));
   }
 }
 function generate_main_vue_file_default() {
-  const watchPath = resolve(__dirname, "../src");
+  const watchPath = resolve2(__dirname, "../src");
   return {
     name: "vite:gen-template-file",
-    configResolved(config) {
+    async configResolved(config) {
       currentUIComponent = JSON.parse(config.define["__APP_UI_COMPONENT__"]);
       compileMode = JSON.parse(config.define["__APP_COMPILE_MODE__"]);
+      await handleSrcDir(watchPath);
     },
     configureServer(server) {
       server.watcher.on("add", async (path) => {
+        if (isSingleMode()) {
+          if (fileExtTypeList.includes(extname2(path))) {
+            allFilePaths.push(path);
+          }
+        }
         if (isTargetFile(path)) {
           const tempFilePath = getCreateTemplateFilePath(path);
           await updateFileGraph(tempFilePath);
@@ -340,6 +368,12 @@ function generate_main_vue_file_default() {
         }
       });
       server.watcher.on("unlink", async (path) => {
+        if (isSingleMode()) {
+          const indexOf = allFilePaths.indexOf(path);
+          if (~indexOf) {
+            allFilePaths.splice(indexOf, 1);
+          }
+        }
         if (isTargetFile(path)) {
           const tempFilePath = getCreateTemplateFilePath(path);
           const res = await updateFileGraph(tempFilePath);
@@ -348,15 +382,27 @@ function generate_main_vue_file_default() {
           console.error(import_picocolors.default.red(`${path} \u6A21\u677F\u6587\u4EF6\u5DF2\u88AB\u5220\u9664\uFF0C\u8BF7\u91CD\u65B0\u8FD0\u884C\u9879\u76EE\u751F\u6210\u8BE5\u6587\u4EF6`));
         }
       });
-      return () => {
-        handleSrcDir(watchPath);
-      };
+    },
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        if (isSingleMode()) {
+          return resolvedVirtualModuleId;
+        }
+        throw new Error(virtualModuleId + " \u865A\u62DF\u5BFC\u5165\u53EA\u80FD\u5728 single \u7F16\u8BD1\u6A21\u5F0F\u4E0B\u4F7F\u7528");
+      }
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId) {
+        if (isSingleMode()) {
+          return getComponentImportInfo(new Set(allFilePaths), currentUIComponent);
+        }
+        throw new Error(virtualModuleId + " \u865A\u62DF\u5BFC\u5165\u53EA\u80FD\u5728 single \u7F16\u8BD1\u6A21\u5F0F\u4E0B\u4F7F\u7528");
+      }
     },
     async transform(code, id) {
       if (templateFileRegex.test(id)) {
         if (compileMode === "single") {
           const reg = /<template>(.*?)<\/template>/;
-          const regex = /<script\s+lang="(jsx|tsx)">/;
           const matched = code.match(reg);
           const matchedPath = matched && matched[1] ? matched[1] : "";
           const fileName = matchedPath.split("?")[0];
