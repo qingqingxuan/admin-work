@@ -1,36 +1,24 @@
 import { isExternal, toHump } from '@/utils'
 import { join, resolve } from 'path-browserify'
-import { h, ref } from 'vue'
+import { defineAsyncComponent, h, ref } from 'vue'
 import { RouteRecordRaw, RouteRecordSingleViewWithChildren } from 'vue-router'
 import { OriginRoute, SplitTab } from '../types'
 import { MenuOption, NIcon } from 'naive-ui'
 import SvgIcon from '@/components/svg-icon/index.vue'
 import { asyncRoutes } from '@/router/routes/async'
 import { LAYOUT } from '../keys'
-import { initFileGraph } from '@/utils/FileGraph'
-
-export function loadComponents() {
-  return import.meta.glob('/src/views/**/*.vue')
-}
-
-export const asynComponents = loadComponents()
-
-const fileGraph = initFileGraph(asynComponents)
+import { componentsGraph } from 'virtual:component-import?path=src/views'
 
 export function getComponent(it: OriginRoute) {
-  const fileGraphItem = fileGraph[join('/src/views', it.menuUrl)]
-  if (fileGraphItem && fileGraphItem.componentPath) {
-    return asynComponents[fileGraphItem.componentPath]
+  if (isExternal(it.menuUrl)) return
+  const fileGraphItem = it.localFilePath
+    ? componentsGraph[join('/src/views', it.localFilePath)]
+    : componentsGraph[join('/src/views', it.menuUrl)]
+  if (fileGraphItem) {
+    return () => Promise.resolve(defineAsyncComponent(fileGraphItem.loader))
   }
-  return asynComponents[getFilePath(it)]
-}
-
-export function getFilePath(it: OriginRoute) {
-  if (!it.localFilePath) {
-    it.localFilePath = it.menuUrl
-  }
-  it.localFilePath = resolve('/', it.localFilePath)
-  return '/src/views' + it.localFilePath + '.vue'
+  console.error(`${it.menuUrl}路径找不到对应的.vue|.jsx|.tsx文件，请确保有对应的文件存在`)
+  return
 }
 
 export function findRootPathRoute(routes: RouteRecordRaw[]) {

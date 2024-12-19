@@ -1,0 +1,30 @@
+{
+  "name": "plugins",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsup && npm run cp",
+    "dev": "tsup --watch src",
+    "gen": "esbuild src/generate-main-vue-file.js --format=esm --bundle --platform=node --outfile=dist/gen-template.js",
+    "cp": "rm -rf /Users/mac/Desktop/vue-admin-work/admin-work/plugins/dist/ && cp -r dist/ /Users/mac/Desktop/vue-admin-work/admin-work/plugins/dist/ && cp package.json /Users/mac/Desktop/vue-admin-work/admin-work/plugins"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "~5.6.3"
+  }
+}

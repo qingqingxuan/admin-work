@@ -6,7 +6,7 @@ import ViteComponents from 'unplugin-vue-components/vite'
 import { NaiveUiResolver, ArcoResolver } from 'unplugin-vue-components/resolvers'
 
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueTemplate from './plugins/gen-template'
+import vueTemplate from './plugins/dist/generate-main-vue-file'
 
 export default () => {
   return {
@@ -28,7 +28,7 @@ export default () => {
       vueJsx(),
     ],
     define: {
-      __APP_UI_COMPONENT__: JSON.stringify('arco'),
+      __APP_UI_COMPONENT__: JSON.stringify('naive'),
       __APP_COMPILE_MODE__: JSON.stringify('single'),
     },
     css: {

@@ -1,14 +1,1 @@
-<script lang="tsx">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  render() {
-    return (
-      <>
-        <div>ArcoTsx</div>
-      </>
-    )
-  },
-})
-
-</script>
+<template>/Users/mac/Desktop/vue-admin-work/admin-work/src/components/logo/index.naive.vue?1734593895841</template>

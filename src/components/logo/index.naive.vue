@@ -5,7 +5,7 @@
       v-if="showTitle"
       :class="[!appConfig.isCollapse || alwaysShow ? 'show-title' : 'close-title']"
     >
-      <span class="logo-title">{{ projectName }}NaiveVue</span>
+      <span class="logo-title">{{ projectName }}</span>
     </div>
   </div>
 </template>
