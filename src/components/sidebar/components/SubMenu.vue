@@ -15,7 +15,8 @@
           <template #icon>
             <component :is="item.icon || 'icon-menu'" />
           </template>
-          {{ item.label }}
+          <component :is="item.label" v-if="typeof item.label === 'function'" />
+          <span v-else>{{ item.label }}</span>
         </a-menu-item>
       </template>
       <template v-else>
