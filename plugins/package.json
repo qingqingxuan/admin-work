@@ -1,12 +1,12 @@
 {
-  "name": "plugins",
+  "name": "@qqxjs/vite-plugin-adapter",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "build": "tsup && npm run cp",
     "dev": "tsup --watch src",
-    "gen": "esbuild src/generate-main-vue-file.js --format=esm --bundle --platform=node --outfile=dist/gen-template.js",
     "cp": "rm -rf /Users/mac/Desktop/vue-admin-work/admin-work/plugins/dist/ && cp -r dist/ /Users/mac/Desktop/vue-admin-work/admin-work/plugins/dist/ && cp package.json /Users/mac/Desktop/vue-admin-work/admin-work/plugins"
   },
   "keywords": [],
@@ -19,9 +19,12 @@
       "import": "./dist/index.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "fast-glob": "^3.3.2",
-    "picocolors": "^1.1.1"
+    "vue": "^3.5.12"
   },
   "devDependencies": {
     "tsup": "^8.3.5",

@@ -6,13 +6,16 @@ import ViteComponents from 'unplugin-vue-components/vite'
 import { NaiveUiResolver, ArcoResolver } from 'unplugin-vue-components/resolvers'
 
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueTemplate from './plugins/dist/generate-main-vue-file'
+import vueAdapter from './plugins/dist'
 
 export default () => {
   return {
     base: '/',
     plugins: [
-      vueTemplate(),
+      vueAdapter({
+        compileMode: 'single',
+        rules: ['naive', 'arco', 'element'],
+      }),
       vue(),
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), 'src/icons')],
@@ -27,14 +30,13 @@ export default () => {
       }),
       vueJsx(),
     ],
-    define: {
-      __APP_UI_COMPONENT__: JSON.stringify('naive'),
-      __APP_COMPILE_MODE__: JSON.stringify('single'),
-    },
     css: {
       preprocessorOptions: {
         scss: {
           additionalData: '@use "./src/styles/variables.scss" as *;',
+        },
+        less: {
+          additionalData: '@import "./src/styles/variables.less";',
         },
       },
     },
@@ -43,6 +45,10 @@ export default () => {
         {
           find: '@/',
           replacement: path.resolve(process.cwd(), 'src') + '/',
+        },
+        {
+          find: '@vt',
+          replacement: 'virtual:template',
         },
       ],
     },

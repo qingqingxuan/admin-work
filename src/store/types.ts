@@ -53,6 +53,8 @@ export interface AppConfigState {
   pageAnim: PageAnim
   isFixedNavBar: boolean
   isCollapse: boolean
+  flexMainHeight: boolean
+  mainHeight: number | string
   actionBar: {
     isShowSearch: boolean
     isShowMessage: boolean

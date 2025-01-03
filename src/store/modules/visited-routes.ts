@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
 import { RouteRecordRaw } from 'vue-router'
 import pinia from '../pinia'
-import useCachedRouteStore from './cached-routes'
-import { findCachedRoutes } from '../help'
 
 const visitedRoutes = JSON.parse(localStorage.getItem('visited-routes') || '[]')
 

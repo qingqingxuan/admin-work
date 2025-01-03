@@ -1,9 +1,10 @@
 <template>
-  <n-notification-provider>
+  <n-notification-provider v-if="appCompoentUI === 'naive'">
     <n-message-provider>
       <router-view />
     </n-message-provider>
   </n-notification-provider>
+  <router-view v-else />
 </template>
 
 <script lang="ts">
@@ -15,7 +16,9 @@
     name: 'App',
     setup() {
       provide('componentUIName', appCompoentUI)
-      return {}
+      return {
+        appCompoentUI,
+      }
     },
   })
 </script>

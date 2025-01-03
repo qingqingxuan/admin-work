@@ -36,7 +36,6 @@ export const adminRoutes = [
         menuUrl: '/system/department',
         menuName: '部门管理',
         badge: 'new',
-        localFilePath: '/system/local-path/department',
         routeName: 'my-department',
       },
       {

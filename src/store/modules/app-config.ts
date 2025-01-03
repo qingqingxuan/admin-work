@@ -34,10 +34,16 @@ const useAppConfigStore = defineStore('app-config', {
     changePrimaryColor(color: string) {
       this.themeColor = color
     },
-    changeSideWith(sideWidth: number) {
+    changeSideWidth(sideWidth: number) {
       this.sideWidth = sideWidth
       const r = document.querySelector(':root') as HTMLElement
       r.style.setProperty('--menu-width', sideWidth + 'px')
+    },
+    setMainHeight(height: number) {
+      this.mainHeight = height
+    },
+    setFlexMainHeight(isFlex: boolean) {
+      this.flexMainHeight = isFlex
     },
     toggleCollapse(isCollapse: boolean) {
       this.isCollapse = isCollapse

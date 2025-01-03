@@ -1,5 +1,5 @@
 <template>
-  <n-drawer v-model:show="opened" placement="right" :auto-focus="false">
+  <n-drawer v-model:show="opened" placement="right" :auto-focus="false" :default-width="280">
     <n-drawer-content title="系统设置" closable class="wrapper">
       <n-divider dashed>主题设置</n-divider>
       <n-grid>
@@ -85,13 +85,13 @@
         />
       </div>
       <n-divider dashed>按钮显示</n-divider>
-      <div class="setting-item-wrapper">
+      <!-- <div class="setting-item-wrapper">
         <span>固定顶部导航</span>
         <n-switch
           v-model:value="appConfig.isFixedNavBar"
           :disabled="appConfig.layoutMode === 'ttb'"
         />
-      </div>
+      </div> -->
       <div class="setting-item-wrapper">
         <span>搜索</span>
         <n-switch v-model:value="appConfig.actionBar.isShowSearch" />
@@ -361,7 +361,7 @@
       watch(
         () => menuWidth.value,
         (newVal) => {
-          appConfig.changeSideWith(newVal)
+          appConfig.changeSideWidth(newVal)
         }
       )
       return {

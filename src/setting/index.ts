@@ -17,6 +17,8 @@ export default {
   sideWidth: 210,
   deviceType: DeviceType.PC,
   pageAnim: PageAnim.OPACITY,
+  flexMainHeight: false,
+  mainHeight: document.body.clientHeight,
   isFixedNavBar: true,
   isCollapse: false,
   actionBar: {

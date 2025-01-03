@@ -25,6 +25,17 @@ const usePermissionStore = defineStore('permission-route', {
         return it.meta && !it.meta.hidden && it.children && it.children.length > 0
       })
     },
+    getTopLevelTabs(state) {
+      return state.permissionRoutes
+        .filter((it) => {
+          return it.meta && !it.meta.hidden && it.children && it.children.length > 0
+        })
+        .map((it) => {
+          const obj = { ...it, items: it.children }
+          delete obj.children
+          return obj
+        })
+    },
   },
   actions: {
     async getRoutes(data: { userId: number; roleId: number }) {

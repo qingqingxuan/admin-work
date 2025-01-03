@@ -4,7 +4,7 @@ export const constantRoutes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/login/index.vue'),
+    component: () => import('@vt/views/login/index'),
     meta: {
       hidden: true,
     },

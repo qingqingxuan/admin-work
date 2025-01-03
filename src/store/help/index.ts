@@ -8,17 +8,30 @@ import SvgIcon from '@/components/svg-icon/index.vue'
 import { asyncRoutes } from '@/router/routes/async'
 import { LAYOUT } from '../keys'
 import { componentsGraph } from 'virtual:component-import?path=src/views'
+import type { ComponentGraphItem } from '../../../plugins/dist/types'
 
 export function getComponent(it: OriginRoute) {
   if (isExternal(it.menuUrl)) return
-  const fileGraphItem = it.localFilePath
-    ? componentsGraph[join('/src/views', it.localFilePath)]
-    : componentsGraph[join('/src/views', it.menuUrl)]
+  const values = Object.values<ComponentGraphItem>(componentsGraph)
+  const fileGraphItem: ComponentGraphItem = it.localFilePath
+    ? componentsGraph[join('/src/views', it.localFilePath)] ||
+      values.find((v) => v.routePath === it.localFilePath)
+    : componentsGraph[join('/src/views', it.menuUrl)] ||
+      values.find((v) => v.routePath === it.menuUrl)
   if (fileGraphItem) {
-    return () => Promise.resolve(defineAsyncComponent(fileGraphItem.loader))
+    return () =>
+      Promise.resolve(
+        defineAsyncComponent(
+          typeof fileGraphItem.loader === 'function'
+            ? fileGraphItem.loader
+            : () => import('/src/views/exception/404.vue')
+        )
+      )
   }
-  console.error(`${it.menuUrl}路径找不到对应的.vue|.jsx|.tsx文件，请确保有对应的文件存在`)
-  return
+  console.error(
+    `${it.localFilePath || it.menuUrl}路径找不到对应的.vue|.jsx|.tsx文件，请确保有对应的文件存在`
+  )
+  return () => Promise.resolve(defineAsyncComponent(() => import('/src/views/exception/404.vue')))
 }
 
 export function findRootPathRoute(routes: RouteRecordRaw[]) {

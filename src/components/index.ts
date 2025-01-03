@@ -9,7 +9,8 @@ function adapterNaiveCss() {
 
 export function registerComponents(app: App) {
   Object.values(componentsGraph).forEach((it: any) => {
-    app.component(it.componentName, defineAsyncComponent(it.loader))
+    if (typeof it.loader === 'function')
+      app.component(it.componentName, defineAsyncComponent(it.loader))
   })
 }
 
