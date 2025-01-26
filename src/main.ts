@@ -6,7 +6,8 @@ import { useAppRouter } from './router'
 import useRouterGuard from './router/guard'
 import useAppPinia from './store'
 import useMock from '../mock'
-import '@arco-design/web-vue/dist/arco.css'
+import { init } from 'virtual:init'
+init()
 
 function vawBoot() {
   const app = createApp(App)

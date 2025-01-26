@@ -9,6 +9,10 @@ declare module 'virtual:component-import?*' {
   export { componentsGraph }
 }
 
+declare module 'virtual:init' {
+  export { init }
+}
+
 declare module '*.adapter' {
   import { DefineComponent } from 'vue'
   const component: DefineComponent<{}, {}, any>

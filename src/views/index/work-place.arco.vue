@@ -135,6 +135,7 @@
   import { useRouter } from 'vue-router'
   import { random } from 'lodash-es'
   import useUserStore from '@/store/modules/user'
+  import { Message } from '@arco-design/web-vue'
   const COLORS = ['#67C23A', '#E6A23C', '#F56C6C', '#409EFF']
   const date = new Date()
   export default defineComponent({
@@ -145,7 +146,11 @@
       const tempWaitingItems = reactive([] as Array<any>)
       const router = useRouter()
       const fastActionClick = ({ path = '/' }) => {
-        router.push(path)
+        // router.push(path)
+        Message.success({
+          content: '功能暂未开放',
+          resetOnHover: true,
+        })
       }
       const dataList = [
         {
