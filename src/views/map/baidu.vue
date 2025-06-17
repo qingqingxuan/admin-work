@@ -7,7 +7,7 @@
   import useCreateScript from '@/hooks/useCreateScript'
 
   const SCRIPT_URL =
-    'http://api.map.baidu.com/getscript?v=3.0&ak=WxbQmaOc3bvSGSaKWcyeFSf8fnYCWpKd&services=&t=' +
+    'http://api.map.baidu.com/getscript?v=3.0' +
     new Date().getTime()
   export default defineComponent({
     setup() {
